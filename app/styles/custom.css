@@ -1,0 +1,9 @@
+.noPadding{padding: 0 !important;}
+.clear{clear: both;}
+.fl{float:left;}
+.fr{float: right;}
+/*.cke_contents{height: 100px !important;}*/
+.insertRecords textarea{width:100%;}
+.insertRecords i{color: #f00; margin-right: 10px;}
+.insertRecords p{color: #f00; margin-top: 5px;}
+.loading{margin-bottom: 30px;}

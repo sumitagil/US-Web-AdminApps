@@ -7,11 +7,8 @@
  * # MainCtrl
  * Controller of the sandvikusaAdminAppsApp
  */
-angular.module('sandvikusaAdminAppsApp')
-  .controller('MainCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+var app=angular.module('sandvikusaAdminAppsApp');
+
+app.controller('MainCtrl', function ($scope,$location, $http) {
+    $scope.$location = $location;
+});
