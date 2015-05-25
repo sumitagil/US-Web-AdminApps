@@ -22,7 +22,7 @@
                     <!--<td>{{$index+1}}</td>-->
                     <td style="padding:10px;">{{result.EntryId}}</td>
                     <td style="max-width:250px; overflow:hidden;padding:5px;"><div ng-bind-html="result.AdditionalInfo" style="max-height:145px;overflow:hidden;text-align:justify;"></div></td>
-                    <td style="padding:10px;">{{result.OfferInfo | limitTo: 30 }}</td>
+                    <td style="max-width:250px; overflow:hidden;padding:10px;"><div ng-bind-html="result.OfferInfo" style="max-height:145px;overflow:hidden;text-align:justify;"></div></td>
                     <td style="padding:10px;">{{result.ShortNotes | limitTo: 30 }}</td>
                     <td style="padding:10px;"><a href="" ng-click="editdata(result.EntryId)" class="btn btn-default">Edit</a></td>         
                 </tr>   
@@ -49,40 +49,42 @@
                 </tr>
                 <tr>
                     <td><b>Offer Info* :</b><br/>
-                    <textarea rows="5" cols="60" data-ng-model="OfferInfo"></textarea>
+                    <textarea rows="5" cols="60" data-ng-model="OfferInfo" data-ck-editor></textarea>
                     </td>
                 </tr>
                 <tr>
                     <td><b>Bonus Info :</b><br/>
-                    <textarea rows="5" cols="60" data-ng-model="BonusInfo" ></textarea>
+                    <textarea rows="5" cols="60" data-ng-model="BonusInfo" data-ck-editor></textarea>
                     </td>
                 </tr>
                 <tr>
                     <td><b>Bonus Text :</b><br/>
-                    <textarea rows="5" cols="60" data-ng-model="BonusText"></textarea>
+                    <textarea rows="5" cols="60" data-ng-model="BonusText" maxlength="200"></textarea>
                     </td>
                 </tr>
                 <tr>
                     <td><b>Bonus Rebuttal Info :</b><br/>
-                    <textarea rows="5" cols="60" data-ng-model="BonusRebuttalInfo"></textarea></td>
+                    <textarea rows="5" cols="60" data-ng-model="BonusRebuttalInfo" data-ck-editor></textarea></td>
                 </tr>
                 <tr>
                     <td><b>Tac Info :</b><br/>
-                    <textarea rows="5" cols="60" data-ng-model="TacInfo" ></textarea></td>
+                    <textarea rows="5" cols="60" data-ng-model="TacInfo" data-ck-editor></textarea></td>
                 </tr>
                 <tr>
                     <td><b>Offer Rebuttal 1 :</b><br/>
-                    <textarea rows="5" cols="60" data-ng-model="OfferRebuttal1" ></textarea>
+                    <textarea rows="5" cols="60" data-ng-model="OfferRebuttal1" data-ck-editor></textarea>
                     </td>
                 </tr>
                 <tr>
                     <td><b>Offer Rebuttal 2 :</b><br/>
-                    <textarea rows="5" cols="60" data-ng-model="OfferRebuttal2" ></textarea>
+                    <textarea rows="5" cols="60" data-ng-model="OfferRebuttal2" data-ck-editor ng-maxlength="2000" name="OfferRebuttal2"></textarea>
+                    <span style="color:red" ng-show="editForm.OfferRebuttal2.$error.maxlength">
+                     It Should Contain Atmost 2000 Characters</span>
                     </td>
                 </tr>
                 <tr>
                     <td><b>Short Notes :</b><br/>
-                    <textarea rows="5" cols="60" rows="5" cols="60" data-ng-model="ShortNotes" ></textarea>
+                    <textarea rows="5" cols="60" rows="5" cols="60" data-ng-model="ShortNotes" maxlength="200"></textarea>
                     </td>
                 </tr>
                 <tr>
