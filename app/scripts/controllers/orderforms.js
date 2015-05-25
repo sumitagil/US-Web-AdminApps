@@ -23,7 +23,7 @@ app.controller('OrderFormsCtrl', function ($scope,$location, $http,$route) {
     //Get All data
     $http.jsonp("http://beta.iservices.earlymoments.com/getorderformdetails?token=741889E3-4565-40A1-982A-F15F7A923D72&EntryId=&format=json&callback=JSON_CALLBACK")
         .success(function(data) {
-            $scope.results = data.response;
+            $scope.results = data.response ;
             $scope.loading = false;
            
         }).error(function(){
@@ -58,16 +58,27 @@ app.controller('OrderFormsCtrl', function ($scope,$location, $http,$route) {
             });
     }
     
+   var data1={
+        'AdditionalInfo':$scope.AdditionalInfo,
+        'OfferInfo':$scope.OfferInfo
+    };
     //update Data
     $scope.editSubmit = function() {
-                //console.log($scope.ShortNotes+ "html "+$scope.ShortNotes.toString());
+                console.log($scope.AdditionalInfo);
                if($scope.AdditionalInfo!=undefined && $scope.AdditionalInfo!='undefined' && $scope.AdditionalInfo!=''
                   && $scope.OfferInfo!=undefined && $scope.OfferInfo!='undefined' && $scope.OfferInfo!=''){
-                var url = "http://beta.iservices.earlymoments.com/updateorderformdetails?EntryId="+$scope.EntryId+"&token="+$scope.token+"&AdditionalInfo="+$scope.AdditionalInfo+"&OfferInfo="+$scope.OfferInfo+"&BonusInfo="+$scope.BonusInfo+"&BonusText="+$scope.BonusText+"&BonusRebuttalInfo="+$scope.BonusRebuttalInfo+"&TacInfo="+$scope.TacInfo+"&OfferRebuttal1="+$scope.OfferRebuttal1+"&OfferRebuttal2="+$scope.OfferRebuttal2+"&ShortNotes="+$scope.ShortNotes+"&format=json&callback=JSON_CALLBACK";
-        
-
-                $http.jsonp(url)
-
+                var url = "http://beta.iservices.earlymoments.com/updateorderformdetails?EntryId="+$scope.EntryId+"&token="+$scope.token+"&AdditionalInfo="+encodeURIComponent($scope.AdditionalInfo)+"&OfferInfo="+$scope.OfferInfo+"&BonusInfo="+$scope.BonusInfo+"&BonusText="+$scope.BonusText+"&BonusRebuttalInfo="+$scope.BonusRebuttalInfo+"&TacInfo="+$scope.TacInfo+"&OfferRebuttal1="+$scope.OfferRebuttal1+"&OfferRebuttal2="+$scope.OfferRebuttal2+"&ShortNotes="+$scope.ShortNotes+"&format=json&callback=JSON_CALLBACK";
+               
+                  
+  
+    console.log(encodeURIComponent($scope.AdditionalInfo));
+    console.log(encodeURI(url));
+                   //var url="http://beta.iservices.earlymoments.com/updateorderformdetails?format=json&callback=JSON_CALLBACK";
+//console.log(url);
+                
+                 //  $http.jsonp("http://beta.iservices.earlymoments.com/updateorderformdetails?format=json&callback=JSON_CALLBACK",data1)
+                  //   $http.jsonp(url,JSON.stringify(data1))
+                   $http.jsonp(encodeURI(url))
                 .success(function (data, status, headers, config) {
                      alert("Record has been updated Successfully");
                      $route.reload();
