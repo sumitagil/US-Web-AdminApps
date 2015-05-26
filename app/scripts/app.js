@@ -39,6 +39,10 @@ angular
         templateUrl: 'views/insertorderforms.html',
         controller: 'insertOrderFormsCtrl'
       })
+     .when('/promocode', {
+        templateUrl: 'views/promocode.html',
+        controller: 'promocodeCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

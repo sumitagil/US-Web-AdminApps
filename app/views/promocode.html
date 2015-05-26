@@ -1,0 +1,71 @@
+<div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+       <div class="row marketing">
+        <h4>Filter Records</h4>
+        
+        <form name="promocodeForm" class="form-horizontal" novalidate>
+           <div class="table-responsive">
+            <table class="table insertRecords">
+               
+                <tr>
+                    <td><b>Promo Code * :</b></td>
+                    <td ng-class="{ 'has-error' : promocodeForm.promo_code.$invalid && !promocodeForm.promo_code.$pristine }">
+                        <input type="text" name="promo_code" ng-model="promo_code" class="form-control" placeholder="Promo Code" required/>
+                        <p ng-show="promocodeForm.promo_code.$invalid && !promocodeForm.promo_code.$pristine" class="help-block">Promo Code is required.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Campaign Id * :</td>
+                    <td ng-class="{ 'has-error' : promocodeForm.campaign_id.$invalid && !promocodeForm.campaign_id.$pristine }">
+
+                        <select name="campaign_id" ng-model="campaign_id" 
+                                ng-options="campaignid as campaignid.CampaignId for campaignid in allcampaignids" 
+                                ng-change="getCampaignDetails(campaign_id)" class="form-control" required>
+                                <option value="">Select One</option>
+                        </select>
+                        <div id="campaign-desc-div">{{hdnCampaignDesc}}</div>
+                        <p ng-show="promocodeForm.campaign_id.$invalid && !promocodeForm.campaign_id.$pristine" class="help-block">Campaign Id is required.</p>
+                    </td>
+                </tr> 
+                <tr>
+                    <td><b>Page Id * :</td>
+                    <td ng-class="{ 'has-error' : promocodeForm.page_id.$invalid && !promocodeForm.page_id.$pristine }">
+                       
+                        <select name="page_id" id="page_id" ng-model="page_id" 
+                                ng-options="pageid as pageid.PageId for pageid in pageids" 
+                                ng-change="getPageDetails(page_id)"
+                                class="form-control" required>
+                                <option value="">Select One</option>
+                        </select>
+                        <div id="page-desc-div">{{hdnPageDesc}}</div>
+                        <p ng-show="promocodeForm.page_id.$invalid && !promocodeForm.page_id.$pristine" class="help-block">Page Id is required.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Confirm Ref Id * :</td>
+                    <td ng-class="{ 'has-error' : promocodeForm.refid.$invalid && !promocodeForm.refid.$pristine }">
+                                               
+                        <select name="refid" id="allref" ng-model="refid" ng-options="allref as allref.EntryId for allref in allrefids" 
+                                ng-change="getRefDetails(refid)" class="form-control" required>
+                                <option value="">Select One</option>
+                        </select>
+                        
+                        <div id="ref-desc-div">{{hdnRefDesc}}</div>
+                        <p ng-show="promocodeForm.refid.$invalid && !promocodeForm.refid.$pristine" class="help-block">Reference Id is required.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Short Notes :</b></td>
+                    <td><textarea id="short_notes" rows="3" class="form-control" placeholder="Short Notes"></textarea></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                       <input type="button" value="Add" ng-click="addPromoCode()" name="submit" class="btn btn-primary">
+                    </td>
+                </tr>
+                
+            </table>
+          </div>
+        </form>      
+    </div>
+       
+</div>

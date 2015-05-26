@@ -26,7 +26,7 @@ app.controller('insertOrderFormsCtrl', function ($scope,$location, $http) {
                    if($scope.AdditionalInfo!=undefined && $scope.OfferInfo!=undefined){
                                  
                     var url = "http://beta.iservices.earlymoments.com/insertorderformdetails?token="+token+"&EntryId="+$scope.EntryId+"&AdditionalInfo="+encodeURIComponent($scope.AdditionalInfo)+"&OfferInfo="+encodeURIComponent($scope.OfferInfo)+"&BonusInfo="+encodeURIComponent($scope.BonusInfo)+"&BonusText="+$scope.BonusText+"&BonusRebuttalInfo="+encodeURIComponent($scope.BonusRebuttalInfo)+"&TacInfo="+encodeURIComponent($scope.TacInfo)+"&OfferRebuttal1="+encodeURIComponent($scope.OfferRebuttal1)+"&OfferRebuttal2="+encodeURIComponent($scope.OfferRebuttal2)+"&ShortNotes="+$scope.ShortNotes+"&callback=JSON_CALLBACK";
-                       console.log(url);
+                      
                                     
                     $http.jsonp(encodeURI(url))
                
