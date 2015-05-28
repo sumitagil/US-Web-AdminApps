@@ -43,6 +43,10 @@ angular
         templateUrl: 'views/promocode.html',
         controller: 'promocodeCtrl'
       })
+    .when('/promolist', {
+        templateUrl: 'views/promolist.html',
+        controller: 'promolistCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

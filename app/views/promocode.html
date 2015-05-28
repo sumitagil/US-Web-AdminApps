@@ -1,6 +1,6 @@
 <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
        <div class="row marketing">
-        <h4>Filter Records</h4>
+        <h4>Add Records</h4>
         
         <form name="promocodeForm" class="form-horizontal" novalidate>
            <div class="table-responsive">
@@ -33,6 +33,7 @@
                         <select name="page_id" id="page_id" ng-model="page_id" 
                                 ng-options="pageid as pageid.PageId for pageid in pageids" 
                                 ng-change="getPageDetails(page_id)"
+                                ng-disabled="!campaign_id"
                                 class="form-control" required>
                                 <option value="">Select One</option>
                         </select>
@@ -55,7 +56,7 @@
                 </tr>
                 <tr>
                     <td><b>Short Notes :</b></td>
-                    <td><textarea id="short_notes" rows="3" class="form-control" placeholder="Short Notes"></textarea></td>
+                    <td><textarea ng-model="short_notes" rows="3" class="form-control" placeholder="Short Notes"></textarea></td>
                 </tr>
                 <tr>
                     <td colspan="2">

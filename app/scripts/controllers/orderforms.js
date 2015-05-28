@@ -58,13 +58,10 @@ app.controller('OrderFormsCtrl', function ($scope,$location, $http,$route) {
             });
     }
     
-   var data1={
-        'AdditionalInfo':$scope.AdditionalInfo,
-        'OfferInfo':$scope.OfferInfo
-    };
+  
     //update Data
     $scope.editSubmit = function() {
-                console.log($scope.AdditionalInfo);
+                
                if($scope.AdditionalInfo!=undefined && $scope.AdditionalInfo!='undefined' && $scope.AdditionalInfo!=''
                   && $scope.OfferInfo!=undefined && $scope.OfferInfo!='undefined' && $scope.OfferInfo!=''){
                 var url = "http://beta.iservices.earlymoments.com/updateorderformdetails?EntryId="+$scope.EntryId+"&token="+$scope.token+"&AdditionalInfo="+encodeURIComponent($scope.AdditionalInfo)+"&OfferInfo="+encodeURIComponent($scope.OfferInfo)+"&BonusInfo="+encodeURIComponent($scope.BonusInfo)+"&BonusText="+$scope.BonusText+"&BonusRebuttalInfo="+encodeURIComponent($scope.BonusRebuttalInfo)+"&TacInfo="+encodeURIComponent($scope.TacInfo)+"&OfferRebuttal1="+encodeURIComponent($scope.OfferRebuttal1)+"&OfferRebuttal2="+encodeURIComponent($scope.OfferRebuttal2)+"&ShortNotes="+$scope.ShortNotes+"&format=json&callback=JSON_CALLBACK";
