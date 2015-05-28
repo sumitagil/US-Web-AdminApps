@@ -18,6 +18,7 @@ app.controller('promolistCtrl', function ($scope,$http,$route) {
     $scope.listAll = true;
     $scope.editAll = false;
     $scope.loading = true;
+    $scope.editLoading=false;
      //Get All data
     $http.jsonp("http://beta.iservices.earlymoments.com/getpromomappings?token=741889E3-4565-40A1-982A-F15F7A923D72&format=json&callback=JSON_CALLBACK")
         .success(function(data) {
@@ -30,13 +31,14 @@ app.controller('promolistCtrl', function ($scope,$http,$route) {
     
     //Edit Data
     $scope.editpromodata = function(index) {  
-            
+               
+         $scope.editLoading=true;
             $http.jsonp('http://beta.iservices.earlymoments.com/getpromomappings?token=741889E3-4565-40A1-982A-F15F7A923D72&EntryId='+index+'&format=json&callback=JSON_CALLBACK')   
             
             .success(function (data, status, headers, config) {             
                 $scope.listAll = false;
                 $scope.editAll = true;  
-                
+              
                 $scope.EntryId           =   data.response[0].EntryId;
                 $scope.promo_code        =   data.response[0].PromoCode;
                 $scope.campaign_id       =   data.response[0].CampaignId;
@@ -55,6 +57,7 @@ app.controller('promolistCtrl', function ($scope,$http,$route) {
                     $http.jsonp("http://beta.iservices.earlymoments.com/getcampaignlist?token=741889E3-4565-40A1-982A-F15F7A923D72&format=json&callback=JSON_CALLBACK")
                     .success(function(data) {
                         $scope.allcampaignids = data.response;
+                          $scope.editLoading=false;
                     });
 
                     //reference Ids

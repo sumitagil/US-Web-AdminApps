@@ -20,12 +20,13 @@ app.controller('promocodeCtrl', function ($scope,$http,$location) {
             $scope.hdnRefDesc = ""; 
             $scope.hdnPageDesc = "";
             $scope.pageids = "";
-            
+            $scope.insertloading = true;
             
             //Campaign Ids
             $http.jsonp("http://beta.iservices.earlymoments.com/getcampaignlist?token=741889E3-4565-40A1-982A-F15F7A923D72&format=json&callback=JSON_CALLBACK")
             .success(function(data) {
                 $scope.allcampaignids = data.response;
+                $scope.insertloading = false;
             });
             
             //reference Ids
