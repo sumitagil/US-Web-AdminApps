@@ -19,11 +19,19 @@ app.controller('promolistCtrl', function ($scope,$http,$route) {
     $scope.editAll = false;
     $scope.loading = true;
     $scope.editLoading=false;
+    $scope.curPage = 0;
+    $scope.pageSize = 5;
+    $scope.MaxPage = 0;
+    
      //Get All data
     $http.jsonp("http://beta.iservices.earlymoments.com/getpromomappings?token=741889E3-4565-40A1-982A-F15F7A923D72&format=json&callback=JSON_CALLBACK")
         .success(function(data) {
             $scope.results = data.response ;
             $scope.loading = false;  
+           
+            $scope.MaxPage=Math.ceil($scope.results.length / $scope.pageSize);
+                //$scope.numberOfPages();
+            console.log( $scope.MaxPage);
         }).error(function(){
             alert("Error");
         });  
@@ -51,7 +59,7 @@ app.controller('promolistCtrl', function ($scope,$http,$route) {
                     $scope.hdnRefDesc = ""; 
                     $scope.hdnPageDesc = "";
                     $scope.pageids = "";
-
+                 
 
                     //Campaign Ids
                     $http.jsonp("http://beta.iservices.earlymoments.com/getcampaignlist?token=741889E3-4565-40A1-982A-F15F7A923D72&format=json&callback=JSON_CALLBACK")
@@ -133,8 +141,23 @@ app.controller('promolistCtrl', function ($scope,$http,$route) {
     $scope.refreshdata = function(){
         $route.reload();
     }
+ 
     
- });
+/*$scope.numberOfPages = function() 
+ {
+ return Math.ceil($scope.results.length / $scope.pageSize);
+ };
 
+*/
+ });    
+app.filter('pagination', function()
+{
+ return function(input, start)
+ {
+     if (!input || !input.length) { return; }
+  start = +start;
+  return input.slice(start);
+ };
+});
 
 
