@@ -7,3 +7,6 @@
 .insertRecords i{color: #f00; margin-right: 10px;}
 .insertRecords p{color: #f00; margin-top: 5px;}
 .loading{margin-bottom: 30px;}
+#tblInsert tr td:first-child{text-align: right;}
+.description{padding:10px;max-with:90%; text-align: justify;}
+.required{color:#f00;}

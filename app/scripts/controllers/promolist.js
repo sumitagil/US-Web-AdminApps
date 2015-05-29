@@ -14,10 +14,11 @@ app.config(function ($httpProvider) {
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
 });
 
-app.controller('promolistCtrl', function ($scope, $http, $route, $filter, ngTableParams) {
+app.controller('promolistCtrl', function ($scope, $http, $route, $filter, ngTableParams, $timeout) {
     $scope.listAll = true;
     $scope.editAll = false;
     $scope.loading = true;
+    $scope.editLoading=false;
      //Get All data
     $http.jsonp("http://beta.iservices.earlymoments.com/getpromomappings?token=741889E3-4565-40A1-982A-F15F7A923D72&format=json&callback=JSON_CALLBACK")
         .success(function(data) {
@@ -25,17 +26,10 @@ app.controller('promolistCtrl', function ($scope, $http, $route, $filter, ngTabl
             $scope.loading = false; 
             var arr=$scope.results;
             //pagination start...
-            console.log($scope.results);
-            $scope.tableParams = new ngTableParams({
-					page: 1,            // show first page
-					count: 10          // count per page
-				}, 
-				{
-					total: arr.length, // length of data
-					getData: function($defer, params) {
-						$defer.resolve(arr.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-				    }
-		   }); //end pagination
+            /*$scope.currentPage = 0;
+            $scope.pageSize = 5;
+            $scope.maxPage = numberOfPages($scope.results,$scope.pageSize);*/
+           //end pagination
             
         }).error(function(){
             alert("Error");
@@ -44,13 +38,13 @@ app.controller('promolistCtrl', function ($scope, $http, $route, $filter, ngTabl
     
     //Edit Data
     $scope.editpromodata = function(index) {  
-            $scope.editloading = true;
+           $scope.editLoading=true;
+
             $http.jsonp('http://beta.iservices.earlymoments.com/getpromomappings?token=741889E3-4565-40A1-982A-F15F7A923D72&EntryId='+index+'&format=json&callback=JSON_CALLBACK')   
             
             .success(function (data, status, headers, config) {             
                 $scope.listAll = false;
                 $scope.editAll = true; 
-                
                 $scope.EntryId           =   data.response[0].EntryId;
                 $scope.promo_code        =   data.response[0].PromoCode;
                 $scope.campaign_id       =   data.response[0].CampaignId;
@@ -69,7 +63,7 @@ app.controller('promolistCtrl', function ($scope, $http, $route, $filter, ngTabl
                     $http.jsonp("http://beta.iservices.earlymoments.com/getcampaignlist?token=741889E3-4565-40A1-982A-F15F7A923D72&format=json&callback=JSON_CALLBACK")
                     .success(function(data) {
                         $scope.allcampaignids = data.response;
-                        $scope.editloading = false;
+                          $scope.editLoading=false;
                     });
 
                     //reference Ids
@@ -100,12 +94,12 @@ app.controller('promolistCtrl', function ($scope, $http, $route, $filter, ngTabl
 
                     //Page Details
                     $scope.getPageDetails=function(item){
-                        $scope.hdnPageDesc = item.PageDesc;
+                            $scope.hdnPageDesc = item.PageDesc;
                     }
 
                     //Reference Details
                     $scope.getRefDetails=function(item){
-                        $scope.hdnRefDesc = item.ShortNotes;
+                            $scope.hdnRefDesc = item.ShortNotes;
                     } 
                 /////////////////////////////////////////////////////////
             })
@@ -116,11 +110,36 @@ app.controller('promolistCtrl', function ($scope, $http, $route, $filter, ngTabl
     
     //update Data
     $scope.editPromoCode = function() {
-                
+                $scope.hdnCampaignDesc = ""; 
+                $scope.hdnRefDesc = ""; 
+                $scope.hdnPageDesc = "";
+                $scope.pageids = "";
+        
                if ($scope.promocodeForm.$valid) {                      
                         var token='741889E3-4565-40A1-982A-F15F7A923D72';
+                        var selpageId=0,selrefId=0,selshortnotes='',selcampaignId;
+                        console.log($scope.page_id);
+                        if($scope.campaign_id.CampaignId=="" || $scope.campaign_id.CampaignId==null || $scope.campaign_id.CampaignId==undefined){
+                            selcampaignId=$scope.campaign_id;
+                        }
                         
-                        var url = "http://beta.iservices.earlymoments.com/UpdatePromoMapping?token="+token+"&EntryId="+$scope.EntryId+"&PromoCode="+$scope.promo_code+"&CampaignId="+$scope.campaign_id.CampaignId+"&PageId="+$scope.page_id.PageId+"&ConfirmReferenceId="+$scope.refid.EntryId+"&ShortNotes="+$scope.short_notes+"&callback=JSON_CALLBACK";
+                        if($scope.page_id=="" || $scope.page_id==null || $scope.page_id==undefined || $scope.page_id==0){
+                            selpageId=0;
+                        }else if($scope.page_id>0){
+                            selpageId=$scope.page_id;
+                        }
+                        else{
+                            selpageId=$scope.page_id.PageId;
+                        }
+                        if($scope.refid!="" && $scope.refid!=null && $scope.refid!=undefined){
+                            selrefId=$scope.refid.EntryId;
+                        }
+                        if($scope.short_notes!="" && $scope.short_notes!=null && $scope.short_notes!=undefined){
+                            selshortnotes=$scope.short_notes;
+                        }
+                        //console.log(selpageId+"=="+$scope.page_id.PageId +'=='+$scope.page_id);
+                       
+                        var url = "http://beta.iservices.earlymoments.com/UpdatePromoMapping?token="+token+"&EntryId="+$scope.EntryId+"&PromoCode="+$scope.promo_code+"&CampaignId="+selcampaignId+"&PageId="+selpageId+"&ConfirmReferenceId="+selrefId+"&ShortNotes="+selshortnotes+"&callback=JSON_CALLBACK";
                         
                         //console.log(url);
                        
@@ -149,4 +168,14 @@ app.controller('promolistCtrl', function ($scope, $http, $route, $filter, ngTabl
  });
 
 
+app.filter('firstPage', function() {
+    return function(input, start) {
+        if (!input || !input.length) { return; }
+        start = +start; //parse to int
+        return input.slice(start);
+    }
+});
 
+function numberOfPages(results,pageSize){
+    return Math.ceil(results.length/pageSize);                
+}
