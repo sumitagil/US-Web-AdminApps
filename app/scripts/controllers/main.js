@@ -9,6 +9,6 @@
  */
 var app=angular.module('sandvikusaAdminAppsApp');
 
-app.controller('MainCtrl', function ($scope,$location, $http) {
+app.controller('MainCtrl', function ($scope,$location) {
     $scope.$location = $location;
 });

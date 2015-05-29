@@ -14,15 +14,29 @@ app.config(function ($httpProvider) {
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
 });
 
-app.controller('promolistCtrl', function ($scope,$http,$route) {
+app.controller('promolistCtrl', function ($scope, $http, $route, $filter, ngTableParams) {
     $scope.listAll = true;
     $scope.editAll = false;
     $scope.loading = true;
      //Get All data
     $http.jsonp("http://beta.iservices.earlymoments.com/getpromomappings?token=741889E3-4565-40A1-982A-F15F7A923D72&format=json&callback=JSON_CALLBACK")
         .success(function(data) {
-            $scope.results = data.response ;
-            $scope.loading = false;  
+            $scope.results = data.response;
+            $scope.loading = false; 
+            var arr=$scope.results;
+            //pagination start...
+            console.log($scope.results);
+            $scope.tableParams = new ngTableParams({
+					page: 1,            // show first page
+					count: 10          // count per page
+				}, 
+				{
+					total: arr.length, // length of data
+					getData: function($defer, params) {
+						$defer.resolve(arr.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+				    }
+		   }); //end pagination
+            
         }).error(function(){
             alert("Error");
         });  
@@ -30,12 +44,12 @@ app.controller('promolistCtrl', function ($scope,$http,$route) {
     
     //Edit Data
     $scope.editpromodata = function(index) {  
-            
+            $scope.editloading = true;
             $http.jsonp('http://beta.iservices.earlymoments.com/getpromomappings?token=741889E3-4565-40A1-982A-F15F7A923D72&EntryId='+index+'&format=json&callback=JSON_CALLBACK')   
             
             .success(function (data, status, headers, config) {             
                 $scope.listAll = false;
-                $scope.editAll = true;  
+                $scope.editAll = true; 
                 
                 $scope.EntryId           =   data.response[0].EntryId;
                 $scope.promo_code        =   data.response[0].PromoCode;
@@ -55,6 +69,7 @@ app.controller('promolistCtrl', function ($scope,$http,$route) {
                     $http.jsonp("http://beta.iservices.earlymoments.com/getcampaignlist?token=741889E3-4565-40A1-982A-F15F7A923D72&format=json&callback=JSON_CALLBACK")
                     .success(function(data) {
                         $scope.allcampaignids = data.response;
+                        $scope.editloading = false;
                     });
 
                     //reference Ids

@@ -14,12 +14,13 @@ app.config(function ($httpProvider) {
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
 });
 
-app.controller('promocodeCtrl', function ($scope,$http,$location) {
+app.controller('promocodeCtrl', function ($scope,$http,$location,$modal) {
     
             $scope.hdnCampaignDesc = ""; 
             $scope.hdnRefDesc = ""; 
             $scope.hdnPageDesc = "";
             $scope.pageids = "";
+            $scope.msg="";
             
             
             //Campaign Ids
@@ -82,11 +83,32 @@ app.controller('promocodeCtrl', function ($scope,$http,$location) {
                         
                     } else {
                         $scope.promocodeForm.submitted = true;
-                        alert("Please fill the required fields.");
+                        //alert("Please fill the required fields.");
+                        $scope.msg="Please fill the required fields.";
+                        var modalInstance = $modal.open({
+                            templateUrl: 'myModalContent.html',
+                            controller: 'ModalInstanceCtrl',
+                            resolve: {
+                                        msg: function () {
+                                          return $scope.msg;
+                                        }
+                                      }
+                        });
+                       
                     }
                   
-             }        
+             } 
+            
+            
 });
+
+app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, msg) {
+    $scope.msg = msg;
+    $scope.ok = function () {
+                $modalInstance.close();
+    };
+});
+
 
 
 
