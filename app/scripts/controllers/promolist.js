@@ -23,6 +23,7 @@ app.controller('promolistCtrl', function ($scope,$http,$route) {
     $scope.pageSize = 5;
     $scope.MaxPage = 0;
     
+    
      //Get All data
     $http.jsonp("http://beta.iservices.earlymoments.com/getpromomappings?token=741889E3-4565-40A1-982A-F15F7A923D72&format=json&callback=JSON_CALLBACK")
         .success(function(data) {
@@ -31,7 +32,7 @@ app.controller('promolistCtrl', function ($scope,$http,$route) {
            
             $scope.MaxPage=Math.ceil($scope.results.length / $scope.pageSize);
                 //$scope.numberOfPages();
-            console.log( $scope.MaxPage);
+            //console.log( $scope.MaxPage);
         }).error(function(){
             alert("Error");
         });  
@@ -141,14 +142,6 @@ app.controller('promolistCtrl', function ($scope,$http,$route) {
     $scope.refreshdata = function(){
         $route.reload();
     }
- 
-    
-/*$scope.numberOfPages = function() 
- {
- return Math.ceil($scope.results.length / $scope.pageSize);
- };
-
-*/
  });    
 app.filter('pagination', function()
 {
