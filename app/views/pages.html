@@ -9,12 +9,18 @@
       
       <accordion close-others="oneAtATime">
             <accordion-group heading="{{result.CampaingDesc}}" ng-repeat="result in results | pagination: curPage * pageSize | limitTo: pageSize" ng-click="getPageData(result.CampaignId);">
-                <div class="panel-body" ng-repeat="allPage in allPageIds" ng-if="allPageIds.length > 0">
-                    <p>Id : {{allPage.PageId}}</p>
-                    <p>Page Name : {{allPage.PageName}}</p>
-                    <p>Page Desc : {{allPage.PageDesc}}</p>
-                    <hr>
-                </div>
+                <table class="table" ng-if="allPageIds.length > 0">
+                    <tr>
+                        <td>Id</td>
+                        <td>Page Name</td>
+                        <td>Page Desc.</td>
+                    </tr>
+                    <tr ng-repeat="allPage in allPageIds" >
+                        <td>{{allPage.PageId}}</td>
+                        <td>{{allPage.PageName}}</td>
+                        <td>{{allPage.PageDesc}}</td>
+                    </tr>
+                </table>
             </accordion-group>
       </accordion>
     
