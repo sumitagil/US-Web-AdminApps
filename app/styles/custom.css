@@ -1,8 +1,10 @@
+body{color:#777 !important;}
 .noPadding{padding: 0 !important;}
 .clear{clear: both;}
 .fl{float:left;}
 .fr{float: right;}
 /*.cke_contents{height: 100px !important;}*/
+.insertRecords,.font14{font-size:14px;}
 .insertRecords textarea{width:100%;}
 .insertRecords i{color: #f00; margin-right: 10px;}
 .insertRecords p{color: #f00; margin-top: 5px;}
@@ -10,3 +12,5 @@
 #tblInsert tr td:first-child{text-align: right;}
 .description{padding:10px;max-with:90%; text-align: justify;}
 .required{color:#f00;}
+#divPaginate ul{list-style-type: none;margin-left: 0;padding-left: 0;}
+#divPaginate ul li{display: inline;}

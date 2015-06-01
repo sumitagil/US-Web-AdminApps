@@ -8,18 +8,18 @@
  *
  * Main module of the application.
  */
-angular
-  .module('sandvikusaAdminAppsApp', [
-    'ngCookies',
-    'ngMessages',
-    'ngResource',
-    'ngRoute',
-    'ngSanitize',
-    'ngTouch',
-    'ngTable',
-    'ui.bootstrap'
-  ])
-  .config(function ($routeProvider) {
+var app = angular.module('sandvikusaAdminAppsApp', [
+                        'ngCookies',
+                        'ngMessages',
+                        'ngResource',
+                        'ngRoute',
+                        'ngSanitize',
+                        'ngTouch',
+                        'ngTable',
+                        'ui.bootstrap'
+                      ]);
+
+  app.config(function ($routeProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
@@ -54,3 +54,21 @@ angular
       });
      
   });
+
+//Common filters...
+app.filter('pagination', function()
+{
+     return function(input, start)
+     {
+         if (!input || !input.length) { return; }
+      start = +start;
+      return input.slice(start);
+     };
+});
+
+app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, msg) {  
+    $scope.msg = msg;
+    $scope.ok = function () {
+                $modalInstance.close();
+    };
+});

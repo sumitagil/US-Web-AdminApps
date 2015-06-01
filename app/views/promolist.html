@@ -7,10 +7,9 @@
       <div class="clear"></div>  
       <div ng-show="loading" class="loading"><img src="../images/loading.gif">LOADING...</div>
       <div class="clear"></div>
-      <div class="table-responsive">
-          
-          <table class="table table-striped table-hover">
-                <!--<tr ng-repeat="result in results | firstPage:currentPage*pageSize | limitTo:pageSize"> --> 
+
+      <div class="table-responsive">    
+          <table class="table table-striped table-hover font14">
                 <tr>
                     <th>Entry Id</th>
                     <th>Promo Code</th>
@@ -22,35 +21,42 @@
                     <th>Short Notes</th>
                     <th>Action</th>
                 </tr>
-                 <tr ng-repeat="result in results">
-                    <td data-title="'Entry Id'" style="padding:10px;">{{result.EntryId}}</td>
-                    <td data-title="'Promo Code'" style="padding:10px;">{{result.PromoCode}}</td>
-                    <td data-title="'Campaign Id'" style="padding:10px;">{{result.CampaignId}}</td>
-                    <td data-title="'Campaign Desc'" style="padding:10px;">{{result.CampaingDesc | limitTo: 20}}</td>
-                    <td data-title="'Page Id'" style="padding:10px;">{{result.PageId}}</td>
-                    <td data-title="'Page Desc'" style="padding:10px;">{{result.PageDesc | limitTo: 20}}</td>
-                    <td data-title="'Confirm Ref. Id'" style="padding:10px;">{{result.ConfirmRefId}}</td>
-                    <td data-title="'Short Notes'" style="padding:10px;">{{result.ShortNotes | limitTo: 20}}</td>  
-                    <td data-title="'Action'"><a href="" ng-click="editpromodata(result.EntryId)" class="btn btn-default">Edit</a></td>
 
+                <tr ng-repeat="result in results | pagination: curPage * pageSize | limitTo: pageSize">                    
+                    <td style="padding:10px;">{{result.EntryId}}</td>
+                    <td style="padding:10px;">{{result.PromoCode}}</td>
+                    <td style="padding:10px;">{{result.CampaignId}}</td>
+                    <td style="padding:10px;">{{result.CampaingDesc | limitTo: 20}}</td>
+                    <td style="padding:10px;">{{result.PageId}}</td>
+                    <td style="padding:10px;">{{result.PageDesc | limitTo: 20}}</td>
+                    <td style="padding:10px;">{{result.ConfirmRefId}}</td>
+                    <td style="padding:10px;">{{result.ShortNotes | limitTo: 20}}</td>  
+                    <td><a href="" ng-click="editpromodata(result.EntryId);" class="btn btn-default">Edit</a></td>
                 </tr>   
-          </table>
-          <!--<div class="pagination">
-                <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1"><</button>
-                <span>{{currentPage+1}}/{{maxPage}}</span>
-                <button ng-disabled="currentPage == maxPage - 1" ng-click="currentPage=currentPage+1">></button>
-         </div>--> 
-         
-          
-       </div>
+            </table> 
+            <div class="pagination-div" ng-show="results.length" id="divPaginate">
+                <ul>
+                    <li><button type="button" class="btn" ng-disabled="curPage == 0" ng-click="curPage=curPage-1">PREV</button></li>
+                    <li><span>{{curPage + 1}} of {{ numberOfPages() }}</span></li>
+                    <li><button type="button"  class="btn" ng-disabled="curPage == numberOfPages()-1" ng-click="curPage = curPage+1">NEXT </button></li>
+                    <li>
+                        <select ng-model="pageSize" ng-change="pageSize" class="btn btn-default">
+                        <option value='5'>5</option>
+                        <option value='10'>10</option>
+                        <option value='15'>15</option>
+                        <option value='20'>20</option>
+                        </select>
+                    </li>
+                </ul>
+            </div>
+     </div>
     </div>
-</div>
 
 
 
 <div ng-show="editAll">
         <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
-            <div class="row">
+        <div class="row">
         <h4 class="fl">Edit Details</h4>
         <span class="fr"><a href="#/promolist" ng-click="refreshdata()"  class="btn btn-primary  btn-sm">Back</a></span>
         
@@ -64,73 +70,68 @@
                     <td style="width:25%;">Promo Code <span class="required">*</span></td>
                     <td style="width:75%;" ng-class="{ 'has-error' : promocodeForm.promo_code.$invalid && !promocodeForm.promo_code.$pristine }">
                         <input type="text" name="promo_code" ng-model="promo_code" class="form-control" required/>
-                        <p ng-show="promocodeForm.promo_code.$invalid && !promocodeForm.promo_code.$pristine" class="help-block">Promo Code is required.</p>
+                        <p ng-show="promocodeForm.promo_code.$invalid && !promocodeForm.promo_code.$pristine" class="help-block">
+                            Promo Code is required.</p>
                     </td>
                 </tr>
                 <tr>
                     <td style="width:25%;">Campaign Id <span class="required">*</span></td>
-                    <td style="width:75%;" ng-class="{ 'has-error' : promocodeForm.campaign_id.$invalid && !promocodeForm.campaign_id.$pristine }">
+                    <td style="width:75%;" ng-class="{'has-error':promocodeForm.campaign_id.$invalid && !promocodeForm.campaign_id.$pristine}">
 
-                        <select name="campaign_id" ng-model="campaign_id" 
-                                ng-options="campaignid.CampaignId for campaignid in allcampaignids track by campaignid.CampaignId" 
-                                ng-change="getCampaignDetails(campaign_id)" class="form-control" required>
-                                <option value="">Select One</option>
-                        </select>
-                        
                         <!--<select name="campaign_id" ng-model="campaign_id" 
-                                ng-change="getCampaignDetails(campaign_id)"
-                                class="form-control" required>
+                                ng-options="campaignid.CampaignId for campaignid in allcampaignids track by campaignid.CampaignId" 
+                                ng-change="getPageId(campaign_id)" class="form-control" required>
+                                <option value="">Select One</option>
+                        </select>-->
+                        
+                        <select name="campaign_id" ng-model="campaign_id" 
+                                ng-change="getPageId(campaign_id)" class="form-control" required>
                                 <option ng-repeat="campaignid in allcampaignids" 
                                         ng-selected="{{campaignid.CampaignId==campaign_id}}" 
-                                        value="{{campaignid.CampaignId}}">{{campaignid.CampaignId}}
+                                        value="{{campaignid.CampaignId}}">
+                                     {{campaignid.CampaingDesc}}-({{campaignid.CampaignId}})
                                 </option>
-                        </select>-->
-                        <div id="campaign-desc-div" class="description">{{hdnCampaignDesc}}</div>
-                        <p ng-show="promocodeForm.campaign_id.$invalid && !promocodeForm.campaign_id.$pristine" class="help-block">Campaign Id is required.</p>
+                        </select>
+                        <p ng-show="promocodeForm.campaign_id.$invalid && !promocodeForm.campaign_id.$pristine" class="help-block">
+                            Campaign Id is required.</p>
                     </td>
                 </tr> 
                 <tr>
                     <td>Page Id</td>
-                    <td ng-class="{ 'has-error' : promocodeForm.page_id.$invalid && !promocodeForm.page_id.$pristine }">
-                       
-                        <select name="page_id" id="page_id" ng-model="page_id" 
+                    <td>  
+                        <!--<select name="page_id" ng-model="page_id" 
                                 ng-options="pageid.PageId for pageid in pageids track by pageid.PageId" 
                                 ng-change="getPageDetails(page_id)"
                                 class="form-control" >
                                 <option value="">Select One</option>
-                        </select>
+                        </select>-->
                         
-                        <!--<select name="page_id" ng-model="page_id" 
-                                ng-change="getPageDetails(page_id)"
-                                class="form-control" required>
+                        <select name="page_id" ng-model="page_id" class="form-control">
                                 <option ng-repeat="pageid in pageids" 
                                         ng-selected="{{pageid.PageId==page_id}}" 
-                                        value="{{pageid.PageId}}">{{pageid.PageId}}
+                                        value="{{pageid.PageId}}">
+                                     {{pageid.PageDesc}}-({{pageid.PageId}})
                                 </option>
-                        </select>-->
-                        <div id="page-desc-div" class="description">{{hdnPageDesc}}</div>
-                        
+                        </select>
                     </td>
                 </tr>
                 <tr>
                     <td>Confirm Ref Id</td>
                     <td>                                               
-                        <select id="allref" ng-model="refid" 
+                        <!--<select id="allref" ng-model="refid" 
                                 ng-options="allref.EntryId for allref in allrefids track by allref.EntryId" 
                                 ng-change="getRefDetails(refid)"
                                 class="form-control">
                                 <option value="">Select One</option>
-                        </select>
+                        </select>-->
                         
-                        <!--<select name="refid" ng-model="refid" 
-                                ng-change="getRefDetails(refid)"
-                                class="form-control" required>
+                        <select name="refid" ng-model="refid" class="form-control">
                                 <option ng-repeat="allref in allrefids" 
                                         ng-selected="{{allref.EntryId==refid}}" 
-                                        value="{{allref.EntryId}}">{{allref.EntryId}}
-                                </option>ng-selected="{{allref.EntryId==refid}}"
-                        </select>-->
-                        <div id="ref-desc-div" class="description">{{hdnRefDesc}}</div>                       
+                                        value="{{allref.EntryId}}">
+                                    {{allref.ShortNotes}}-({{allref.EntryId}})
+                                </option>
+                        </select>                     
                     </td>
                 </tr>
                 <tr>
@@ -150,4 +151,3 @@
         </div>
       </div>
     </div>
-

@@ -14,23 +14,27 @@ app.config(function ($httpProvider) {
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
 });
 
-app.controller('promolistCtrl', function ($scope, $http, $route, $filter, ngTableParams, $timeout) {
+app.controller('promolistCtrl', function ($scope,$http,$route) {
     $scope.listAll = true;
     $scope.editAll = false;
     $scope.loading = true;
     $scope.editLoading=false;
+    $scope.curPage = 0;
+    $scope.pageSize = 5;
+    $scope.MaxPage = 0;
+    
+    
      //Get All data
     $http.jsonp("http://beta.iservices.earlymoments.com/getpromomappings?token=741889E3-4565-40A1-982A-F15F7A923D72&format=json&callback=JSON_CALLBACK")
         .success(function(data) {
-            $scope.results = data.response;
-            $scope.loading = false; 
-            var arr=$scope.results;
-            //pagination start...
-            /*$scope.currentPage = 0;
-            $scope.pageSize = 5;
-            $scope.maxPage = numberOfPages($scope.results,$scope.pageSize);*/
-           //end pagination
-            
+            $scope.results = data.response ;
+            $scope.loading = false;  
+            //pagination...
+            $scope.numberOfPages=function(){
+                return Math.ceil($scope.results.length / $scope.pageSize);
+            }
+            $scope.MaxPage=$scope.numberOfPages();
+            //pagination...
         }).error(function(){
             alert("Error");
         });  
@@ -38,13 +42,14 @@ app.controller('promolistCtrl', function ($scope, $http, $route, $filter, ngTabl
     
     //Edit Data
     $scope.editpromodata = function(index) {  
-           $scope.editLoading=true;
-
+               
+            $scope.editLoading=true;
             $http.jsonp('http://beta.iservices.earlymoments.com/getpromomappings?token=741889E3-4565-40A1-982A-F15F7A923D72&EntryId='+index+'&format=json&callback=JSON_CALLBACK')   
             
             .success(function (data, status, headers, config) {             
                 $scope.listAll = false;
-                $scope.editAll = true; 
+                $scope.editAll = true;  
+              
                 $scope.EntryId           =   data.response[0].EntryId;
                 $scope.promo_code        =   data.response[0].PromoCode;
                 $scope.campaign_id       =   data.response[0].CampaignId;
@@ -53,56 +58,34 @@ app.controller('promolistCtrl', function ($scope, $http, $route, $filter, ngTabl
                 $scope.short_notes       =   data.response[0].ShortNotes; 
                 
                 //////////////////////////////////////////////////////////
-                    $scope.hdnCampaignDesc = ""; 
-                    $scope.hdnRefDesc = ""; 
-                    $scope.hdnPageDesc = "";
                     $scope.pageids = "";
-
-
-                    //Campaign Ids
+                 
+                    //All Campaign Ids
                     $http.jsonp("http://beta.iservices.earlymoments.com/getcampaignlist?token=741889E3-4565-40A1-982A-F15F7A923D72&format=json&callback=JSON_CALLBACK")
                     .success(function(data) {
-                        $scope.allcampaignids = data.response;
+                          $scope.allcampaignids = data.response;
                           $scope.editLoading=false;
                     });
-
-                    //reference Ids
+                
+                     //All page Ids
+                    $http.jsonp("http://beta.iservices.earlymoments.com/getpagelist?token=741889E3-4565-40A1-982A-F15F7A923D72&CampaignId="+ $scope.campaign_id+"&format=json&callback=JSON_CALLBACK")
+                    .success(function(data) {
+                        $scope.pageids = data.response;
+                    });
+                
+                    //All reference Ids
                     $http.jsonp("http://beta.iservices.earlymoments.com/getorderformdetails?token=741889E3-4565-40A1-982A-F15F7A923D72&format=json&callback=JSON_CALLBACK")
                     .success(function(data) {
                         $scope.allrefids = data.response;
                     });
                 
-                    //page Ids
-                    $http.jsonp("http://beta.iservices.earlymoments.com/getpagelist?token=741889E3-4565-40A1-982A-F15F7A923D72&CampaignId="+ $scope.campaign_id+"&format=json&callback=JSON_CALLBACK")
-                    .success(function(data) {
-                        $scope.pageids = data.response;
-                    });
-
-                    //Campaign Details
-                    $scope.getCampaignDetails=function(item){
-                         if(angular.isObject(item)){
-                        $scope.hdnCampaignDesc = item.CampaingDesc; 
-                        $scope.hdnPageDesc = "";
-
-                        //call page data...
-                        $http.jsonp("http://beta.iservices.earlymoments.com/getpagelist?token=741889E3-4565-40A1-982A-F15F7A923D72&CampaignId="+item.CampaignId+"&format=json&callback=JSON_CALLBACK")
-
-                        .success(function(data) {
-                            $scope.pageids = data.response;
-                        });
-                         }
-                    } 
-
-                    //Page Details
-                    $scope.getPageDetails=function(item){
-                             if(angular.isObject(item))
-                                 $scope.hdnPageDesc = item.PageDesc;
-                    }
-
-                    //Reference Details
-                    $scope.getRefDetails=function(item){
-                            if(angular.isObject(item))
-                            $scope.hdnRefDesc = item.ShortNotes;
+                    //Get Page Id wrt Campaign Id
+                    $scope.getPageId=function(item){
+                         //if(angular.isObject(item)){
+                            $http.jsonp("http://beta.iservices.earlymoments.com/getpagelist?token=741889E3-4565-40A1-982A-F15F7A923D72&CampaignId="+item+"&format=json&callback=JSON_CALLBACK")
+                            .success(function(data) {
+                                $scope.pageids = data.response;
+                            });
                     } 
                 /////////////////////////////////////////////////////////
             })
@@ -113,46 +96,19 @@ app.controller('promolistCtrl', function ($scope, $http, $route, $filter, ngTabl
     
     //update Data
     $scope.editPromoCode = function() {
-                $scope.hdnCampaignDesc = ""; 
-                $scope.hdnRefDesc = ""; 
-                $scope.hdnPageDesc = "";
-                $scope.pageids = "";
-        
-               if ($scope.promocodeForm.$valid) {                      
-                        var token='741889E3-4565-40A1-982A-F15F7A923D72';
-                        var selpageId=0,selrefId=0,selshortnotes='',selcampaignId;
-                        if($scope.campaign_id){
-                             selcampaignId=$scope.campaign_id;
-                        }else{
-                            selcampaignId=$scope.campaign_id.CampaignId;
-                        }
-                        console.log($scope.campaign_id+"=="+$scope.campaign_id.CampaignId);
-                   
-                        /*if($scope.campaign_id.CampaignId=="" || $scope.campaign_id.CampaignId==null || $scope.campaign_id.CampaignId==undefined){
-                            selcampaignId=$scope.campaign_id;
-                        }else{
-                            selcampaignId=$scope.campaign_id.CampaignId;
-                        }*/
-                        
-                        if($scope.page_id=="" || $scope.page_id==null || $scope.page_id==undefined || $scope.page_id==0){
-                            selpageId=0;
-                        }else if($scope.page_id>0){
-                            selpageId=$scope.page_id;
-                        }
-                        else{
-                            selpageId=$scope.page_id.PageId;
-                        }
-                        if($scope.refid!="" && $scope.refid!=null && $scope.refid!=undefined){
-                            selrefId=$scope.refid.EntryId;
-                        }
-                        if($scope.short_notes!="" && $scope.short_notes!=null && $scope.short_notes!=undefined){
-                            selshortnotes=$scope.short_notes;
-                        }else{$scope.short_notes="";}
-                        //console.log(selpageId+"=="+$scope.page_id.PageId +'=='+$scope.page_id);
+                
+               if ($scope.promocodeForm.$valid) 
+               {                      
+                        var token='741889E3-4565-40A1-982A-F15F7A923D72';                   
+                        if($scope.page_id=="" || $scope.page_id==null || $scope.page_id==undefined)
+                            $scope.page_id=0;
+                        if($scope.refid=="" && $scope.refid==null || $scope.refid==undefined)
+                            $scope.refid=0;
+                        if($scope.short_notes==null || $scope.short_notes==undefined)
+                            $scope.short_notes="";
                        
-                        var url = "http://beta.iservices.earlymoments.com/UpdatePromoMapping?token="+token+"&EntryId="+$scope.EntryId+"&PromoCode="+$scope.promo_code+"&CampaignId="+selcampaignId+"&PageId="+selpageId+"&ConfirmReferenceId="+selrefId+"&ShortNotes="+selshortnotes+"&callback=JSON_CALLBACK";
-                        
-                        //console.log(url);
+                        var url = "http://beta.iservices.earlymoments.com/UpdatePromoMapping?token="+token+"&EntryId="+$scope.EntryId+"&PromoCode="+$scope.promo_code+"&CampaignId="+$scope.campaign_id+"&PageId="+$scope.page_id+"&ConfirmReferenceId="+$scope.refid+"&ShortNotes="+$scope.short_notes+"&callback=JSON_CALLBACK";
+                     
                        
                         $http.jsonp(url)
                         .success(function (data, status, headers, config) {
@@ -165,9 +121,27 @@ app.controller('promolistCtrl', function ($scope, $http, $route, $filter, ngTabl
                            alert( "failure message: " + JSON.stringify({data: data}));
                         });
                         
-                } else {
-                    $scope.promocodeForm.submitted = true;
-                    alert("Please fill the required fields.");
+                } 
+                else{
+                        var errMsg="",i=0; 
+                        if($scope.promo_code=="" || $scope.promo_code==undefined)
+                            errMsg= ++i +" Promo Code is required. <br/>";
+                        if($scope.campaign_id=="" || $scope.campaign_id==undefined)
+                            errMsg=errMsg + ++i + " Campaign Id is required. <br/>";
+                        if(errMsg!="" && errMsg!= undefined)
+                            errMsg="Please address the error and then submit the form...<br/><br/>"+errMsg;                           
+                        
+                        $scope.msg=errMsg;   
+                        var modalInstance = $modal.open({
+                                                templateUrl: 'myModalContent.html',
+                                                controller: 'ModalInstanceCtrl',
+                                                resolve: {
+                                                            msg: function () {
+                                                              return $scope.msg;
+                                                            }
+                                                         }
+                                            });
+                        $scope.promocodeForm.submitted = false;
                 }
         }
         
@@ -175,18 +149,4 @@ app.controller('promolistCtrl', function ($scope, $http, $route, $filter, ngTabl
     $scope.refreshdata = function(){
         $route.reload();
     }
-    
- });
-
-
-app.filter('firstPage', function() {
-    return function(input, start) {
-        if (!input || !input.length) { return; }
-        start = +start; //parse to int
-        return input.slice(start);
-    }
-});
-
-function numberOfPages(results,pageSize){
-    return Math.ceil(results.length/pageSize);                
-}
+ });    
