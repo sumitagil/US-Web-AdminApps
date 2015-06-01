@@ -53,6 +53,10 @@ var app = angular.module('sandvikusaAdminAppsApp', [
         templateUrl: 'views/pages.html',
         controller: 'pageCtrl'
       })
+      .when('/checkpage', {
+        templateUrl: 'views/checkpage.html',
+        controller: 'CheckPageCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
