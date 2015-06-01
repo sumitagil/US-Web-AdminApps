@@ -14,7 +14,7 @@ app.config(function ($httpProvider) {
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
 });
 
-app.controller('promolistCtrl', function ($scope,$http,$route) {
+app.controller('promolistCtrl', function ($scope,$http,$route,$modal) {
     $scope.listAll = true;
     $scope.editAll = false;
     $scope.loading = true;
