@@ -46,6 +46,7 @@
               <li ng-class="{active: $location.path() == '/contact'}"><a ng-href="#/contact">Contact</a></li>
               <li ng-class="{active: $location.path() == '/orderforms'}"><a ng-href="#/orderforms">Order Forms</a></li>
               <li ng-class="{active: $location.path() == '/promolist'}"><a ng-href="#/promolist">Promo Mapping</a></li>
+                <li ng-class="{active: $location.path() == '/pages'}"><a ng-href="#/pages">Pages</a></li>
             </ul>
           </div>
         </div>
@@ -65,15 +66,16 @@
         <p><span class="glyphicon glyphicon-heart"></span> @2015 All Right Reserved</p>
       </div>
     </div>
-      <!--Modal Text-->
-        <script type="text/ng-template" id="myModalContent.html">
-                <div class="modal-header"><h3 class="modal-title">Error</h3></div>
-                <div class="modal-body" ng-bind-html="msg"></div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary" ng-click="ok()">OK</button>
-                </div>
-        </script>
       
+    <!--Modal Text-->
+    <script type="text/ng-template" id="myModalContent.html">
+            <div class="modal-header"><h3 class="modal-title">Error</h3></div>
+            <div class="modal-body" ng-bind-html="msg"></div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" ng-click="ok()">OK</button>
+            </div>
+    </script>
+    <!--Modal Text-->
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
@@ -112,13 +114,11 @@
         <script src="scripts/controllers/insertorderforms.js"></script>
         <script src="scripts/controllers/promocode.js"></script>
         <script src="scripts/controllers/promolist.js"></script>
+        <script src="scripts/controllers/pages.js"></script>
         
         <script src="http://ckeditor.com/apps/ckeditor/4.2/ckeditor.js"></script>
         <script src="scripts/ng-table.js"></script>     
-
         <script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.0.js"></script>
-        
-
         <!-- endbuild -->
 </body>
 </html>
