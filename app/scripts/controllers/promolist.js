@@ -80,7 +80,7 @@ app.controller('promolistCtrl', function ($scope, $http, $route, $filter, ngTabl
 
                     //Campaign Details
                     $scope.getCampaignDetails=function(item){
-
+                         if(angular.isObject(item)){
                         $scope.hdnCampaignDesc = item.CampaingDesc; 
                         $scope.hdnPageDesc = "";
 
@@ -90,15 +90,18 @@ app.controller('promolistCtrl', function ($scope, $http, $route, $filter, ngTabl
                         .success(function(data) {
                             $scope.pageids = data.response;
                         });
+                         }
                     } 
 
                     //Page Details
                     $scope.getPageDetails=function(item){
-                            $scope.hdnPageDesc = item.PageDesc;
+                             if(angular.isObject(item))
+                                 $scope.hdnPageDesc = item.PageDesc;
                     }
 
                     //Reference Details
                     $scope.getRefDetails=function(item){
+                            if(angular.isObject(item))
                             $scope.hdnRefDesc = item.ShortNotes;
                     } 
                 /////////////////////////////////////////////////////////
@@ -118,10 +121,18 @@ app.controller('promolistCtrl', function ($scope, $http, $route, $filter, ngTabl
                if ($scope.promocodeForm.$valid) {                      
                         var token='741889E3-4565-40A1-982A-F15F7A923D72';
                         var selpageId=0,selrefId=0,selshortnotes='',selcampaignId;
-                        console.log($scope.page_id);
-                        if($scope.campaign_id.CampaignId=="" || $scope.campaign_id.CampaignId==null || $scope.campaign_id.CampaignId==undefined){
-                            selcampaignId=$scope.campaign_id;
+                        if($scope.campaign_id){
+                             selcampaignId=$scope.campaign_id;
+                        }else{
+                            selcampaignId=$scope.campaign_id.CampaignId;
                         }
+                        console.log($scope.campaign_id+"=="+$scope.campaign_id.CampaignId);
+                   
+                        /*if($scope.campaign_id.CampaignId=="" || $scope.campaign_id.CampaignId==null || $scope.campaign_id.CampaignId==undefined){
+                            selcampaignId=$scope.campaign_id;
+                        }else{
+                            selcampaignId=$scope.campaign_id.CampaignId;
+                        }*/
                         
                         if($scope.page_id=="" || $scope.page_id==null || $scope.page_id==undefined || $scope.page_id==0){
                             selpageId=0;
@@ -136,7 +147,7 @@ app.controller('promolistCtrl', function ($scope, $http, $route, $filter, ngTabl
                         }
                         if($scope.short_notes!="" && $scope.short_notes!=null && $scope.short_notes!=undefined){
                             selshortnotes=$scope.short_notes;
-                        }
+                        }else{$scope.short_notes="";}
                         //console.log(selpageId+"=="+$scope.page_id.PageId +'=='+$scope.page_id);
                        
                         var url = "http://beta.iservices.earlymoments.com/UpdatePromoMapping?token="+token+"&EntryId="+$scope.EntryId+"&PromoCode="+$scope.promo_code+"&CampaignId="+selcampaignId+"&PageId="+selpageId+"&ConfirmReferenceId="+selrefId+"&ShortNotes="+selshortnotes+"&callback=JSON_CALLBACK";
