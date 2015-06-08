@@ -2,19 +2,27 @@
         <div class="col-md-12">
             <h4 class="fl">List of Campaigns</h4>
         </div>
+     
            
       <div class="clear"></div>  
       <div ng-show="loading" class="loading"><img src="../images/loading.gif">LOADING...</div>
-      <div class="clear"></div>
-      
-      <accordion close-others="oneAtATime">
-            <accordion-group heading="{{result.CampaingDesc}}" ng-repeat="result in results | pagination: curPage * pageSize | limitTo: pageSize" ng-click="getPageData(result.CampaignId);">
-                <div ng-repeat="allPage in allPageIds" ng-if="allPageIds.length > 0">
+      <div class="clear"></div>      
+      <accordion close-others="oneAtATime">          
+            <accordion-group heading="{{result.CampaignId}} | {{result.CampaingDesc}}" ng-repeat="result in results | pagination: curPage * pageSize | limitTo: pageSize" ng-click="getPageData(result.CampaignId);">
+               <table class="table">
+                    <tr><th>Id</th><th>Page Name</th><th>Description</th></tr>
+                    <tr  ng-repeat="page in allPageIds" ng-if="allPageIds.length > 0">
+                     <td>{{page.PageId}}</td>
+                        <td>{{page.PageName}}</td>
+                        <td>{{page.PageDesc}}</td>
+                    </tr>
+                </table>
+               <!-- <div ng-repeat="allPage in allPageIds" ng-if="allPageIds.length > 0">
                     <p>Id : {{allPage.PageId}}</p>
                     <p>Page Name : {{allPage.PageName}}</p>
                     <p>Page Desc : {{allPage.PageDesc}}</p>
                     <hr>
-                </div>
+                </div> -->
             </accordion-group>
       </accordion>
     
@@ -35,7 +43,7 @@
                 </li>
             </ul>
         </div>
-    
+ 
     
       <!--<div class="table-responsive">    
           <table class="table table-striped table-hover font14">
