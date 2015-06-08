@@ -7,18 +7,29 @@
       <div ng-show="loading" class="loading"><img src="../images/loading.gif">LOADING...</div>
       <div class="clear"></div>
       
+      
       <accordion close-others="oneAtATime">
-            <accordion-group heading="{{result.CampaingDesc}}" ng-repeat="result in results | pagination: curPage * pageSize | limitTo: pageSize" ng-click="getPageData(result.CampaignId);">
+            <accordion-group heading="{{result.CampaignId}} | {{result.CampaingDesc}}" ng-repeat="result in results | pagination: curPage * pageSize | limitTo: pageSize" ng-click="getPageData(result.CampaignId);">
+                <h4>Page Details</h4>
                 <table class="table" ng-if="allPageIds.length > 0">
                     <tr>
                         <td>Id</td>
                         <td>Page Name</td>
-                        <td>Page Desc.</td>
+                        <td>Page Desc</td>
+                        <td>Action</td>
                     </tr>
                     <tr ng-repeat="allPage in allPageIds" >
                         <td>{{allPage.PageId}}</td>
                         <td>{{allPage.PageName}}</td>
-                        <td>{{allPage.PageDesc}}</td>
+                        <td>
+                            <span ng-hide="editMode">{{allPage.PageDesc}}</span>
+                            <input type="text" ng-show="editMode" ng-model="allPage.PageDesc" />
+                        </td>
+                        <td>
+                            <button type="submit" ng-hide="editMode" ng-click="editModeBtn()" class="btn btn-default">Edit</button>
+                            <button type="submit" ng-show="editMode" ng-click="saveModeBtn()" class="btn btn-default">Save</button>
+                            <button type="submit" ng-show="editMode" ng-click="cancelModeBtn()" class="btn btn-default">Cancel</button>
+                        </td>
                     </tr>
                 </table>
             </accordion-group>
@@ -59,7 +70,8 @@
                     <td style="padding:10px;">{{result.CampaignCreditRule}}</td>
                     <td style="padding:10px;">{{result.CampaingDesc}}</td>
                     <td style="padding:10px;">{{result.CampaignShortNotes}}</td>                    
-                </tr>  
+                </tr> 
+
             </table>              
             <div class="pagination-div" ng-show="results.length" id="divPaginate">
                 <ul>

@@ -15,6 +15,9 @@ app.config(function ($httpProvider) {
 });
 
 app.controller('pageCtrl', function ($scope,$http,$route) {
+        
+        $scope.results = [];
+        $scope.allPageIds = [];
         $scope.loading = true;
         $scope.oneAtATime = true;
         $scope.curPage = 0;
@@ -39,12 +42,22 @@ app.controller('pageCtrl', function ($scope,$http,$route) {
     
        // Onclick get page data start
         $scope.getPageData = function(cid) { 
-                    //All page Ids
-                    $http.jsonp("http://beta.iservices.earlymoments.com/getpagelist?token=741889E3-4565-40A1-982A-F15F7A923D72&CampaignId="+ cid+"&format=json&callback=JSON_CALLBACK")
-                    .success(function(data) {
-                        $scope.allPageIds = data.response;
-                    });
+            //All page Ids
+            $http.jsonp("http://beta.iservices.earlymoments.com/getpagelist?token=741889E3-4565-40A1-982A-F15F7A923D72&CampaignId="+ cid+"&format=json&callback=JSON_CALLBACK")
+            .success(function(data) {
+                $scope.allPageIds = data.response;
+            });
          }
-    // Onclick get page data end
+        // Onclick get page data end
+        
+         $scope.editModeBtn = function() {
+            $scope.editMode = true;
+         }
+         $scope.saveModeBtn = function() {
+            $scope.editMode = false;
+         }
+         $scope.cancelModeBtn = function() {
+            $scope.editMode = false;
+         }
         
 });

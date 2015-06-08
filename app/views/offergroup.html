@@ -1,0 +1,72 @@
+<div>
+      <div class="col-md-12">
+            <h4 class="fl">Offer Group</h4>
+      </div>  
+      <div class="clear"></div>  
+      <div ng-show="loading" class="loading"><img src="../images/loading.gif">LOADING...</div>
+      <div class="clear"></div>
+       
+    
+      <div class="row" style="width:500px;padding:25px;"> 
+            <label>Project :
+                <select ng-model="searchProject" class="form-control" ng-change="getDropdownVal(searchProject)">
+                  <option value="">Select One</option>
+                  <option ng-repeat="project in allProjects" value="{{project.ProjectCode}}">
+                      {{project.ProjectCode}}
+                  </option>
+                </select>
+            </label>
+            <label>Offer Id :
+              <input ng-model="searchOfferId" class="form-control">
+            </label>
+      </div>
+    
+      <div class="table-responsive">    
+      <table class="table table-striped table-hover font14">
+            <tr>  
+                <th>OfferGroup Id</th>
+                <th>Offer Id</th>     
+                <th>Group Desc</th>
+                <th>Offer Desc</th>                    
+                <th>Display Order</th> 
+                <th>Selected Item</th>
+                <th>Bonus Bundled</th>
+                <th>Cart</th>
+                <th>Base Offer</th>
+                <th>Use</th>
+                <!--<th>Special Text</th>-->
+            </tr>
+            <tr ng-repeat="result in results | filter: searchProject | filter: searchOfferId | pagination: curPage * pageSize | limitTo: pageSize">
+                <td>{{result.OfferGroupId}}</td>
+                <td>{{result.OfferId}}</td>
+                <td>{{result.GroupDescription}}</td>
+                <td>{{result.OffersDescription}}</td> 
+                <td>{{result.DisplayOrder}}</td>
+                <td>{{result.ItemSelected}}</td>
+                <td>{{result.IsBonusBundled}}</td>
+                <td>{{result.DisplayInCart}}</td>
+                <td>{{result.IsBaseOffer}}</td>
+                <td>{{result.InUse}}</td>
+                <!--<td>{{result.specialText}}</td>-->
+            </tr> 
+            
+        </table>              
+        <div class="pagination-div" ng-show="results.length" id="divPaginate">
+            <ul>
+                <li><button type="button" class="btn" ng-disabled="curPage == 0" ng-click="curPage=curPage-1">PREV</button></li>
+                <li><span>{{curPage + 1}} of {{ numberOfPages() }}</span></li>
+                <li><button type="button" class="btn" ng-disabled="curPage == numberOfPages()-1" ng-click="curPage = curPage+1">NEXT</button></li>
+                <li>
+                    <select ng-model="pageSize" ng-change="pageSize" class="btn btn-default">
+                        <option value='5' selected>5</option>
+                        <option value='10'>10</option>
+                        <option value='15'>15</option>
+                        <option value='20'>20</option>
+                        <option value='50'>50</option>
+                        <option value='100'>100</option>
+                    </select>
+                </li>
+            </ul>
+        </div>
+</div>
+</div>
