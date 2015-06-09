@@ -23,6 +23,9 @@ app.controller('OfferGroupCtrl', function ($scope, $http) {
         $scope.curPage = 0;
         $scope.pageSize = 5;
         $scope.MaxPage = 0;
+		$scope.curPage_sub = 0;
+        $scope.pageSize_sub = 5;
+        $scope.MaxPage_sub = 0;
         $scope.Run = 1;
     
         //Get All Project
@@ -48,7 +51,6 @@ app.controller('OfferGroupCtrl', function ($scope, $http) {
         
     
          $scope.getDropdownVal = function(selid) {   
-             console.log("http://beta.iservices.earlymoments.com/getsamsoffergrouplist?token=741889E3-4565-40A1-982A-F15F7A923D72&ProjectCode="+selid+"&format=json&callback=JSON_CALLBACK");
              $http.jsonp("http://beta.iservices.earlymoments.com/getsamsoffergrouplist?token=741889E3-4565-40A1-982A-F15F7A923D72&ProjectCode="+selid+"&format=json&callback=JSON_CALLBACK")
             .success(function(data) {
                 $scope.results = data.response ;  
@@ -59,4 +61,17 @@ app.controller('OfferGroupCtrl', function ($scope, $http) {
                 $scope.loading = false;                 
             });
          }
+		 
+		  // Onclick get Campaign data start
+        $scope.getCampaignData = function(cid) { 
+            $http.jsonp("http://beta.iservices.earlymoments.com/getcampaignlist?token=741889E3-4565-40A1-982A-F15F7A923D72&CampaignId="+ cid+"&format=json&callback=JSON_CALLBACK")
+            .success(function(data) {
+                $scope.allCampaigns = data.response;
+                $scope.numberOfPages_sub=function(){
+                    return Math.ceil($scope.allCampaigns.length / $scope.pageSize_sub);
+                }
+                $scope.MaxPage_sub=$scope.numberOfPages_sub();
+            });
+         }
+        // Onclick get campaign data end
   });

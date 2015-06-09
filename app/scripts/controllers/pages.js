@@ -1,20 +1,13 @@
 'use strict';
 
-/**
- * @ngdoc function
- * @name globsynApp.controller:promolistCtrl
- * @description
- * # AboutCtrl
- * Controller of the globsynApp
- */
-var app=angular.module('sandvikusaAdminAppsApp');
+var app = angular.module('sandvikusaAdminAppsApp');
 
 app.config(function ($httpProvider) {
     $httpProvider.defaults.useXDomain = true;
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
 });
 
-app.controller('pageCtrl', function ($scope,$http,$route) {
+app.controller('pageCtrl', function ($scope, $http, $route) {
         
         $scope.results = [];
         $scope.allPageIds = [];
@@ -23,7 +16,10 @@ app.controller('pageCtrl', function ($scope,$http,$route) {
         $scope.curPage = 0;
         $scope.pageSize = 5;
         $scope.MaxPage = 0;
-        $scope.Run=1;    
+        $scope.curPage_sub = 0;
+        $scope.pageSize_sub = 2;
+        $scope.MaxPage_sub = 0;
+        $scope.Run = 1;    
 
         //Get All data start
         $http.jsonp("http://beta.iservices.earlymoments.com/getcampaignlist?token=741889E3-4565-40A1-982A-F15F7A923D72&format=json&callback=JSON_CALLBACK")
@@ -46,6 +42,10 @@ app.controller('pageCtrl', function ($scope,$http,$route) {
             $http.jsonp("http://beta.iservices.earlymoments.com/getpagelist?token=741889E3-4565-40A1-982A-F15F7A923D72&CampaignId="+ cid+"&format=json&callback=JSON_CALLBACK")
             .success(function(data) {
                 $scope.allPageIds = data.response;
+                $scope.numberOfPages_sub=function(){
+                    return Math.ceil($scope.allPageIds.length / $scope.pageSize_sub);
+                }
+                $scope.MaxPage_sub=$scope.numberOfPages_sub();
             });
          }
         // Onclick get page data end

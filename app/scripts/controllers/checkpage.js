@@ -35,14 +35,8 @@ app.controller('CheckPageCtrl', function ($scope,$http) {
                 .success(function(data, status, headers, config){                   
                     console.log(data+status);
                 }).error(function(data, status, headers, config){
-                     console.log("failure message: " + data);
-                })
-            .then(function(response) {
-                  var data = response.data;
-                  var status = response.status;
-                  alert(status);
+                     console.log("failure message: " + data.status);
                 });
-            
             
         }
         

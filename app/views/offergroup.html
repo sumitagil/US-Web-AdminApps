@@ -20,37 +20,102 @@
               <input ng-model="searchOfferId" class="form-control">
             </label>
       </div>
-    
-      <div class="table-responsive">    
-      <table class="table table-striped table-hover font14">
+		<table class="table table-striped table-hover font14">
             <tr>  
-                <th>OfferGroup Id</th>
-                <th>Offer Id</th>     
-                <th>Group Desc</th>
-                <th>Offer Desc</th>                    
-                <th>Display Order</th> 
-                <th>Selected Item</th>
-                <th>Bonus Bundled</th>
-                <th>Cart</th>
-                <th>Base Offer</th>
-                <th>Use</th>
-                <!--<th>Special Text</th>-->
+                <th width="10%">OfferGroup Id</th>
+                <th width="10%">Offer Id</th>     
+                <th width="10%">Group Desc</th>
+                <th width="10%">Offer Desc</th>                    
+                <th width="10%">Display Order</th> 
+                <th width="10%">Selected Item</th>
+                <th width="10%">Bonus Bundled</th>
+                <th width="10%">Cart</th>
+                <th width="10%">Base Offer</th>
+                <th width="10%">Use</th>
             </tr>
-            <tr ng-repeat="result in results | filter: searchProject | filter: searchOfferId | pagination: curPage * pageSize | limitTo: pageSize">
-                <td>{{result.OfferGroupId}}</td>
-                <td>{{result.OfferId}}</td>
-                <td>{{result.GroupDescription}}</td>
-                <td>{{result.OffersDescription}}</td> 
-                <td>{{result.DisplayOrder}}</td>
-                <td>{{result.ItemSelected}}</td>
-                <td>{{result.IsBonusBundled}}</td>
-                <td>{{result.DisplayInCart}}</td>
-                <td>{{result.IsBaseOffer}}</td>
-                <td>{{result.InUse}}</td>
-                <!--<td>{{result.specialText}}</td>-->
-            </tr> 
+		</table>
+		<accordion>
+		  <accordion-group heading="{{result.OfferGroupId}}" ng-repeat="result in results | filter: searchProject | filter: searchOfferId | pagination: curPage * pageSize | limitTo: pageSize" ng-click="getCampaignData(result.OfferGroupId)">
+			   <accordion-heading>
+				  <h4 class="panel-title clearfix" >
+					  <span class="pull-left" style="width:10%">{{result.OfferGroupId}}</span>
+					  <span style="width:10%;">{{result.OfferId}}</span>
+					  <span style="width:10%;padding-left:5%;">{{result.GroupDescription}}</span>
+					  <span style="width:10%">{{result.OffersDescription}}</span>
+					  <span style="width:10%">{{result.DisplayOrder}}</span>
+					  <span style="width:10%">{{result.ItemSelected}}</span>
+					  <span style="width:10%">{{result.IsBonusBundled}}</span>
+					  <span style="width:10%">{{result.DisplayInCart}}</span>
+					  <span style="width:10%">{{result.IsBaseOffer}}</span>
+					  <span class="pull-right" style="width:10%">{{result.InUse}}</span>
+				  </h4>                           
+			   </accordion-heading>
+			  <table class="table" ng-if="allCampaigns.length > 0">
+                    <tr>
+                        <td>CampaignId</td>
+                        <td>CampaingDesc</td>
+                        <td>CampaignTAC</td>
+                    </tr>
+                    <tr ng-repeat="campaign in allCampaigns" >
+                        <td>{{campaign.CampaignId}}</td>
+                        <td>{{campaign.CampaingDesc}}</td>
+						<td>{{campaign.CampaignTAC}}</td>
+					</tr>
+			</table>
+		  </accordion-group>
+		</accordion>
+    
+          
+      <!--<table class="table table-striped table-hover font14">
+            <tr>  
+                <th width="10%">OfferGroup Id</th>
+                <th width="10%">Offer Id</th>     
+                <th width="10%">Group Desc</th>
+                <th width="10%">Offer Desc</th>                    
+                <th width="10%">Display Order</th> 
+                <th width="10%">Selected Item</th>
+                <th width="10%">Bonus Bundled</th>
+                <th width="10%">Cart</th>
+                <th width="10%">Base Offer</th>
+                <th width="10%">Use</th>
+            </tr>
+		    
+		   <tr ng-repeat="result in results | filter: searchProject | filter: searchOfferId | pagination: curPage * pageSize | limitTo: pageSize">
+			<td colspan="10" width="100%">
+		    <table class="table table-striped table-hover font14">
+            <tr data-toggle="collapse" data-target="#accordion" ng-click="getCampaignData(result.OfferGroupId);">
+                <td width="10%">{{result.OfferGroupId}}</td>
+                <td width="10%">{{result.OfferId}}</td>
+                <td width="10%">{{result.GroupDescription}}</td>
+                <td width="10%">{{result.OffersDescription}}</td> 
+                <td width="10%">{{result.DisplayOrder}}</td>
+                <td width="10%">{{result.ItemSelected}}</td>
+                <td width="10%">{{result.IsBonusBundled}}</td>
+                <td width="10%">{{result.DisplayInCart}}</td>
+                <td width="10%">{{result.IsBaseOffer}}</td>
+                <td width="10%">{{result.InUse}}</td>
+            </tr>
+			<tr ng-show="hdnrow">
+				<td colspan="10">
+					<table class="table collapse" ng-if="allCampaigns.length > 0">
+                    <tr>
+                        <td>CampaignId</td>
+                        <td>CampaingDesc</td>
+                        <td>CampaignTAC</td>
+                    </tr>
+                    <tr ng-repeat="campaign in allCampaigns | pagination: curPage_sub * pageSize_sub | limitTo: pageSize_sub" >
+                        <td>{{campaign.CampaignId}}</td>
+                        <td>{{campaign.CampaingDesc}}</td>
+						<td>{{campaign.CampaignTAC}}</td>
+					</tr>
+					</table>
+				</td>
+			</tr>
+			</table>	
+			</td>
+		  	</tr>
             
-        </table>              
+        </table> -->             
         <div class="pagination-div" ng-show="results.length" id="divPaginate">
             <ul>
                 <li><button type="button" class="btn" ng-disabled="curPage == 0" ng-click="curPage=curPage-1">PREV</button></li>
@@ -68,5 +133,5 @@
                 </li>
             </ul>
         </div>
-</div>
+
 </div>
