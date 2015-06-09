@@ -20,20 +20,36 @@
                         <td>Page Desc</td>
                         <td>Action</td>
                     </tr>
-                    <tr ng-repeat="allPage in allPageIds" >
+                    <tr ng-repeat="allPage in allPageIds | pagination: curPage_sub * pageSize_sub | limitTo: pageSize_sub" >
                         <td>{{allPage.PageId}}</td>
                         <td>{{allPage.PageName}}</td>
                         <td>
                             <span ng-hide="editMode">{{allPage.PageDesc}}</span>
-                            <input type="text" ng-show="editMode" ng-model="allPage.PageDesc" />
+                            <!--<input type="text" ng-show="editMode" ng-model="allPage.PageDesc" />-->
                         </td>
-                        <td>
+                        <!--<td>
                             <button type="submit" ng-hide="editMode" ng-click="editModeBtn()" class="btn btn-default">Edit</button>
                             <button type="submit" ng-show="editMode" ng-click="saveModeBtn()" class="btn btn-default">Save</button>
                             <button type="submit" ng-show="editMode" ng-click="cancelModeBtn()" class="btn btn-default">Cancel</button>
-                        </td>
+                        </td>-->
                     </tr>
                 </table>
+                <div class="pagination-div" ng-show="allPageIds.length" id="divPaginate">
+                    <ul>
+                        <li><button type="button" class="btn" ng-disabled="curPage_sub == 0" ng-click="curPage_sub=curPage_sub-1">PREV</button></li>
+                        <li><span>{{curPage_sub + 1}} of {{ numberOfPages_sub() }}</span></li>
+                        <li><button type="button" class="btn" ng-disabled="curPage_sub==numberOfPages_sub()-1" ng-click="curPage_sub = curPage_sub+1">NEXT</button></li>
+                        <li>
+                            <select ng-model="pageSize_sub" ng-change="pageSize_sub" class="btn btn-default">
+                                <option value="2">2</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                            </select>
+                        </li>
+                    </ul>
+                </div>
             </accordion-group>
       </accordion>
     
