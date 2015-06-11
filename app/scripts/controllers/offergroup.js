@@ -67,6 +67,7 @@ app.controller('OfferGroupCtrl', function ($scope, $http) {
             $http.jsonp("http://beta.iservices.earlymoments.com/getcampaignlist?token=741889E3-4565-40A1-982A-F15F7A923D72&CampaignId="+ cid+"&format=json&callback=JSON_CALLBACK")
             .success(function(data) {
                 $scope.allCampaigns = data.response;
+				console.log($scope.allCampaigns);
                 $scope.numberOfPages_sub=function(){
                     return Math.ceil($scope.allCampaigns.length / $scope.pageSize_sub);
                 }
