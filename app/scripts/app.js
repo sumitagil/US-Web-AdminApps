@@ -88,36 +88,12 @@ app.run(function($rootScope, $location, $cookieStore, $http) {
             // redirect to login page if not logged in and trying to access a restricted page
             var restrictedPage = $.inArray($location.path(), ['/login']) === -1;
             var loggedIn = $rootScope.globals.currentUser;
-            
+        
             if (restrictedPage && !loggedIn) {
                 $location.path('/login');
             }
         });
 });
-
-/*app.run(function ($rootScope, $location, Auth) {
-    $rootScope.$on('$routeChangeStart', function (event) {
-        if (!Auth.isLoggedIn()) {
-            $location.path('/login');
-        }
-        else{ 
-            $location.path('/');
-        }
-    });
-});
-
-app.factory('Auth', function(){
-    var user;
-    return{
-        setUser : function(aUser){
-            user = aUser;
-        },
-        isLoggedIn : function(){
-            return(user)? user : false;
-        }
-    }
-});*/
-
 
 
 

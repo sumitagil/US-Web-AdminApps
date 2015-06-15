@@ -8,10 +8,12 @@
       <div ng-show="loading" class="loading"><img src="../images/loading.gif">LOADING...</div>
       <div class="clear"></div>
       
+
 	<div class="panel panel-default">
             <div class="panel-heading">
 				<div style="padding-left:20px;">
 					<label style="width:10%;">Page Description :</label><input type="text" ng-model="searchCampaignShortNotes">
+
 				</div>
 				<div style="padding-left:20px;padding-top:20px;">
 					<label style="width:10%;">Project :</label>
@@ -37,6 +39,7 @@
 				</div>
 			</div>
             <div class="panel-body">
+
 				<table class="table table-striped table-hover font14" style="width:100%;">
 				<thead>
 					<tr>
@@ -69,6 +72,7 @@
 					</tr>
 				</tbody>
 				</table>
+                
                 <div class="pagination-div" ng-show="results.length" id="divPaginate">
             <ul>
                 <li><button type="button" class="btn" ng-disabled="curPage == 0" ng-click="curPage=curPage-1">PREV</button></li>
@@ -85,8 +89,9 @@
                     </select>
                 </li>
             </ul>
-      </div>
-            </div>
-          </div> 
+      
+        </div>
     
+</div>
+    </div>
 </div>

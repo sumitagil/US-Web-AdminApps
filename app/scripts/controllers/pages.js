@@ -44,5 +44,6 @@ app.controller('pageCtrl', function ($scope, $http, $route) {
             alert("Error");
         }); 
        //Get All data end
+
         
 });
