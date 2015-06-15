@@ -14,6 +14,6 @@ app.config(function ($httpProvider) {
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
 });
   
-app.controller('ContactCtrl', function ($scope,$http) {
+app.controller('ContactCtrl', function ($scope) {
             
   });

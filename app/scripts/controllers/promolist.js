@@ -23,6 +23,11 @@ app.controller('promolistCtrl', function ($scope,$http,$route,$modal) {
     $scope.pageSize = 5;
     $scope.MaxPage = 0;
     
+    $scope.results = [];
+    $scope.allcampaignids = [];
+    $scope.pageids = [];
+    $scope.allrefids = [];
+    
     
      //Get All data
     $http.jsonp("http://beta.iservices.earlymoments.com/getpromomappings?token=741889E3-4565-40A1-982A-F15F7A923D72&format=json&callback=JSON_CALLBACK")
@@ -58,8 +63,7 @@ app.controller('promolistCtrl', function ($scope,$http,$route,$modal) {
                 $scope.short_notes       =   data.response[0].ShortNotes; 
                 
                 //////////////////////////////////////////////////////////
-                    $scope.pageids = "";
-                 
+                    
                     //All Campaign Ids
                     $http.jsonp("http://beta.iservices.earlymoments.com/getcampaignlist?token=741889E3-4565-40A1-982A-F15F7A923D72&format=json&callback=JSON_CALLBACK")
                     .success(function(data) {

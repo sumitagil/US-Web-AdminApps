@@ -44,11 +44,25 @@
               <li ng-class="{active: $location.path() == '/'}"><a ng-href="#/">Home</a></li>
               <li ng-class="{active: $location.path() == '/about'}"><a ng-href="#/about">About</a></li>
               <li ng-class="{active: $location.path() == '/contact'}"><a ng-href="#/contact">Contact</a></li>
-              <li ng-class="{active: $location.path() == '/orderforms'}"><a ng-href="#/orderforms">Order Forms</a></li>
-              <li ng-class="{active: $location.path() == '/promolist'}"><a ng-href="#/promolist">Promo Mapping</a></li>
-              <li ng-class="{active: $location.path() == '/pages'}"><a ng-href="#/pages">Pages</a></li>
+              <li class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Reports<span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li ng-class="{active: $location.path() == '/pages'}"><a ng-href="#/pages">Page List</a></li>
+                  </ul>
+              </li>
+              <li class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Offer Setup<span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li ng-class="{active: $location.path() == '/orderforms'}"><a ng-href="#/orderforms">Order Forms</a></li>
+                    <li ng-class="{active: $location.path() == '/promolist'}"><a ng-href="#/promolist">Promo Mapping</a></li>
+                    <li ng-class="{active: $location.path() == '/offergroup'}"><a ng-href="#/offergroup">Offer Group</a></li>
+                  </ul>
+              </li>
+              <li><a ng-href="#/">Vendors</a></li>
               <li ng-class="{active: $location.path() == '/checkpage'}"><a ng-href="#/checkpage">Check Page</a></li>
+              <li ng-class="{active: $location.path() == '/login'}"><a ng-href="#/login">Logout</a></li>
             </ul>
+            
           </div>
         </div>
       </div>
@@ -117,10 +131,17 @@
         <script src="scripts/controllers/promolist.js"></script>
         <script src="scripts/controllers/pages.js"></script>
         <script src="scripts/controllers/checkpage.js"></script>
+        <script src="scripts/controllers/offergroup.js"></script>
+	    <script src="scripts/controllers/insertcampaigns.js"></script>
+        <script src="scripts/controllers/login.js"></script>
         
         <script src="http://ckeditor.com/apps/ckeditor/4.2/ckeditor.js"></script>
         <script src="scripts/ng-table.js"></script>     
         <script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.0.js"></script>
+      
+        <script src="scripts/app-services/authentication.service.js"></script>
+        <script src="scripts/app-services/flash.service.js"></script>
+        <script src="scripts/app-services/user.service.local-storage.js"></script>
         <!-- endbuild -->
 </body>
 </html>
