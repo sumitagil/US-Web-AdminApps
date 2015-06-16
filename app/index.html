@@ -35,11 +35,10 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-
             <a class="navbar-brand" href="#/">sandvikusaAdminApps</a>
           </div>
 
-          <div class="collapse navbar-collapse" id="js-navbar-collapse">       
+          <div class="collapse navbar-collapse" id="js-navbar-collapse" ng-if="loggedIn">       
             <ul class="nav navbar-nav" ng-controller="MainCtrl">
               <li ng-class="{active: $location.path() == '/'}"><a ng-href="#/">Home</a></li>
               <li ng-class="{active: $location.path() == '/about'}"><a ng-href="#/about">About</a></li>
@@ -121,6 +120,7 @@
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/ng-table.js"></script>     
         <link rel="stylesheet" href="styles/ng-table.css"/>
+        <link rel="stylesheet" href="styles/custom-app.css"/>
       
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>

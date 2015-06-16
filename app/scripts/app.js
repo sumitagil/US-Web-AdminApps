@@ -88,6 +88,10 @@ app.run(function($rootScope, $location, $cookieStore, $http) {
             // redirect to login page if not logged in and trying to access a restricted page
             var restrictedPage = $.inArray($location.path(), ['/login']) === -1;
             var loggedIn = $rootScope.globals.currentUser;
+            if(loggedIn === undefined || loggedIn === '' || loggedIn === 'undefined')
+                    $rootScope.loggedIn = false;
+            else
+                    $rootScope.loggedIn = true;
         
             if (restrictedPage && !loggedIn) {
                 $location.path('/login');
