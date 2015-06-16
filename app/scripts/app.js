@@ -21,18 +21,6 @@ var app = angular.module('sandvikusaAdminAppsApp', [
 
   app.config(function ($routeProvider) {
     $routeProvider
-      .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
-      })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl'
-      })
-     .when('/contact', {
-        templateUrl: 'views/contact.html',
-        controller: 'ContactCtrl'
-      })
      .when('/orderforms', {
         templateUrl: 'views/orderforms.html',
         controller: 'OrderFormsCtrl'
@@ -71,7 +59,7 @@ var app = angular.module('sandvikusaAdminAppsApp', [
         controllerAs:'vm'
       })
     .otherwise({
-        redirectTo: '/'
+        redirectTo: '/pages'
     });
      
   });
@@ -82,7 +70,7 @@ app.run(function($rootScope, $location, $cookieStore, $http) {
         if ($rootScope.globals.currentUser) {
             $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
         }
-
+        
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
             // redirect to login page if not logged in and trying to access a restricted page
             var restrictedPage = $.inArray($location.path(), ['/login']) === -1;
@@ -95,6 +83,19 @@ app.run(function($rootScope, $location, $cookieStore, $http) {
         
             if (restrictedPage && !loggedIn) {
                 $location.path('/login');
+            }
+            
+            if($location.path() === '/pages'){
+                $rootScope.opendiv = 'reports';
+            }
+            else if($location.path() === '/orderforms' || $location.path() === '/promolist' || $location.path() === '/offergroup' || $location.path() === '/promocode' || $location.path() === '/insertorderforms'){
+                $rootScope.opendiv = 'offersetup';
+            }
+            else{
+                $rootScope.opendiv = '';
+            }
+            $rootScope.selectdiv = function(selval) {  
+                   $rootScope.opendiv = selval;
             }
         });
 });

@@ -8,7 +8,7 @@ app.config(function ($httpProvider) {
 });
 
 app.controller('pageCtrl', function ($scope, $http, $route) {
-        
+        $scope.opendiv = 'reports';
         $scope.results = [];
         $scope.allPageIds = [];
         $scope.loading = true;

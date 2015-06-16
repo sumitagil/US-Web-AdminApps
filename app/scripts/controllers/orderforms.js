@@ -26,7 +26,7 @@ app.controller('OrderFormsCtrl', function ($scope,$location, $http,$route) {
     //Get All data
     $http.jsonp("http://beta.iservices.earlymoments.com/getorderformdetails?token=741889E3-4565-40A1-982A-F15F7A923D72&EntryId=&format=json&callback=JSON_CALLBACK")
         .success(function(data) {
-            $scope.results = data.response ;
+            $scope.results = data.response;
             $scope.loading = false;
             //pagination...
             $scope.numberOfPages=function(){
