@@ -24,7 +24,7 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div class="header">
+    <div class="header" ng-if="loggedIn">
       <div class="navbar navbar-default" role="navigation">
         <div class="container">
           <div class="navbar-header">
@@ -58,9 +58,8 @@
                   </ul>
               </li>
               <li><a ng-href="#/">Vendors</a></li>
-              <li ng-class="{active: $location.path() == '/checkpage'}"><a ng-href="#/checkpage">Check Page</a></li>
-              <li ng-class="{active: $location.path() == '/login'}"><a ng-href="#/login">Logout</a></li>
-
+              <li ng-class="{active: $location.path() === '/checkpage'}"><a ng-href="#/checkpage">Check Page</a></li>
+              <li ng-class="{active: $location.path() === '/login'}"><a ng-href="#/login">Logout</a></li>
             </ul>
             
           </div>

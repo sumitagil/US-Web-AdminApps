@@ -28,5 +28,16 @@ function loginCtrl($location, AuthenticationService, FlashService,$rootScope) {
                     $rootScope.errmsg = true;
                 }
             });
-        };
+        };       
     }
+
+    function logoutCtrl($location, AuthenticationService, FlashService) {        
+        function logout() {
+            AuthenticationService.ClearCredentials();
+        };       
+    };
+
+    
+
+
+
