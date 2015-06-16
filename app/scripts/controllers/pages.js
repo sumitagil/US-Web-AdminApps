@@ -16,9 +16,6 @@ app.controller('pageCtrl', function ($scope, $http, $route) {
         $scope.curPage = 0;
         $scope.pageSize = 5;
         $scope.MaxPage = 0;
-        $scope.curPage_sub = 0;
-        $scope.pageSize_sub = 2;
-        $scope.MaxPage_sub = 0;
         $scope.Run = 1;    
 	
 		 //Get All Project
@@ -35,7 +32,7 @@ app.controller('pageCtrl', function ($scope, $http, $route) {
     
 
         //Get All data start
-        $http.jsonp("http://beta.iservices.earlymoments.com/getcampaignlist?token=741889E3-4565-40A1-982A-F15F7A923D72&format=json&callback=JSON_CALLBACK")
+        $http.jsonp("http://beta.iservices.earlymoments.com/getpagelist?token=741889E3-4565-40A1-982A-F15F7A923D72&format=json&callback=JSON_CALLBACK")
         .success(function(data) {
             $scope.results = data.response ;                     
             $scope.numberOfPages=function(){
@@ -47,30 +44,6 @@ app.controller('pageCtrl', function ($scope, $http, $route) {
             alert("Error");
         }); 
        //Get All data end
-    
-    
-       // Onclick get page data start
-        $scope.getPageData = function(cid) { 
-            //All page Ids
-            $http.jsonp("http://beta.iservices.earlymoments.com/getpagelist?token=741889E3-4565-40A1-982A-F15F7A923D72&CampaignId="+ cid+"&format=json&callback=JSON_CALLBACK")
-            .success(function(data) {
-                $scope.allPageIds = data.response;
-                $scope.numberOfPages_sub=function(){
-                    return Math.ceil($scope.allPageIds.length / $scope.pageSize_sub);
-                }
-                $scope.MaxPage_sub=$scope.numberOfPages_sub();
-            });
-         }
-        // Onclick get page data end
-        
-         $scope.editModeBtn = function() {
-            $scope.editMode = true;
-         }
-         $scope.saveModeBtn = function() {
-            $scope.editMode = false;
-         }
-         $scope.cancelModeBtn = function() {
-            $scope.editMode = false;
-         }
+
         
 });

@@ -65,11 +65,43 @@ var app = angular.module('sandvikusaAdminAppsApp', [
         templateUrl: 'views/insertcampaigns.html',
         controller: 'insertCampaignsCtrl'
       })
-      .otherwise({
+    .when('/login', {
+        templateUrl: 'views/login.html',
+        controller: 'loginCtrl',
+        controllerAs:'vm'
+      })
+    .otherwise({
         redirectTo: '/'
-      });
+    });
      
   });
+
+//run.$inject = ['$rootScope', '$location', '$cookieStore', '$http'];
+app.run(function($rootScope, $location, $cookieStore, $http) {
+        // keep user logged in after page refresh
+        $rootScope.globals = $cookieStore.get('globals') || {};
+        if ($rootScope.globals.currentUser) {
+            $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
+        }
+
+        $rootScope.$on('$locationChangeStart', function (event, next, current) {
+            // redirect to login page if not logged in and trying to access a restricted page
+            var restrictedPage = $.inArray($location.path(), ['/login']) === -1;
+            var loggedIn = $rootScope.globals.currentUser;
+            console.log(loggedIn);
+            if(loggedIn!='' && loggedIn!=undefined && loggedIn!='undefined')
+              $rootScope.loggedIn=true;
+            else
+              $rootScope.loggedIn=false;
+            
+            //alert($rootScope.loggedIn);
+            if (restrictedPage && !loggedIn) {
+                $location.path('/login');
+            }
+        });
+});
+
+
 
 //Common filters...
 app.filter('pagination', function()
