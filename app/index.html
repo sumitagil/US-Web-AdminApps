@@ -33,7 +33,7 @@
                 	<a href="/#"><img src="images/sandviksLogo.gif" alt="sandviks logo" class="responsiveImg"></a>
                 </div>
                 
-                <div class="col-md-4 col-md-offset-4 text-right">
+                <div class="col-md-4 col-md-offset-4 text-right" ng-show="loggedIn">
                 	<div class="btn-group customBtnGr" role="group">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                         	Departments <span class="caret"></span>
@@ -41,11 +41,11 @@
                         <ul class="dropdown-menu" role="menu">
                             <li><a ng-href="#/reports" ng-click="selectdiv('reports')">Reports</a></li>
                             <li><a ng-href="#/orderforms" ng-click="selectdiv('offersetup')">Offer Setup</a></li>
-                            <!--<li><a ng-href="#">Vendors</a></li>-->
-                            <li><a ng-href="#/checkpage">Check Page</a></li>
+                            <!--<li><a ng-href="#">Vendors</a></li>
+                            <li><a ng-href="#/checkpage">Check Page</a></li>-->
                         </ul>
                         
-                        <a ng-href="#/login"><button type="button" class="btn btn-primary marginLeft5" ng-class="{active: $location.path() === '/login'}"><span ng-hide="loggedIn">Login</span><span ng-show="loggedIn">Logout</span></button></a>
+                        <a ng-href="#/login"><button type="button" class="btn btn-primary marginLeft5" ng-class="{active: $location.path() === '/login'}"><span ng-show="loggedIn">Logout</span></button></a>
                     </div>
                 </div>
             </div>
@@ -60,7 +60,7 @@
                         <li class="active" ng-class="{active: $location.path() == '/pages'}"><a ng-href="#/pages">Page List</a></li>
                     </ul>
                     <ul ng-if="opendiv == 'offersetup'">
-                        <li ng-class="{active: $location.path() == '/orderforms'}"><a ng-href="#/orderforms">Order Forms</a></li>
+                        <li class="active" ng-class="{active: $location.path() == '/orderforms'}"><a ng-href="#/orderforms">Order Forms</a></li>
                         <li ng-class="{active: $location.path() == '/promolist'}"><a ng-href="#/promolist">Promo Mapping</a></li>
                         <li ng-class="{active: $location.path() == '/offergroup'}"><a ng-href="#/offergroup">Offer Group</a></li>  
                     </ul>
@@ -95,16 +95,11 @@
     </script>
     <!--Modal Text-->
 
-    <script src="scripts/js/jquery.1.11.2.min.js"></script>
-    <script src="scripts/js/bootstrap.min.js"></script>
     <script src="scripts/js/moment.min.js"></script>
-    <script src="scripts/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="scripts/js/common.js"></script>
-    
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
-    <!--<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>-->
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="bower_components/angular-messages/angular-messages.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
@@ -112,6 +107,15 @@
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <!-- endbower -->
+    
+    <!-- For Kendo -->
+    <link rel="stylesheet" href="http://cdn.kendostatic.com/2015.1.429/styles/kendo.common-material.min.css" />
+    <link rel="stylesheet" href="http://cdn.kendostatic.com/2015.1.429/styles/kendo.material.min.css" />
+    <link rel="stylesheet" href="http://cdn.kendostatic.com/2015.1.429/styles/kendo.dataviz.min.css" />
+    <link rel="stylesheet" href="http://cdn.kendostatic.com/2015.1.429/styles/kendo.dataviz.material.min.css" />
+    
+    <script src="http://cdn.kendostatic.com/2015.1.429/js/kendo.all.min.js"></script>
+    <!-- For Kendo -->
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->    
     <script src="scripts/app.js"></script>

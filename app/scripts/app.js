@@ -16,7 +16,8 @@ var app = angular.module('sandvikusaAdminAppsApp', [
                         'ngSanitize',
                         'ngTouch',
                         'ngTable',
-                        'ui.bootstrap'
+                        'ui.bootstrap',
+                        'kendo.directives'
                       ]);
 
   app.config(function ($routeProvider) {
@@ -97,6 +98,7 @@ app.run(function($rootScope, $location, $cookieStore, $http) {
             $rootScope.selectdiv = function(selval) {  
                    $rootScope.opendiv = selval;
             }
+            
         });
 });
 
