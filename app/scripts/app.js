@@ -59,6 +59,10 @@ var app = angular.module('sandvikusaAdminAppsApp', [
         controller: 'loginCtrl',
         controllerAs:'vm'
       })
+    .when('/testpage', {
+        templateUrl: 'views/testpage.html',
+        controller: 'testpageCtrl'
+      })
     .otherwise({
         redirectTo: '/pages'
     });

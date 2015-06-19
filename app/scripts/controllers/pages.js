@@ -43,15 +43,113 @@ app.controller('pageCtrl', function ($scope, $http, $route) {
         }).error(function(){
             alert("Error");
         }); 
-       //Get All data end
-
-        
+       //Get All data end  
 });
 */
 
 var app = angular.module("sandvikusaAdminAppsApp");
 
-app.controller("pageCtrl", function($scope,$http){
+app.controller( "pageCtrl", function($scope,$http){
+    
+     $scope.opendiv = 'reports';
+        
+    //////////////////////////
+     $scope.mainGridOptions = {
+            dataSource: new kendo.data.DataSource({
+                  type: "odata",
+                  transport: {
+                      read:{
+                            url:"http://beta.iservices.earlymoments.com/getpagelist?token=741889E3-4565-40A1-982A-F15F7A923D72",
+                            dataType: "json"
+                      },
+                      parameterMap: function (options, type) {
+                            var paramMap = kendo.data.transports.odata.parameterMap(options);
+                            delete paramMap.$inlinecount; // <-- remove inlinecount parameter.
+                            delete paramMap.$format; // <-- remove format parameter.
+                            return paramMap;
+                      }
+                  },
+                  schema: {
+                    data: 'response',
+                    total: function(data){
+                        return data.response.length;
+                    },
+                    model: {
+                        fields: {
+                                CampaignId: { type: "number" },
+                                PageId: { type: "number" },
+                                PageName: { type: "string" },
+                                PageDesc: { type: "string" },
+                                Project: { type: "string" }
+                        }
+                    }
+                  },
+                  pageSize: 20,
+                  //serverPaging: true,//this is problem for pagination
+                  serverFiltering: true,
+            }),
+            height: 488,
+            filterable: {
+              mode: "row"
+            },
+            pageable: true,
+            columns: 
+            [{
+              field: "CampaignId",
+              width: 220,
+              title: "Campaign Id",
+              filterable: {
+                cell: {
+                  showOperators: false, 
+                }
+              }
+            },
+             {
+               field: "PageId",
+               width: 500,
+               title: "Page Id",
+               filterable: {
+                 cell: {
+                   operator: "gte"              
+                 }
+               }
+             },
+             {
+               field: "PageName",
+               title: "Page Name",
+               filterable: {
+                 cell: {
+                   operator: "contains"
+                 }
+               }
+             },
+             {
+               field: "PageDesc",
+               title: "Page Desc",
+                filterable: {
+                 cell: {
+                   operator: "contains"
+                 }
+               }
+             },
+             {
+               field: "Project",
+               title: "Project",
+               filterable: {
+                 cell: {
+                   operator: "contains"              
+                 }
+               }
+             }
+            ]
+          };
+    /////////////////////////
+    
+});
+
+
+
+/*app.controller("pageCtrl", function($scope,$http){
             $scope.opendiv = 'reports';
             
             $scope.mainGridOptions = {
@@ -99,7 +197,7 @@ app.controller("pageCtrl", function($scope,$http){
                     buttonCount: 5
                 },*/
                 
-                columns: [
+                /*columns: [
                         {field: "CampaignId", title: "Campaign Id", width: "60px"},
                         {field: "PageId", title: "Page Id", width: "60px"},
                         {field: "PageName", title: "Page Name", width: "120px"},
@@ -108,4 +206,4 @@ app.controller("pageCtrl", function($scope,$http){
                 ]
                 
             };
- });
+ });*/
