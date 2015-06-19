@@ -95,6 +95,15 @@ app.controller( "pageCtrl", function($scope,$http){
             pageable: true,
             columns: 
             [{
+               field: "Project",
+               title: "Project",
+               filterable: {
+                 cell: {
+                   operator: "contains"              
+                 }
+               }
+             },
+                {
               field: "CampaignId",
               title: "Campaign Id",
               filterable: {
@@ -168,14 +177,15 @@ app.controller( "pageCtrl", function($scope,$http){
                }
              },
              {
-               field: "Project",
-               title: "Project",
-               filterable: {
+               field: "IsClubShopOffer",
+               title: "IsMaxChoice",
+                filterable: {
                  cell: {
-                   operator: "contains"              
+                   operator: "contains"
                  }
                }
              }
+             
             ]
           };
     /////////////////////////
