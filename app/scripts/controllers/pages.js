@@ -96,7 +96,6 @@ app.controller( "pageCtrl", function($scope,$http){
             columns: 
             [{
               field: "CampaignId",
-              width: 220,
               title: "Campaign Id",
               filterable: {
                 cell: {
@@ -106,12 +105,29 @@ app.controller( "pageCtrl", function($scope,$http){
             },
              {
                field: "PageId",
-               width: 500,
                title: "Page Id",
                filterable: {
                  cell: {
                    //operator: "gte" 
                    showOperators: false
+                 }
+               }
+             },
+             {
+               field: "CampaignShortNotes",
+               title: "Offer Description",
+               filterable: {
+                 cell: {
+                  operator: "contains"
+                 }
+               }
+             },
+             {
+               field: "CampaignCreditRule",
+               title: "Credit Rule",
+               filterable: {
+                 cell: {
+                  operator: "contains"
                  }
                }
              },
@@ -134,6 +150,24 @@ app.controller( "pageCtrl", function($scope,$http){
                }
              },
              {
+               field: "PageShortNotes",
+               title: "Page ShortNotes",
+                filterable: {
+                 cell: {
+                   operator: "contains"
+                 }
+               }
+             },
+              {
+               field: "PageUrl",
+               title: "Page Url",
+                filterable: {
+                 cell: {
+                   operator: "contains"
+                 }
+               }
+             },
+             {
                field: "Project",
                title: "Project",
                filterable: {
@@ -147,64 +181,3 @@ app.controller( "pageCtrl", function($scope,$http){
     /////////////////////////
     
 });
-
-
-
-/*app.controller("pageCtrl", function($scope,$http){
-            $scope.opendiv = 'reports';
-            
-            $scope.mainGridOptions = {
-                 dataSource: new kendo.data.DataSource({
-                     type: "odata",
-                     transport: {
-                       read: function(options) {
-                            var url = "http://beta.iservices.earlymoments.com/getpagelist?token=741889E3-4565-40A1-982A-F15F7A923D72&format=json&callback=JSON_CALLBACK";
-                            $http.jsonp(url).success(function (data, status, headers, config) {
-                                options.success(data);
-                            }).error(function (data, status, headers, config) {
-                                options.error(data);
-                            });
-                        }
-                          
-                    },
-                     schema: {
-                        data: function (data) {
-                                return data.response;
-                             },
-                        //serverGrouping: true,
-                        total: function (data) {
-                            return data.response.length;
-                        },
-                        model: {
-                            fields: {
-                                CampaignId: { type: "number" },
-                                PageId: { type: "number" },
-                                PageName: { type: "string" },
-                                PageDesc: { type: "string" },
-                                Project: { type: "string" }
-                            }
-                        }
-                    },
-                    pageSize: 20,
-                    serverFiltering: true,
-                }),
-                height: 488,
-                filterable: {mode: "row"},
-                pageable: true,
-                //sortable: true,
-                /*pageable: {
-                    refresh: true,
-                    pageSizes: true,
-                    buttonCount: 5
-                },*/
-                
-                /*columns: [
-                        {field: "CampaignId", title: "Campaign Id", width: "60px"},
-                        {field: "PageId", title: "Page Id", width: "60px"},
-                        {field: "PageName", title: "Page Name", width: "120px"},
-                        {field: "PageDesc", title: "Page Desc", width: "120px", filterable: {cell: {operator: "contains"}}},
-                        {field: "Project", title: "Project", width: "60px", filterable: {cell: {operator: "contains"}}}
-                ]
-                
-            };
- });*/
