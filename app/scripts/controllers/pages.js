@@ -61,13 +61,13 @@ app.controller( "pageCtrl", function($scope,$http){
                       read:{
                             url:"http://beta.iservices.earlymoments.com/getpagelist?token=741889E3-4565-40A1-982A-F15F7A923D72",
                             dataType: "json"
-                      },
-                      parameterMap: function (options, type) {
+                      }
+                      /*parameterMap: function (options, type) {
                             var paramMap = kendo.data.transports.odata.parameterMap(options);
                             delete paramMap.$inlinecount; // <-- remove inlinecount parameter.
                             delete paramMap.$format; // <-- remove format parameter.
                             return paramMap;
-                      }
+                      }*/
                   },
                   schema: {
                     data: 'response',
@@ -86,7 +86,7 @@ app.controller( "pageCtrl", function($scope,$http){
                   },
                   pageSize: 20,
                   //serverPaging: true,//this is problem for pagination
-                  serverFiltering: true,
+                  //serverFiltering: true,
             }),
             height: 488,
             filterable: {
@@ -100,7 +100,7 @@ app.controller( "pageCtrl", function($scope,$http){
               title: "Campaign Id",
               filterable: {
                 cell: {
-                  showOperators: false, 
+                  showOperators: false
                 }
               }
             },
@@ -110,7 +110,8 @@ app.controller( "pageCtrl", function($scope,$http){
                title: "Page Id",
                filterable: {
                  cell: {
-                   operator: "gte"              
+                   //operator: "gte" 
+                   showOperators: false
                  }
                }
              },
