@@ -105,18 +105,21 @@ app.controller('OfferGroupCtrl', function ($scope) {
             $("#icon_"+offergroupId).removeClass("glyphicon-plus-sign").addClass("glyphicon-minus-sign");
         } 
         else if ($scope.tableRowExpanded === true) {
-            $("#icon_"+offergroupId).removeClass("glyphicon-minus-sign").addClass("glyphicon-plus-sign");
+            
             if ($scope.tableRowIndexExpandedCurr === index && $scope.storeIdExpanded === offergroupId) {
                 $scope.tableRowExpanded = false;
                 $scope.tableRowIndexExpandedCurr = "";
                 $scope.storeIdExpanded = "";
                 $scope.dayDataCollapse[index] = false;
+                $("#icon_"+offergroupId).removeClass("glyphicon-minus-sign").addClass("glyphicon-plus-sign");
             } else {
                 $scope.tableRowIndexExpandedPrev = $scope.tableRowIndexExpandedCurr;
                 $scope.tableRowIndexExpandedCurr = index;
                 $scope.storeIdExpanded = offergroupId;
                 $scope.dayDataCollapse[$scope.tableRowIndexExpandedPrev] = false;
                 $scope.dayDataCollapse[$scope.tableRowIndexExpandedCurr] = true;
+                $(".listSerialicon").removeClass("glyphicon-minus-sign").addClass("glyphicon-plus-sign");
+                $("#icon_"+offergroupId).removeClass("glyphicon-plus-sign").addClass("glyphicon-minus-sign");
             }
         }
 
