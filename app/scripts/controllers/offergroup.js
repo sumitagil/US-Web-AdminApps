@@ -2,7 +2,7 @@
 
 var app = angular.module('sandvikusaAdminAppsApp');
 
-app.controller('OfferGroupCtrl', function ($scope,$filter) {
+app.controller('OfferGroupCtrl', function ($scope,$http,$filter) {
         $scope.editing = false;
     
         $scope.models = {
@@ -316,6 +316,18 @@ app.controller('OfferGroupCtrl', function ($scope,$filter) {
     
         
       //Edit Section and Save Edit..
+        $scope.itemstatus = [
+            {value: 'Y', text: 'Y'},
+            {value: 'N', text: 'N'},
+            {value: 'X', text: 'X'}
+          ];
+        $scope.showStatus = function(offerData) {
+            var selected = [];
+            if(offerData.itemSelected) {
+              selected = $filter('filter')($scope.itemstatus, {value: offerData.itemSelected});
+            }
+            return selected.length ? selected[0].text : 'Not set';
+        };
         $scope.saveUser = function(data, id) {
             angular.extend(data, {id: id});
             return $http.post('/saveUser', data);
