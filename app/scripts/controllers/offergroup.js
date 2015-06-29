@@ -318,8 +318,8 @@ app.controller('OfferGroupCtrl', function ($scope,$http,$filter) {
         
       //Edit Section and Save Edit..
         $scope.itemstatus = [
-            {value: 'Y', text: 'Y'},
-            {value: 'N', text: 'N'},
+            {value: 'Y', text: 'Yes'},
+            {value: 'N', text: 'No'},
             {value: 'X', text: 'X'}
           ];
         $scope.showStatus = function(offerData) {
@@ -330,8 +330,10 @@ app.controller('OfferGroupCtrl', function ($scope,$http,$filter) {
             return selected.length ? selected[0].text : 'Not set';
         };
         $scope.saveUser = function(data, id) {
-            angular.extend(data, {id: id});
-            return $http.post('/saveUser', data);
+            //angular.extend(data, {id: id});
+            //return $http.post('/saveUser', data);
+            alert("please wait...");
+            //return false;
         };
      //Edit Section and Save Edit..
     
