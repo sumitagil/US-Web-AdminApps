@@ -122,7 +122,7 @@ app.controller('OfferGroupCtrl', function ($scope,$http,$filter) {
              ]
             },
             
-             {
+            {
             "offergroupId": "12196",
             "offergroupDesc": "Seuss Max Choice $.79 ea Cat in the Hat - BW6",
             "Offers": [
@@ -234,6 +234,144 @@ app.controller('OfferGroupCtrl', function ($scope,$http,$filter) {
                     }
              ]
             },
+              
+            {
+            "offergroupId": "12197",
+            "offergroupDesc": "Seuss Max Choice $.79 ea Cat in the Hat - BW6",
+            "Offers": [
+                    {
+                    "offerId": "19631531",
+                    "offerDescCode": "O",
+                    "displayOrder": 1,
+                    "itemSelected": "N",
+                    "isBonusBundled": "N",
+                    "displayInCart": "Y",
+                    "isBaseOffer": "N",
+                    "inUse": "Y",
+                    "specialText": ""
+                    },
+                    {
+                   "offerId": "19631532",
+                    "offerDescCode": "O",
+                    "displayOrder": 2,
+                    "itemSelected": "N",
+                    "isBonusBundled": "N",
+                    "displayInCart": "Y",
+                    "isBaseOffer": "N",
+                    "inUse": "Y",
+                    "specialText": ""
+                    },
+                    {
+                   "offerId": "19631533",
+                    "offerDescCode": "O",
+                    "displayOrder": 3,
+                    "itemSelected": "N",
+                    "isBonusBundled": "N",
+                    "displayInCart": "Y",
+                    "isBaseOffer": "N",
+                    "inUse": "Y",
+                    "specialText": ""
+                    },
+                    {
+                   "offerId": "19631534",
+                    "offerDescCode": "O",
+                    "displayOrder": 4,
+                    "itemSelected": "N",
+                    "isBonusBundled": "N",
+                    "displayInCart": "Y",
+                    "isBaseOffer": "N",
+                    "inUse": "Y",
+                    "specialText": ""
+                    }
+            ],
+            "campaigns": [
+                    {
+                    "campaignId": 12365,
+                    "CampaingDesc": "Dr. Seuss™ & His Friends",
+                    "CampaignCreditRule":"SBM",
+                    "CampaignShortNotes":"Control: Max Choice 5 for $3.95 + 2 Bonus Books at $4.99",
+                    "Project":"BRU",
+                    "IsClubShopOffer":"Y",
+                    "pages":[
+                        {
+                        "PageId":12366,
+                        "PageName":"seuss-2015-sbm-5for395-599BE",
+                        "PageDesc":"seuss-max-choice",
+                        "PageShortNotes":"Seuss Winter Regular 5for595 noprem 499be",
+                        "PageUrl":"https://enrollments.earlymoments.com/seuss-winter-2014-regular-5for595-noprem-499be.aspx"
+                        }]
+                    }
+             ]
+            },
+              
+            {
+            "offergroupId": "12198",
+            "offergroupDesc": "Seuss Max Choice $.79 ea Cat in the Hat - BW6",
+            "Offers": [
+                    {
+                    "offerId": "19631542",
+                    "offerDescCode": "O",
+                    "displayOrder": 1,
+                    "itemSelected": "N",
+                    "isBonusBundled": "N",
+                    "displayInCart": "Y",
+                    "isBaseOffer": "N",
+                    "inUse": "Y",
+                    "specialText": ""
+                    },
+                    {
+                   "offerId": "19631543",
+                    "offerDescCode": "O",
+                    "displayOrder": 2,
+                    "itemSelected": "N",
+                    "isBonusBundled": "N",
+                    "displayInCart": "Y",
+                    "isBaseOffer": "N",
+                    "inUse": "Y",
+                    "specialText": ""
+                    },
+                    {
+                   "offerId": "19631544",
+                    "offerDescCode": "O",
+                    "displayOrder": 3,
+                    "itemSelected": "N",
+                    "isBonusBundled": "N",
+                    "displayInCart": "Y",
+                    "isBaseOffer": "N",
+                    "inUse": "Y",
+                    "specialText": ""
+                    },
+                    {
+                   "offerId": "19631545",
+                    "offerDescCode": "O",
+                    "displayOrder": 4,
+                    "itemSelected": "N",
+                    "isBonusBundled": "N",
+                    "displayInCart": "Y",
+                    "isBaseOffer": "N",
+                    "inUse": "Y",
+                    "specialText": ""
+                    }
+            ],
+            "campaigns": [
+                    {
+                    "campaignId": 12369,
+                    "CampaingDesc": "Dr. Seuss™ & His Friends",
+                    "CampaignCreditRule":"SBM",
+                    "CampaignShortNotes":"Control: Max Choice 5 for $3.95 + 2 Bonus Books at $4.99",
+                    "Project":"BRU",
+                    "IsClubShopOffer":"Y",
+                    "pages":[
+                        {
+                        "PageId":12370,
+                        "PageName":"seuss-2015-sbm-5for395-599BE",
+                        "PageDesc":"seuss-max-choice",
+                        "PageShortNotes":"Seuss Winter Regular 5for595 noprem 499be",
+                        "PageUrl":"https://enrollments.earlymoments.com/seuss-winter-2014-regular-5for595-noprem-499be.aspx"
+                        }]
+                    }
+             ]
+            }
             
           ],
           state: {
