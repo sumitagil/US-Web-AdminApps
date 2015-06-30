@@ -4,6 +4,7 @@ var app = angular.module('sandvikusaAdminAppsApp');
 
 app.controller('OfferGroupCtrl', function ($scope,$http,$filter) {
         $scope.editing = false;
+        $scope.showModal = false;
     
         $scope.models = {
           changeInfo: [],
@@ -380,7 +381,7 @@ app.controller('OfferGroupCtrl', function ($scope,$http,$filter) {
           }
         };
        
-        $scope.offerTableColumnDefinition = [
+        $scope.offerGroupTableColumnDefinition = [
               {
                 columnHeaderDisplayName: 'Offer Group Id',
                 displayProperty: 'offergroupId',
@@ -403,6 +404,10 @@ app.controller('OfferGroupCtrl', function ($scope,$http,$filter) {
                 visible: false
               }
             ];
+    
+        //for second layer : offer soring..
+        $scope.orderByField = 'offerId';
+        $scope.reverseSort = false;
      
     
         //////// third Layer...
@@ -475,4 +480,74 @@ app.controller('OfferGroupCtrl', function ($scope,$http,$filter) {
         };
      //Edit Section and Save Edit..
     
+    //Edit campaign data..
+    $scope.editCampaignData = function(campaignData,action){
+            $scope.showModal = !$scope.showModal;
+            $scope.actionVal=false;
+            $scope.action = action;
+            $scope.campaignId = campaignData.campaignId;
+            $scope.CampaingDesc = campaignData.CampaingDesc;
+            $scope.CampaignCreditRule = campaignData.CampaignCreditRule;
+            $scope.CampaignShortNotes = campaignData.CampaignShortNotes;
+            $scope.Project = campaignData.Project;
+            $scope.IsClubShopOffer = campaignData.IsClubShopOffer;
+            if(action==='View') $scope.actionVal=true;
+            alert(action+' changed');
+    };
+    $scope.updateCampaignData= function() {
+        var campaignData = {'campaignId':this.campaignId,
+                            'CampaingDesc':this.CampaingDesc,
+                            'CampaignCreditRule':this.CampaignCreditRule,
+                            'CampaignShortNotes':this.CampaignShortNotes,
+                            'Project':this.Project,
+                            'IsClubShopOffer':this.IsClubShopOffer
+                           };
+        console.log(campaignData);
+        alert("please wait...");
+        this.editCampaignData(campaignData,'View');
+    };
+    
 });
+
+
+app.directive('modal', function () {
+    return {
+      template: '<div class="modal fade">' + 
+          '<div class="modal-dialog">' + 
+            '<div class="modal-content">' + 
+              '<div class="modal-header">' + 
+                '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>' + 
+                '<h4 class="modal-title">{{ title }}</h4>' + 
+              '</div>' + 
+              '<div class="modal-body" ng-transclude></div>' + 
+            '</div>' + 
+          '</div>' + 
+        '</div>',
+      restrict: 'E',
+      transclude: true,
+      replace:true,
+      scope:true,
+      link: function postLink(scope, element, attrs) {
+        scope.title = attrs.title;
+
+        scope.$watch(attrs.visible, function(value){
+          if(value == true)
+            $(element).modal('show');
+          else
+            $(element).modal('hide');
+        });
+
+        $(element).on('shown.bs.modal', function(){
+          scope.$apply(function(){
+            scope.$parent[attrs.visible] = true;
+          });
+        });
+
+        $(element).on('hidden.bs.modal', function(){
+          scope.$apply(function(){
+            scope.$parent[attrs.visible] = false;
+          });
+        });
+      }
+    };
+  });

@@ -10,7 +10,7 @@
   <!-- ========== Usage ========== -->
   <ad-table-lite table-name="offergrouplist"
                  enable-column-search="false"
-                 column-definition="offerTableColumnDefinition"
+                 column-definition="offerGroupTableColumnDefinition"
                  local-data-source="models.offergrouplist"
                  page-sizes="[2,5,10]"
                  page-loader="methods.pageLoader"
@@ -37,9 +37,33 @@
                 <thead class="levelTwo">
                     <tr>
                         <th>#</th>
-                        <th>Offer Id</th>
-                        <th>Offer Desc Code</th>
-                        <th>Display Order</th>
+                        <th>Offer Id
+                            <a href="#offergroup" ng-click="orderByField='offerId'; reverseSort = !reverseSort">
+                              <i ng-hide="orderByField == 'offerId'" class="glyphicon glyphicon-resize-vertical"></i>
+                              <span ng-show="orderByField == 'offerId'">
+                               <i ng-class="iconClasses.sortAscending" ng-show="!reverseSort" class="glyphicon glyphicon-chevron-up ng-hide"></i>
+                               <i ng-class="iconClasses.sortDescending" ng-show="reverseSort" class="glyphicon glyphicon-chevron-down"></i>
+                              </span>
+                            </a>
+                        </th>
+                        <th>Offer Desc Code
+                            <a href="#offergroup" ng-click="orderByField='offerDescCode'; reverseSort = !reverseSort">
+                              <i ng-hide="orderByField == 'offerDescCode'" class="glyphicon glyphicon-resize-vertical"></i>
+                              <span ng-show="orderByField == 'offerDescCode'">
+                               <i ng-class="iconClasses.sortAscending" ng-show="!reverseSort" class="glyphicon glyphicon-chevron-up ng-hide"></i>
+                               <i ng-class="iconClasses.sortDescending" ng-show="reverseSort" class="glyphicon glyphicon-chevron-down"></i>
+                              </span>
+                            </a>
+                        </th>
+                        <th>Display Order
+                        <a href="#offergroup" ng-click="orderByField='displayOrder'; reverseSort = !reverseSort">
+                              <i ng-hide="orderByField == 'displayOrder'" class="glyphicon glyphicon-resize-vertical"></i>
+                              <span ng-show="orderByField == 'displayOrder'">
+                               <i ng-class="iconClasses.sortAscending" ng-show="!reverseSort" class="glyphicon glyphicon-chevron-up ng-hide"></i>
+                               <i ng-class="iconClasses.sortDescending" ng-show="reverseSort" class="glyphicon glyphicon-chevron-down"></i>
+                              </span>
+                            </a>
+                        </th>
                         <th>Is Item Selected</th>
                         <th>Is Bonus Bundled</th>
                         <th>Display In Cart</th>
@@ -50,7 +74,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr data-ng-repeat="offerData in item.Offers">
+                    <tr data-ng-repeat="offerData in item.Offers | orderBy:orderByField:reverseSort">
                         <td>{{$index+1}}</td>
                         <td>{{offerData.offerId}}</td>
                         <td class="smlTxtBx">{{offerData.offerDescCode}}</td>
@@ -105,9 +129,6 @@
                     </tr>
                 </tbody>
                 </table>
-                
-                
-                
             </div>
             <div role="tabpanel" class="tab-pane" id="campaigns">
               <table class="table table-hover table-condensed">
@@ -120,6 +141,7 @@
                         <th>Campaign Short Notes</th>
                         <th>Project</th>
                         <th>Design</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                   <tbody data-ng-repeat="campaignData in item.campaigns | filter : searchText" data-ng-switch on="dayDataCollapse[$index]">
@@ -136,9 +158,11 @@
                             <span ng-if="campaignData.IsClubShopOffer=='Y'">Maxchoice</span>
                             <span ng-if="campaignData.IsClubShopOffer=='N'">Horizontal</span>
                         </td>
+                        <td><button class="btn btn-primary" ng-click="editCampaignData(campaignData,'View')">View</button>
+                            <button class="btn btn-primary" ng-click="editCampaignData(campaignData,'Edit')">Edit</button></td>
                     </tr>
                     <tr data-ng-switch-when="true">
-                        <td colspan="7">
+                        <td colspan="8">
                             <div style="margin-left:10px;margin-right:10px;">
                             <ul class="nav nav-tabs tabTitle" role="tablist">
                                 <li role="presentation" class="active"><a showtab="" href="#pages" role="tab" data-toggle="tab">Pages</a></li>
@@ -181,6 +205,44 @@
     </script>
     
 </div>
+
+
+<modal title="Campaigns" visible="showModal">
+    <form name="campaignEditform" role="form" ng-submit="updateCampaignData()">
+      <div class="form-group">
+            <label for="CampaingDesc">Campaign Description</label>
+            <input type="text" class="form-control" placeholder="Enter Campaing Desc" ng-model="CampaingDesc" ng-readonly="actionVal" />
+      </div>
+      <div class="form-group">
+            <label for="CampaignCreditRule">Credit Rule</label>
+            <select class="form-control" ng-model="CampaignCreditRule" ng-disabled="actionVal">
+                <option value="SBM">SBM</option>  
+            </select>
+      </div>
+      <div class="form-group">
+            <label for="CampaignShortNotes">Short Notes</label>
+            <textarea class="form-control" ng-model="CampaignShortNotes" ng-readonly="actionVal"></textarea>
+      </div>
+      <div class="form-group">
+            <label for="Project">Project</label>
+            <select class="form-control" ng-model="Project" ng-disabled="actionVal">
+                <option value="BRU">BRU</option>
+                <option value="DBU">DBU</option>
+            </select>
+      </div>
+      <div class="form-group">
+            <label for="IsClubShopOffer">Design</label>
+            <select class="form-control" ng-model="IsClubShopOffer" ng-disabled="actionVal">
+                <option value="N">Horizontal</option>
+                <option value="Y">Maxchoice</option>
+            </select>
+      </div>
+      <input type="hidden" ng-model="campaignId" />    
+      <input type="submit" class="btn btn-primary btn-sm" ng-hide="actionVal" value="Save" />
+      <button type="button" class="btn btn-default btn-sm" ng-hide="actionVal">Cancel</button>
+    </form>
+</modal>
+
 
 <style>
 .offerGroup thead tr:first-child {

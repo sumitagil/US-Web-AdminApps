@@ -89,9 +89,7 @@
     <!--Modal Text-->
     <script type="text/ng-template" id="myModalContent.html">
             <div class="modal-header"><h3 class="modal-title">Error</h3></div>
-            <div class="modal-body" ng-bind-html="msg">
-            </div>
-            
+            <div class="modal-body" ng-bind-html="msg"></div>
             <div class="modal-footer">
                 <button class="btn btn-primary" ng-click="ok()">OK</button>
             </div>
@@ -111,10 +109,9 @@
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/adapt-strap/dist/adapt-strap.min.js"></script>
     <script src="bower_components/adapt-strap/dist/adapt-strap.tpl.min.js"></script>
-    <link href="bower_components/angular-xeditable/dist/css/xeditable.css" rel="stylesheet">
-    <script src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
     <!-- endbower -->
-    
+    <script src="scripts/js/xeditable.js"></script>
+    <link href="styles/xeditable.css" rel="stylesheet">
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->    
     <script src="scripts/app.js"></script>
