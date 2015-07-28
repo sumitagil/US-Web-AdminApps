@@ -437,7 +437,6 @@ app.controller('OfferGroupCtrl', function ($scope,$http,$filter) {
                 $("#icon_"+campaignId).removeClass("glyphicon-plus-sign").addClass("glyphicon-minus-sign");
             } 
             else if ($scope.tableRowExpanded === true) {
-
                 if ($scope.tableRowIndexExpandedCurr === index && $scope.storeIdExpanded === campaignId) {
                     $scope.tableRowExpanded = false;
                     $scope.tableRowIndexExpandedCurr = "";
@@ -465,10 +464,17 @@ app.controller('OfferGroupCtrl', function ($scope,$http,$filter) {
             {value: 'N', text: 'No'},
             {value: 'X', text: 'X'}
           ];
-        $scope.showStatus = function(offerData) {
+        $scope.allstatus = [
+            {value: 'Y', text: 'Yes'},
+            {value: 'N', text: 'No'}
+          ];
+        $scope.showStatus = function(itemSelected,c) {
             var selected = [];
-            if(offerData.itemSelected) {
-              selected = $filter('filter')($scope.itemstatus, {value: offerData.itemSelected});
+            if(itemSelected) {
+              if(c==1)
+                  selected = $filter('filter')($scope.itemstatus, {value: itemSelected});
+              else
+                  selected = $filter('filter')($scope.allstatus, {value: itemSelected});
             }
             return selected.length ? selected[0].text : 'Not set';
         };
@@ -492,7 +498,7 @@ app.controller('OfferGroupCtrl', function ($scope,$http,$filter) {
             $scope.Project = campaignData.Project;
             $scope.IsClubShopOffer = campaignData.IsClubShopOffer;
             if(action==='View') $scope.actionVal=true;
-            alert(action+' changed');
+            //alert(action+' changed');
     };
     $scope.updateCampaignData= function() {
         var campaignData = {'campaignId':this.campaignId,
@@ -502,8 +508,7 @@ app.controller('OfferGroupCtrl', function ($scope,$http,$filter) {
                             'Project':this.Project,
                             'IsClubShopOffer':this.IsClubShopOffer
                            };
-        console.log(campaignData);
-        alert("please wait...");
+        //alert("please wait...");
         this.editCampaignData(campaignData,'View');
     };
     
