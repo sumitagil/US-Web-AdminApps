@@ -5,7 +5,7 @@ var app = angular.module('sandvikusaAdminAppsApp');
 app.controller('OfferGroupCtrl', function ($scope,$http,$filter) {
         $scope.editing = false;
         $scope.showModal = false;
-    
+        
         $scope.models = {
           changeInfo: [],
           searchText: '',
@@ -118,7 +118,39 @@ app.controller('OfferGroupCtrl', function ($scope,$http,$filter) {
                         "PageDesc":"disney-max-choice",
                         "PageShortNotes":"Disney MAX choice 4books $1.24each/$2.99 and $5.99 Backend",
                         "PageUrl":"https://disney.earlymoments.com/special_offer/offers-new.aspx?pid=12366&pgd=12367"
-                        }]
+                        },
+                        {
+                        "PageId":12368,
+                        "PageName":"disney-max-4for124each299-sbm",
+                        "PageDesc":"disney-max-choice",
+                        "PageShortNotes":"Disney MAX choice 4books $1.24each/$2.99 and $5.99 Backend",
+                        "PageUrl":"https://disney.earlymoments.com/special_offer/offers-new.aspx?pid=12366&pgd=12368"
+                        }
+                    ]
+                    },
+                    {
+                        "campaignId": 12365,
+                        "CampaingDesc": "Disney Wonderful World of Reading",
+                        "CampaignCreditRule":"SBM",
+                        "CampaignShortNotes":"Disney MAX choice 4 books $1.24 each / $2.99 and $5.99 Backend",
+                        "Project":"DBU",
+                        "IsClubShopOffer":"Y",
+                        "pages":[
+                            {
+                            "PageId":12369,
+                            "PageName":"disney-max-4for124each299-sbm",
+                            "PageDesc":"disney-max-choice",
+                            "PageShortNotes":"Disney MAX choice 4books $1.24each/$2.99 and $5.99 Backend",
+                            "PageUrl":"https://disney.earlymoments.com/special_offer/offers-new.aspx?pid=12366&pgd=12367"
+                            },
+                            {
+                            "PageId":12370,
+                            "PageName":"disney-max-4for124each299-sbm",
+                            "PageDesc":"disney-max-choice",
+                            "PageShortNotes":"Disney MAX choice 4books $1.24each/$2.99 and $5.99 Backend",
+                            "PageUrl":"https://disney.earlymoments.com/special_offer/offers-new.aspx?pid=12366&pgd=12368"
+                            }
+                        ]
                     }
              ]
             },
@@ -381,7 +413,7 @@ app.controller('OfferGroupCtrl', function ($scope,$http,$filter) {
           }
         };
        
-        $scope.offerGroupTableColumnDefinition = [
+        /*$scope.offerGroupTableColumnDefinition = [
               {
                 columnHeaderDisplayName: 'Offer Group Id',
                 displayProperty: 'offergroupId',
@@ -403,19 +435,67 @@ app.controller('OfferGroupCtrl', function ($scope,$http,$filter) {
                 //columnSearchProperty: 'campaigns',
                 visible: false
               }
-            ];
+            ];*/
     
-        //for second layer : offer soring..
+        /////// second layer : offer soring..
         $scope.orderByField = 'offerId';
         $scope.reverseSort = false;
+    
+        /////// first Layer...
+         $scope.offertableRowExpanded = false;
+         $scope.offertableRowIndexExpandedCurr = "";
+         $scope.offertableRowIndexExpandedPrev = "";
+         $scope.offerstoreIdExpanded = "";
+        
+         $scope.tableRowExpanded = false;
+         $scope.tableRowIndexExpandedCurr = "";
+         $scope.tableRowIndexExpandedPrev = "";
+         $scope.storeIdExpanded = "";
+    
+         $scope.offerDataCollapseFn = function (index) {
+            $scope.offerDataCollapse = [];
+            for (var i = 0; i < $scope.models.offergrouplist.length; i += 1) {
+                $scope.offerDataCollapse.push(false);
+            }
+         };
+         $scope.selectTableRowOffer = function (index, offergroupId) {
+             if (typeof $scope.offerDataCollapse === 'undefined') {
+                 //alert("1.fn call");
+                $scope.offerDataCollapseFn(index);
+             } 
+             if ($scope.offertableRowExpanded === false && $scope.offertableRowIndexExpandedCurr === "" && $scope.offerstoreIdExpanded === "") {
+                  //alert("2.fn call"); 
+                  $scope.offertableRowIndexExpandedPrev = "";
+                  $scope.offertableRowExpanded = true;
+                  $scope.offertableRowIndexExpandedCurr = index;
+                  $scope.offerstoreIdExpanded = offergroupId;
+                  $scope.offerDataCollapse[index] = true;
+                  $("#icon_"+offergroupId).removeClass("glyphicon-plus-sign").addClass("glyphicon-minus-sign");
+              }
+             else if ($scope.offertableRowExpanded === true){
+                  if ($scope.offertableRowIndexExpandedCurr === index && $scope.offerstoreIdExpanded === offergroupId) {
+                     //alert("3.fn call");
+                    $scope.offertableRowExpanded = false;
+                    $scope.offertableRowIndexExpandedCurr = "";
+                    $scope.offerstoreIdExpanded = "";
+                    $scope.offerDataCollapse[index] = false;
+                    $scope.dayDataCollapseFn(index);
+                    $("#icon_"+offergroupId).removeClass("glyphicon-minus-sign").addClass("glyphicon-plus-sign");
+                } else {
+                     //alert("4.fn call");
+                    $scope.offertableRowIndexExpandedPrev = $scope.offertableRowIndexExpandedCurr;
+                    $scope.offertableRowIndexExpandedCurr = index;
+                    $scope.offerstoreIdExpanded = offergroupId;
+                    $scope.offerDataCollapse[$scope.offertableRowIndexExpandedPrev] = false;
+                    $scope.offerDataCollapse[$scope.offertableRowIndexExpandedCurr] = true;
+                    //$(".listSerialicon").removeClass("glyphicon-minus-sign").addClass("glyphicon-plus-sign");
+                    $(".offerlistSerialicon").removeClass("glyphicon-minus-sign").addClass("glyphicon-plus-sign");
+                    $("#icon_"+offergroupId).removeClass("glyphicon-plus-sign").addClass("glyphicon-minus-sign");
+                }
+              }
+         };
      
-    
         //////// third Layer...
-        $scope.tableRowExpanded = false;
-        $scope.tableRowIndexExpandedCurr = "";
-        $scope.tableRowIndexExpandedPrev = "";
-        $scope.storeIdExpanded = "";
-    
         $scope.dayDataCollapseFn = function (index) {
             $scope.dayDataCollapse = [];
             for (var i = 0; i < $scope.models.offergrouplist[index].campaigns[[index]].pages.length; i += 1) {
