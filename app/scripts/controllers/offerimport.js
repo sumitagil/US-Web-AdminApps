@@ -12,6 +12,7 @@ app.controller('offerimportCtrl', function ($scope,$http,$filter) {
                 $scope.errModal = true;
             }else{
                 $scope.errModal = false;
+                alert($scope.offercode);
             }
         };
 });

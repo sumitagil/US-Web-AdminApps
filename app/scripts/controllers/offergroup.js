@@ -3,502 +3,87 @@
 var app = angular.module('sandvikusaAdminAppsApp');
 
 app.controller('OfferGroupCtrl', function ($scope,$http,$filter) {
+        $scope.maindiv = false;    
         $scope.editing = false;
         $scope.showModal = false;
+        $scope.searchText = '';
+        $scope.models=[];
         
-        $scope.models = {
-          changeInfo: [],
-          searchText: '',
-          offergrouplist: [
-            {
-            "offergroupId": "12195",
-            "offergroupDesc": "Disney Max Choice Frozen $5.99BE DW6- Disney MAX choice 4 books $1.24 each / $2.99 and $5.99 Backend",
-            "Offers": [
-                    {
-                    "offerId": "19632221",
-                    "offerDescCode": "O",
-                    "displayOrder": 17,
-                    "itemSelected": "N",
-                    "isBonusBundled": "N",
-                    "displayInCart": "Y",
-                    "isBaseOffer": "N",
-                    "inUse": "Y",
-                    "specialText": ""
-                    },
-                    {
-                   "offerId": "19632222",
-                    "offerDescCode": "O",
-                    "displayOrder": 18,
-                    "itemSelected": "N",
-                    "isBonusBundled": "N",
-                    "displayInCart": "Y",
-                    "isBaseOffer": "N",
-                    "inUse": "Y",
-                    "specialText": ""
-                    },
-                    {
-                   "offerId": "19632223",
-                    "offerDescCode": "O",
-                    "displayOrder": 19,
-                    "itemSelected": "N",
-                    "isBonusBundled": "N",
-                    "displayInCart": "Y",
-                    "isBaseOffer": "N",
-                    "inUse": "Y",
-                    "specialText": ""
-                    },
-                    {
-                   "offerId": "19632224",
-                    "offerDescCode": "O",
-                    "displayOrder": 20,
-                    "itemSelected": "N",
-                    "isBonusBundled": "N",
-                    "displayInCart": "Y",
-                    "isBaseOffer": "N",
-                    "inUse": "Y",
-                    "specialText": ""
-                    },
-                    {
-                    "offerId": "19632225",
-                    "offerDescCode": "O",
-                    "displayOrder": 21,
-                    "itemSelected": "N",
-                    "isBonusBundled": "N",
-                    "displayInCart": "Y",
-                    "isBaseOffer": "N",
-                    "inUse": "Y",
-                    "specialText": ""
-                    },
-                    {
-                   "offerId": "19632226",
-                    "offerDescCode": "O",
-                    "displayOrder": 22,
-                    "itemSelected": "N",
-                    "isBonusBundled": "N",
-                    "displayInCart": "Y",
-                    "isBaseOffer": "N",
-                    "inUse": "Y",
-                    "specialText": ""
-                    },
-                    {
-                   "offerId": "19632227",
-                    "offerDescCode": "O",
-                    "displayOrder": 23,
-                    "itemSelected": "N",
-                    "isBonusBundled": "N",
-                    "displayInCart": "Y",
-                    "isBaseOffer": "N",
-                    "inUse": "Y",
-                    "specialText": ""
-                    },
-                    {
-                   "offerId": "19632228",
-                    "offerDescCode": "O",
-                    "displayOrder": 24,
-                    "itemSelected": "N",
-                    "isBonusBundled": "N",
-                    "displayInCart": "Y",
-                    "isBaseOffer": "N",
-                    "inUse": "Y",
-                    "specialText": ""
-                    }
-            ],
-            "campaigns": [
-                    {
-                    "campaignId": 12366,
-                    "CampaingDesc": "Disney Wonderful World of Reading",
-                    "CampaignCreditRule":"SBM",
-                    "CampaignShortNotes":"Disney MAX choice 4 books $1.24 each / $2.99 and $5.99 Backend",
-                    "Project":"DBU",
-                    "IsClubShopOffer":"Y",
-                    "pages":[
-                        {
-                        "PageId":12367,
-                        "PageName":"disney-max-4for124each299-sbm",
-                        "PageDesc":"disney-max-choice",
-                        "PageShortNotes":"Disney MAX choice 4books $1.24each/$2.99 and $5.99 Backend",
-                        "PageUrl":"https://disney.earlymoments.com/special_offer/offers-new.aspx?pid=12366&pgd=12367"
-                        },
-                        {
-                        "PageId":12368,
-                        "PageName":"disney-max-4for124each299-sbm",
-                        "PageDesc":"disney-max-choice",
-                        "PageShortNotes":"Disney MAX choice 4books $1.24each/$2.99 and $5.99 Backend",
-                        "PageUrl":"https://disney.earlymoments.com/special_offer/offers-new.aspx?pid=12366&pgd=12368"
-                        }
-                    ]
-                    },
-                    {
-                        "campaignId": 12365,
-                        "CampaingDesc": "Disney Wonderful World of Reading",
-                        "CampaignCreditRule":"SBM",
-                        "CampaignShortNotes":"Disney MAX choice 4 books $1.24 each / $2.99 and $5.99 Backend",
-                        "Project":"DBU",
-                        "IsClubShopOffer":"Y",
-                        "pages":[
-                            {
-                            "PageId":12369,
-                            "PageName":"disney-max-4for124each299-sbm",
-                            "PageDesc":"disney-max-choice",
-                            "PageShortNotes":"Disney MAX choice 4books $1.24each/$2.99 and $5.99 Backend",
-                            "PageUrl":"https://disney.earlymoments.com/special_offer/offers-new.aspx?pid=12366&pgd=12367"
-                            },
-                            {
-                            "PageId":12370,
-                            "PageName":"disney-max-4for124each299-sbm",
-                            "PageDesc":"disney-max-choice",
-                            "PageShortNotes":"Disney MAX choice 4books $1.24each/$2.99 and $5.99 Backend",
-                            "PageUrl":"https://disney.earlymoments.com/special_offer/offers-new.aspx?pid=12366&pgd=12368"
-                            }
-                        ]
-                    }
-             ]
-            },
-            
-            {
-            "offergroupId": "12196",
-            "offergroupDesc": "Seuss Max Choice $.79 ea Cat in the Hat - BW6",
-            "Offers": [
-                    {
-                    "offerId": "19631528",
-                    "offerDescCode": "O",
-                    "displayOrder": 1,
-                    "itemSelected": "N",
-                    "isBonusBundled": "N",
-                    "displayInCart": "Y",
-                    "isBaseOffer": "N",
-                    "inUse": "Y",
-                    "specialText": ""
-                    },
-                    {
-                   "offerId": "19631963",
-                    "offerDescCode": "O",
-                    "displayOrder": 2,
-                    "itemSelected": "N",
-                    "isBonusBundled": "N",
-                    "displayInCart": "Y",
-                    "isBaseOffer": "N",
-                    "inUse": "Y",
-                    "specialText": ""
-                    },
-                    {
-                   "offerId": "19631964",
-                    "offerDescCode": "O",
-                    "displayOrder": 3,
-                    "itemSelected": "N",
-                    "isBonusBundled": "N",
-                    "displayInCart": "Y",
-                    "isBaseOffer": "N",
-                    "inUse": "Y",
-                    "specialText": ""
-                    },
-                    {
-                   "offerId": "19631965",
-                    "offerDescCode": "O",
-                    "displayOrder": 4,
-                    "itemSelected": "N",
-                    "isBonusBundled": "N",
-                    "displayInCart": "Y",
-                    "isBaseOffer": "N",
-                    "inUse": "Y",
-                    "specialText": ""
-                    },
-                    {
-                    "offerId": "19631966",
-                    "offerDescCode": "O",
-                    "displayOrder": 5,
-                    "itemSelected": "N",
-                    "isBonusBundled": "N",
-                    "displayInCart": "Y",
-                    "isBaseOffer": "N",
-                    "inUse": "Y",
-                    "specialText": ""
-                    },
-                    {
-                   "offerId": "19631967",
-                    "offerDescCode": "O",
-                    "displayOrder": 6,
-                    "itemSelected": "N",
-                    "isBonusBundled": "N",
-                    "displayInCart": "Y",
-                    "isBaseOffer": "N",
-                    "inUse": "Y",
-                    "specialText": ""
-                    },
-                    {
-                   "offerId": "19631968",
-                    "offerDescCode": "O",
-                    "displayOrder": 7,
-                    "itemSelected": "N",
-                    "isBonusBundled": "N",
-                    "displayInCart": "Y",
-                    "isBaseOffer": "N",
-                    "inUse": "Y",
-                    "specialText": ""
-                    },
-                    {
-                   "offerId": "19631969",
-                    "offerDescCode": "O",
-                    "displayOrder": 8,
-                    "itemSelected": "N",
-                    "isBonusBundled": "N",
-                    "displayInCart": "Y",
-                    "isBaseOffer": "N",
-                    "inUse": "Y",
-                    "specialText": ""
-                    }
-            ],
-            "campaigns": [
-                    {
-                    "campaignId": 12367,
-                    "CampaingDesc": "Dr. Seuss™ & His Friends",
-                    "CampaignCreditRule":"SBM",
-                    "CampaignShortNotes":"Control: Max Choice 5 for $3.95 + 2 Bonus Books at $4.99",
-                    "Project":"BRU",
-                    "IsClubShopOffer":"Y",
-                    "pages":[
-                        {
-                        "PageId":12368,
-                        "PageName":"seuss-2015-sbm-5for395-599BE",
-                        "PageDesc":"seuss-max-choice",
-                        "PageShortNotes":"Seuss Winter Regular 5for595 noprem 499be",
-                        "PageUrl":"https://enrollments.earlymoments.com/seuss-winter-2014-regular-5for595-noprem-499be.aspx"
-                        }]
-                    }
-             ]
-            },
-              
-            {
-            "offergroupId": "12197",
-            "offergroupDesc": "Seuss Max Choice $.79 ea Cat in the Hat - BW6",
-            "Offers": [
-                    {
-                    "offerId": "19631531",
-                    "offerDescCode": "O",
-                    "displayOrder": 1,
-                    "itemSelected": "N",
-                    "isBonusBundled": "N",
-                    "displayInCart": "Y",
-                    "isBaseOffer": "N",
-                    "inUse": "Y",
-                    "specialText": ""
-                    },
-                    {
-                   "offerId": "19631532",
-                    "offerDescCode": "O",
-                    "displayOrder": 2,
-                    "itemSelected": "N",
-                    "isBonusBundled": "N",
-                    "displayInCart": "Y",
-                    "isBaseOffer": "N",
-                    "inUse": "Y",
-                    "specialText": ""
-                    },
-                    {
-                   "offerId": "19631533",
-                    "offerDescCode": "O",
-                    "displayOrder": 3,
-                    "itemSelected": "N",
-                    "isBonusBundled": "N",
-                    "displayInCart": "Y",
-                    "isBaseOffer": "N",
-                    "inUse": "Y",
-                    "specialText": ""
-                    },
-                    {
-                   "offerId": "19631534",
-                    "offerDescCode": "O",
-                    "displayOrder": 4,
-                    "itemSelected": "N",
-                    "isBonusBundled": "N",
-                    "displayInCart": "Y",
-                    "isBaseOffer": "N",
-                    "inUse": "Y",
-                    "specialText": ""
-                    }
-            ],
-            "campaigns": [
-                    {
-                    "campaignId": 12365,
-                    "CampaingDesc": "Dr. Seuss™ & His Friends",
-                    "CampaignCreditRule":"SBM",
-                    "CampaignShortNotes":"Control: Max Choice 5 for $3.95 + 2 Bonus Books at $4.99",
-                    "Project":"BRU",
-                    "IsClubShopOffer":"Y",
-                    "pages":[
-                        {
-                        "PageId":12366,
-                        "PageName":"seuss-2015-sbm-5for395-599BE",
-                        "PageDesc":"seuss-max-choice",
-                        "PageShortNotes":"Seuss Winter Regular 5for595 noprem 499be",
-                        "PageUrl":"https://enrollments.earlymoments.com/seuss-winter-2014-regular-5for595-noprem-499be.aspx"
-                        }]
-                    }
-             ]
-            },
-              
-            {
-            "offergroupId": "12198",
-            "offergroupDesc": "Seuss Max Choice $.79 ea Cat in the Hat - BW6",
-            "Offers": [
-                    {
-                    "offerId": "19631542",
-                    "offerDescCode": "O",
-                    "displayOrder": 1,
-                    "itemSelected": "N",
-                    "isBonusBundled": "N",
-                    "displayInCart": "Y",
-                    "isBaseOffer": "N",
-                    "inUse": "Y",
-                    "specialText": ""
-                    },
-                    {
-                   "offerId": "19631543",
-                    "offerDescCode": "O",
-                    "displayOrder": 2,
-                    "itemSelected": "N",
-                    "isBonusBundled": "N",
-                    "displayInCart": "Y",
-                    "isBaseOffer": "N",
-                    "inUse": "Y",
-                    "specialText": ""
-                    },
-                    {
-                   "offerId": "19631544",
-                    "offerDescCode": "O",
-                    "displayOrder": 3,
-                    "itemSelected": "N",
-                    "isBonusBundled": "N",
-                    "displayInCart": "Y",
-                    "isBaseOffer": "N",
-                    "inUse": "Y",
-                    "specialText": ""
-                    },
-                    {
-                   "offerId": "19631545",
-                    "offerDescCode": "O",
-                    "displayOrder": 4,
-                    "itemSelected": "N",
-                    "isBonusBundled": "N",
-                    "displayInCart": "Y",
-                    "isBaseOffer": "N",
-                    "inUse": "Y",
-                    "specialText": ""
-                    }
-            ],
-            "campaigns": [
-                    {
-                    "campaignId": 12369,
-                    "CampaingDesc": "Dr. Seuss™ & His Friends",
-                    "CampaignCreditRule":"SBM",
-                    "CampaignShortNotes":"Control: Max Choice 5 for $3.95 + 2 Bonus Books at $4.99",
-                    "Project":"BRU",
-                    "IsClubShopOffer":"Y",
-                    "pages":[
-                        {
-                        "PageId":12370,
-                        "PageName":"seuss-2015-sbm-5for395-599BE",
-                        "PageDesc":"seuss-max-choice",
-                        "PageShortNotes":"Seuss Winter Regular 5for595 noprem 499be",
-                        "PageUrl":"https://enrollments.earlymoments.com/seuss-winter-2014-regular-5for595-noprem-499be.aspx"
-                        }]
-                    }
-             ]
-            }
-            
-          ],
-          state: {
-            sortKey: 'offergroupId',
-            sortDirection: 'DEC' 
-          }
-        };
-       
-        /*$scope.offerGroupTableColumnDefinition = [
-              {
-                columnHeaderDisplayName: 'Offer Group Id',
-                displayProperty: 'offergroupId',
-                sortKey: 'offergroupId',
-                //columnSearchProperty: 'offergroupId',
-                width: '20em',
-                visible: true
-              },
-              {
-                columnHeaderDisplayName: 'Offer Group Desc',
-                displayProperty: 'offergroupDesc',
-                //columnSearchProperty: 'offergroupDesc',
-                visible: true
-              },
-              {
-                columnHeaderDisplayName: 'campaigns',
-                displayProperty: 'campaigns',
-                sortKey: 'campaigns',
-                //columnSearchProperty: 'campaigns',
-                visible: false
-              }
-            ];*/
+        //Add a function
+        /*$scope.rowExpanded = function (item) {
+            //console.log(item);
+            alert(item.offergroupId + ' row expanded');
+            $scope.models.offergrouplist.forEach(function (selectedItem) {
+                if (item.offergroupId != selectedItem.offergroupId) {
+                    $(".glyphicon-minus-sign").attr("ng-class","iconClasses.expand");
+                    $(".glyphicon-minus-sign").removeClass("glyphicon-minus-sign").addClass("glyphicon-plus-sign");                  
+                }
+            });
+        };*/
     
-        /////// second layer : offer soring..
+        $scope.getrecords = function(){
+            if($scope.searchText!=''){
+                   //Get All data
+                    var url = "http://beta.iservices.earlymoments.com/getSamsOfferGroups?token=741889E3-4565-40A1-982A-F15F7A923D72&campdesc="+$scope.searchText+"&format=json&callback=JSON_CALLBACK";
+                    console.log(url);
+                    $http.jsonp(url)
+                    .success(function(data) {
+                        $scope.results = data;
+                        if($scope.results.length > 0){
+                             $scope.maindiv = true;
+                             $scope.models = {
+                                              changeInfo: [],
+                                              searchText: $scope.searchText,
+                                              offergrouplist : $scope.results,
+                                              state: {
+                                                sortKey: 'offergroupId',
+                                                sortDirection: 'DEC' 
+                                              }
+                            };
+                            console.log($scope.models);
+                            $scope.offerGroupTableColumnDefinition = [
+                                                          {
+                                                            columnHeaderDisplayName: 'Offer Group Id',
+                                                            displayProperty: 'OfferGroupId',
+                                                            sortKey: 'OfferGroupId',
+                                                            width: '20em',
+                                                            visible: true
+                                                          },
+                                                          {
+                                                            columnHeaderDisplayName: 'Offer Group Desc',
+                                                            displayProperty: 'GroupDesc',
+                                                            visible: true
+                                                          },
+                                                          {
+                                                            columnHeaderDisplayName: 'campaigns',
+                                                            displayProperty: 'campaigns',
+                                                            sortKey: 'campaigns',
+                                                            visible: false
+                                                          }
+                                                        ];
+                        }
+                    }).error(function(){
+                        alert("Error");
+                    });   
+            }
+        }   
+    
+       
+    
+        //for second layer : offer soring..
         $scope.orderByField = 'offerId';
         $scope.reverseSort = false;
-    
-        /////// first Layer...
-         $scope.offertableRowExpanded = false;
-         $scope.offertableRowIndexExpandedCurr = "";
-         $scope.offertableRowIndexExpandedPrev = "";
-         $scope.offerstoreIdExpanded = "";
-        
-         $scope.tableRowExpanded = false;
-         $scope.tableRowIndexExpandedCurr = "";
-         $scope.tableRowIndexExpandedPrev = "";
-         $scope.storeIdExpanded = "";
-    
-         $scope.offerDataCollapseFn = function (index) {
-            $scope.offerDataCollapse = [];
-            for (var i = 0; i < $scope.models.offergrouplist.length; i += 1) {
-                $scope.offerDataCollapse.push(false);
-            }
-         };
-         $scope.selectTableRowOffer = function (index, offergroupId) {
-             if (typeof $scope.offerDataCollapse === 'undefined') {
-                 //alert("1.fn call");
-                $scope.offerDataCollapseFn(index);
-             } 
-             if ($scope.offertableRowExpanded === false && $scope.offertableRowIndexExpandedCurr === "" && $scope.offerstoreIdExpanded === "") {
-                  //alert("2.fn call"); 
-                  $scope.offertableRowIndexExpandedPrev = "";
-                  $scope.offertableRowExpanded = true;
-                  $scope.offertableRowIndexExpandedCurr = index;
-                  $scope.offerstoreIdExpanded = offergroupId;
-                  $scope.offerDataCollapse[index] = true;
-                  $("#icon_"+offergroupId).removeClass("glyphicon-plus-sign").addClass("glyphicon-minus-sign");
-              }
-             else if ($scope.offertableRowExpanded === true){
-                  if ($scope.offertableRowIndexExpandedCurr === index && $scope.offerstoreIdExpanded === offergroupId) {
-                     //alert("3.fn call");
-                    $scope.offertableRowExpanded = false;
-                    $scope.offertableRowIndexExpandedCurr = "";
-                    $scope.offerstoreIdExpanded = "";
-                    $scope.offerDataCollapse[index] = false;
-                    $scope.dayDataCollapseFn(index);
-                    $("#icon_"+offergroupId).removeClass("glyphicon-minus-sign").addClass("glyphicon-plus-sign");
-                } else {
-                     //alert("4.fn call");
-                    $scope.offertableRowIndexExpandedPrev = $scope.offertableRowIndexExpandedCurr;
-                    $scope.offertableRowIndexExpandedCurr = index;
-                    $scope.offerstoreIdExpanded = offergroupId;
-                    $scope.offerDataCollapse[$scope.offertableRowIndexExpandedPrev] = false;
-                    $scope.offerDataCollapse[$scope.offertableRowIndexExpandedCurr] = true;
-                    //$(".listSerialicon").removeClass("glyphicon-minus-sign").addClass("glyphicon-plus-sign");
-                    $(".offerlistSerialicon").removeClass("glyphicon-minus-sign").addClass("glyphicon-plus-sign");
-                    $("#icon_"+offergroupId).removeClass("glyphicon-plus-sign").addClass("glyphicon-minus-sign");
-                }
-              }
-         };
      
+    
         //////// third Layer...
+        $scope.tableRowExpanded = false;
+        $scope.tableRowIndexExpandedCurr = "";
+        $scope.tableRowIndexExpandedPrev = "";
+        $scope.storeIdExpanded = "";
+    
         $scope.dayDataCollapseFn = function (index) {
             $scope.dayDataCollapse = [];
-            for (var i = 0; i < $scope.models.offergrouplist[index].campaigns[[index]].pages.length; i += 1) {
+            for (var i = 0; i < $scope.models.offergrouplist[index].campaigns[[index]].OfferPages.length; i += 1) {
                 $scope.dayDataCollapse.push(false);
             }
         };

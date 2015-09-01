@@ -1,215 +1,214 @@
 <div class="col-md-12 bodyContentArea">
     
 <div class="input-group" style="width:20%; padding-bottom:1px;">
-    <input type="text" ng-model="models.searchText" class="form-control" placeholder="Search here" >
-    <span class="input-group-addon">
+    <form ng-submit="getrecords()">
+    <input type="text" ng-model="searchText" class="form-control" placeholder="Enter Campaign Desciption to Search">
+    <!--<span class="input-group-addon">
       <i class="glyphicon glyphicon-search"></i>
-    </span>
+    </span>-->
+    </form>
 </div>
     
-<table class="table table-hover table-condensed">
-    <thead class="levelOne">
-        <tr>
-            <th>#</th>
-            <th>Offer Group Id</th>
-            <th>Description</th>
-            <td style="display:none;">&nbsp;</td>
-        </tr>
-    </thead>
-    <tbody data-ng-repeat="item in models.offergrouplist" data-ng-switch on="offerDataCollapse[$index]">
-        <tr class="clickableRow">
-            <td data-ng-click="selectTableRowOffer($index, item.offergroupId)" class="listSerial">
-                <i id="icon_{{item.offergroupId}}" ng-class="iconClasses.expand" class="offerlistSerialicon ng-scope glyphicon glyphicon-plus-sign"></i>
-            </td>
-            <td class="listOffergroupId">{{item.offergroupId}}</td>
-            <td>{{item.offergroupDesc}}</td>
-            <td style="display:none;">{{item.campaigns}}</td>
-        </tr>
-        <tr data-ng-switch-when="true">
-            <td colspan="3">
-                <div>
-                  <ul class="nav nav-tabs tabTitle" role="tablist">
-                        <li role="presentation" class="active"><a showtab="" href="#offers" role="tab" data-toggle="tab">Offers</a></li>
-                        <li role="presentation"><a showtab="" href="#campaigns" role="tab" data-toggle="tab">Campaigns</a></li>
-                  </ul>
+  <!-- ========== Usage ========== -->
+  <div ng-show="maindiv">
+  <ad-table-lite table-name="offergrouplist"
+                 enable-column-search="false"
+                 column-definition="offerGroupTableColumnDefinition"
+                 local-data-source="models.offergrouplist"
+                 page-sizes="[2,5,10]"
+                 page-loader="methods.pageLoader"
+                 pagination-btn-group-classes="pagination pagination-sm"
+                 table-classes="table table-hover table-condensed table-striped table-bordered offerGroup"
+                 items-not-found-message="Records Not Found"
+                 snug-sort-icons="true"
+                 search-text="models.searchText"                
+                 row-expand-template="src/tablelite/docs/innertable.html"
+                 >
+   </ad-table-lite>
+   </div>
+  <!--row-expand-callback="rowExpanded"-->
+  <!-- ========== Usage ============ -->
+    
+    <script type="text/ng-template" id="src/tablelite/docs/innertable.html">
+        <div>
+          <ul class="nav nav-tabs tabTitle" role="tablist">
+                <li role="presentation" class="active"><a showtab="" href="#offers" role="tab" data-toggle="tab">Offers</a></li>
+                <li role="presentation"><a showtab="" href="#campaigns" role="tab" data-toggle="tab">Campaigns</a></li>
+          </ul>
 
-                  <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="offers">
-                      <table class="table table-hover table-condensed">
-                        <thead class="levelTwo">
-                            <tr>
-                                <th>#</th>
-                                <th>Offer Id
-                                    <a href="#offergroup" ng-click="orderByField='offerId'; reverseSort = !reverseSort">
-                                      <i ng-hide="orderByField == 'offerId'" class="glyphicon glyphicon-resize-vertical"></i>
-                                      <span ng-show="orderByField == 'offerId'">
-                                       <i ng-class="iconClasses.sortAscending" ng-show="!reverseSort" class="glyphicon glyphicon-chevron-up ng-hide"></i>
-                                       <i ng-class="iconClasses.sortDescending" ng-show="reverseSort" class="glyphicon glyphicon-chevron-down"></i>
-                                      </span>
-                                    </a>
-                                </th>
-                                <th>Description Code
-                                    <a href="#offergroup" ng-click="orderByField='offerDescCode'; reverseSort = !reverseSort">
-                                      <i ng-hide="orderByField == 'offerDescCode'" class="glyphicon glyphicon-resize-vertical"></i>
-                                      <span ng-show="orderByField == 'offerDescCode'">
-                                       <i ng-class="iconClasses.sortAscending" ng-show="!reverseSort" class="glyphicon glyphicon-chevron-up ng-hide"></i>
-                                       <i ng-class="iconClasses.sortDescending" ng-show="reverseSort" class="glyphicon glyphicon-chevron-down"></i>
-                                      </span>
-                                    </a>
-                                </th>
-                                <th>Display Order
-                                <a href="#offergroup" ng-click="orderByField='displayOrder'; reverseSort = !reverseSort">
-                                      <i ng-hide="orderByField == 'displayOrder'" class="glyphicon glyphicon-resize-vertical"></i>
-                                      <span ng-show="orderByField == 'displayOrder'">
-                                       <i ng-class="iconClasses.sortAscending" ng-show="!reverseSort" class="glyphicon glyphicon-chevron-up ng-hide"></i>
-                                       <i ng-class="iconClasses.sortDescending" ng-show="reverseSort" class="glyphicon glyphicon-chevron-down"></i>
-                                      </span>
-                                    </a>
-                                </th>
-                                <th>Is Selected</th>
-                                <th>Is Bonus Bundled</th>
-                                <th>Is In Cart</th>
-                                <th>Is Base Offer</th>
-                                <th class="smlTxtBxHead">Is Use</th>
-                                <th class="smlTxtBxHead">Special Text</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr data-ng-repeat="offerData in item.Offers | orderBy:orderByField:reverseSort">
-                                <td>{{$index+1}}</td>
-                                <td>{{offerData.offerId}}</td>
-                                <td class="smlTxtBx">{{offerData.offerDescCode}}</td>
-                                <td class="smlTxtBx">
-                                    <span editable-number="offerData.displayOrder" e-name="displayOrder" e-form="rowform" e-step="any" e-required>
-                                    {{offerData.displayOrder || 'Enter number'}}
-                                    </span>
-                                </td>
-                                <td class="smlTxtBx">
-                                    <span editable-select="offerData.itemSelected" e-name="itemSelected" e-form="rowform" e-ng-options="s.value as s.text for s in itemstatus">
-                                        {{showStatus(offerData.itemSelected,1)}}
-                                    </span>
-                                </td>
-                                <td class="smlTxtBx">
-                                    <span editable-select="offerData.isBonusBundled" e-name="isBonusBundled" e-form="rowform" e-ng-options="s.value as s.text for s in allstatus">
-                                        {{showStatus(offerData.isBonusBundled,2)}}
-                                    </span>
-                                </td>
-                                <td class="smlTxtBx">
-                                    <span editable-select="offerData.displayInCart" e-name="displayInCart" e-form="rowform" e-ng-options="s.value as s.text for s in allstatus" e-required>
-                                        {{showStatus(offerData.displayInCart,2)}}
-                                    </span>
-                                </td>
-                                <td class="smlTxtBx">
-                                    <span editable-select="offerData.isBaseOffer" e-name="isBaseOffer" e-form="rowform" e-ng-options="s.value as s.text for s in allstatus" e-required>
-                                         {{showStatus(offerData.isBaseOffer,2)}}
-                                    </span>
-                                </td>
-                                <td class="smlTxtBx">
-                                    <span editable-select="offerData.inUse" e-name="inUse" e-form="rowform" e-ng-options="s.value as s.text for s in allstatus" e-required>
-                                        {{showStatus(offerData.inUse,2)}}
-                                    </span>
-                                </td>
-                                <td class="smlTxtBx">
-                                    <span editable-text="offerData.specialText" e-maxlength="30" e-name="specialText" e-form="rowform" e-required>
-                                        {{offerData.specialText}} 
-                                    </span>
-                                </td>
-                                <td>
-                                    <form editable-form name="rowform" onbeforesave="saveUser($data, offerData.offerId)" ng-show="rowform.$visible" class="form-buttons form-inline">
-                                      <span ng-disabled="rowform.$waiting" class="btn btn-primary offerEditBtn">Save</span> 
-                                      <span ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-primary offerEditBtn">cancel</span>
-                                    </form> 
-                                    <div class="buttons" ng-show="!rowform.$visible">
-                                      <span ng-click="rowform.$show()" class="btn btn-primary offerEditBtn">Edit</span>
-                                    </div> 
-                                </td>
-                            </tr>
-                        </tbody>
-                        </table>
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="campaigns">
-                      <table class="table table-hover table-condensed">
-                          <thead class="levelTwo">
-                            <tr>
-                                <th>#</th>
-                                <th>Campaign Id</th>
-                                <th>Description</th>
-                                <th>Credit Rule</th>
-                                <th>Short Notes</th>
-                                <th>Project</th>
-                                <th>Design</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                          <tbody data-ng-repeat="campaignData in item.campaigns | filter : searchText" data-ng-switch on="dayDataCollapse[$index]">
-                            <tr class="clickableRow">
-                                <td data-ng-click="selectTableRow($index, campaignData.campaignId)" class="listSerial">
-                                    <i id="icon_{{campaignData.campaignId}}" ng-class="iconClasses.expand" class="listSerialicon ng-scope glyphicon glyphicon-plus-sign"></i>
-                                </td>
-                                <td class="listOffergroupId">{{campaignData.campaignId}}</td>
-                                <td>{{campaignData.CampaingDesc}}</td>
-                                <td>{{campaignData.CampaignCreditRule}}</td>
-                                <td>{{campaignData.CampaignShortNotes}}</td>
-                                <td>{{campaignData.Project}}</td>
-                                <td>
-                                    <span ng-if="campaignData.IsClubShopOffer=='Y'">Maxchoice</span>
-                                    <span ng-if="campaignData.IsClubShopOffer=='N'">Horizontal</span>
-                                </td>
-                                <td>
-                                    <span class="btn btn-primary offerEditBtn" ng-click="editCampaignData(campaignData,'View')">View</span>
-                                    <span class="btn btn-primary offerEditBtn" ng-click="editCampaignData(campaignData,'Edit')">Edit</span>
-                                </td>
-                            </tr>
-                            <tr data-ng-switch-when="true">
-                                <td colspan="8">
-                                    <div>
-                                    <ul class="nav nav-tabs tabTitle" role="tablist">
-                                        <li role="presentation" class="active"><a showtab="" href="#pages" role="tab" data-toggle="tab">Pages</a></li>
-                                    </ul>
-
-                                    <div class="tab-content">
-                                        <div role="tabpanel" class="tab-pane active" id="offers">
-                                          <table class="table table-hover table-condensed">
-                                            <thead class="levelTwo">
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>Page Id</th>
-                                                    <th>Name</th>
-                                                    <th>Description</th>
-
-                                                    <th>Short Notes</th>
-                                                    <th>Page Url</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr data-ng-repeat="pageData in item.campaigns[$index].pages">
-                                                    <td>{{$index+1}}</td>
-                                                    <td>{{pageData.PageId}}</td>
-                                                    <td>{{pageData.PageName}}</td>
-                                                    <td>{{pageData.PageDesc}}</td>
-                                                    <td>{{pageData.PageShortNotes}}</td>
-                                                    <td><a href="{{pageData.PageUrl}}" target="_blank">Click here</a></td>
-                                                    <td><span class="btn btn-primary offerEditBtn">Edit</span></td>
-                                                </tr>
-                                            </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-            </td>
-        </tr>
-    </tbody>
-    </table>
-       
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="offers">
+              <table class="table table-hover table-condensed">
+                <thead class="levelTwo">
+                    <tr>
+                        <th>#</th>
+                        <th>Offer Id
+                            <a href="#offergroup" ng-click="orderByField='offerId'; reverseSort = !reverseSort">
+                              <i ng-hide="orderByField == 'offerId'" class="glyphicon glyphicon-resize-vertical"></i>
+                              <span ng-show="orderByField == 'offerId'">
+                               <i ng-class="iconClasses.sortAscending" ng-show="!reverseSort" class="glyphicon glyphicon-chevron-up ng-hide"></i>
+                               <i ng-class="iconClasses.sortDescending" ng-show="reverseSort" class="glyphicon glyphicon-chevron-down"></i>
+                              </span>
+                            </a>
+                        </th>
+                        <th>Description Code
+                            <a href="#offergroup" ng-click="orderByField='offerDescCode'; reverseSort = !reverseSort">
+                              <i ng-hide="orderByField == 'offerDescCode'" class="glyphicon glyphicon-resize-vertical"></i>
+                              <span ng-show="orderByField == 'offerDescCode'">
+                               <i ng-class="iconClasses.sortAscending" ng-show="!reverseSort" class="glyphicon glyphicon-chevron-up ng-hide"></i>
+                               <i ng-class="iconClasses.sortDescending" ng-show="reverseSort" class="glyphicon glyphicon-chevron-down"></i>
+                              </span>
+                            </a>
+                        </th>
+                        <th>Display Order
+                        <a href="#offergroup" ng-click="orderByField='displayOrder'; reverseSort = !reverseSort">
+                              <i ng-hide="orderByField == 'displayOrder'" class="glyphicon glyphicon-resize-vertical"></i>
+                              <span ng-show="orderByField == 'displayOrder'">
+                               <i ng-class="iconClasses.sortAscending" ng-show="!reverseSort" class="glyphicon glyphicon-chevron-up ng-hide"></i>
+                               <i ng-class="iconClasses.sortDescending" ng-show="reverseSort" class="glyphicon glyphicon-chevron-down"></i>
+                              </span>
+                            </a>
+                        </th>
+                        <th>Is Selected</th>
+                        <th>Is Bonus Bundled</th>
+                        <th>Is In Cart</th>
+                        <th>Is Base Offer</th>
+                        <th class="smlTxtBxHead">Is Use</th>
+                        <th class="smlTxtBxHead">Special Text</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="offerData in item.offers | orderBy:orderByField:reverseSort">
+                        <td>{{$index+1}}</td>
+                        <td>{{offerData.OfferId}}</td>
+                        <td class="smlTxtBx">{{offerData.OfferDescCode}}</td>
+                        <td class="smlTxtBx">
+                            <span editable-number="offerData.DisplayOrder" e-name="DisplayOrder" e-form="rowform" e-step="any" e-required>
+                            {{offerData.DisplayOrder || 'Enter number'}}
+                            </span>
+                        </td>
+                        <td class="smlTxtBx">
+                            <span editable-select="offerData.ItemSelected" e-name="ItemSelected" e-form="rowform" e-ng-options="s.value as s.text for s in itemstatus">
+                                {{showStatus(offerData.ItemSelected,1)}}
+                            </span>
+                        </td>
+                        <td class="smlTxtBx">
+                            <span editable-select="offerData.IsBonusBundled" e-name="IsBonusBundled" e-form="rowform" e-ng-options="s.value as s.text for s in allstatus">
+                                {{showStatus(offerData.IsBonusBundled,2)}}
+                            </span>
+                        </td>
+                        <td class="smlTxtBx">
+                            <span editable-select="offerData.DisplayInCart" e-name="DisplayInCart" e-form="rowform" e-ng-options="s.value as s.text for s in allstatus" e-required>
+                                {{showStatus(offerData.DisplayInCart,2)}}
+                            </span>
+                        </td>
+                        <td class="smlTxtBx">
+                            <span editable-select="offerData.IsBaseOffer" e-name="IsBaseOffer" e-form="rowform" e-ng-options="s.value as s.text for s in allstatus" e-required>
+                                 {{showStatus(offerData.IsBaseOffer,2)}}
+                            </span>
+                        </td>
+                        <td class="smlTxtBx">
+                            <span editable-select="offerData.InUse" e-name="InUse" e-form="rowform" e-ng-options="s.value as s.text for s in allstatus" e-required>
+                                {{showStatus(offerData.InUse,2)}}
+                            </span>
+                        </td>
+                        <td class="smlTxtBx">
+                            <span editable-text="offerData.SpecialText" e-maxlength="30" e-name="SpecialText" e-form="rowform" e-required>
+                                {{offerData.SpecialText}} 
+                            </span>
+                        </td>
+                        <td>
+                            <form editable-form name="rowform" onbeforesave="saveUser($data, offerData.OfferId)" ng-show="rowform.$visible" class="form-buttons form-inline">
+                              <span ng-disabled="rowform.$waiting" class="btn btn-primary offerEditBtn">Save</span> 
+                              <span ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-primary offerEditBtn">cancel</span>
+                            </form> 
+                            <div class="buttons" ng-show="!rowform.$visible">
+                              <span ng-click="rowform.$show()" class="btn btn-primary offerEditBtn">Edit</span>
+                            </div> 
+                        </td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="campaigns">
+              <table class="table table-hover table-condensed">
+                <thead class="levelTwo">
+                    <tr>
+                        <th>#</th>
+                        <th>Campaign Id</th>
+                        <th>Description</th>
+                        <th>Credit Rule</th>
+                        <th>Short Notes</th>
+                        <th>Project</th>
+                        <th>Design</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                  <tbody data-ng-repeat="campaignData in item.campaigns | filter : searchText" data-ng-switch on="dayDataCollapse[$index]">
+                    <tr class="clickableRow">
+                        <td data-ng-click="selectTableRow($index, campaignData.CampaignId)" class="listSerial">
+                            <i id="icon_{{campaignData.CampaignId}}" ng-class="iconClasses.expand" class="listSerialicon ng-scope glyphicon glyphicon-plus-sign"></i>
+                        </td>
+                        <td class="listOffergroupId">{{campaignData.CampaignId}}</td>
+                        <td>{{campaignData.CampaignDesc}}</td>
+                        <td>{{campaignData.CreditRule}}</td>
+                        <td>{{campaignData.ShortNotes}}</td>
+                        <td>{{campaignData.Project}}</td>
+                        <td>
+                            <span ng-if="campaignData.IsClubShopOffer=='Y'">Maxchoice</span>
+                            <span ng-if="campaignData.IsClubShopOffer=='N'">Horizontal</span>
+                        </td>
+                        <td>
+							<span class="btn btn-primary offerEditBtn" ng-click="editCampaignData(campaignData,'View')">View</span>
+							<span class="btn btn-primary offerEditBtn" ng-click="editCampaignData(campaignData,'Edit')">Edit</span>
+						</td>
+                    </tr>
+                    <tr data-ng-switch-when="true">
+                        <td colspan="8">
+                            <div>
+                            <ul class="nav nav-tabs tabTitle" role="tablist">
+                                <li role="presentation" class="active"><a showtab="" href="#pages" role="tab" data-toggle="tab">Pages</a></li>
+                            </ul>
+                            
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="offers">
+                                  <table class="table table-hover table-condensed">
+                                    <thead class="levelTwo">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Page Id</th>
+                                            <th>Name</th>
+                                            <th>Description</th>
+                                            <th>Short Notes</th>
+                                            <th>Page Url</th>
+											<th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr data-ng-repeat="pageData in item.campaigns[$index].OfferPages">
+                                            <td>{{$index+1}}</td>
+                                            <td>{{pageData.PageId}}</td>
+                                            <td>{{pageData.PageName}}</td>
+                                            <td>{{pageData.PageDesc}}</td>
+                                            <td>{{pageData.PageShortNotes}}</td>
+                                            <td><a href="{{pageData.PageUrl}}" target="_blank">Click here</a></td>
+											<td><span class="btn btn-primary offerEditBtn">Edit</span></td>
+                                        </tr>
+                                    </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+         </div>
+        </div>
+    </script>
+    
 </div>
 
 
