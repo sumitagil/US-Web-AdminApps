@@ -64,6 +64,10 @@ var app = angular.module('sandvikusaAdminAppsApp', [
         templateUrl: 'views/offerimport.html',
         controller: 'offerimportCtrl',
       })
+    .when('/customerservice', {
+        templateUrl: 'views/customerservice.html',
+        controller: 'customerserviceCtrl',
+      })
     .otherwise({
         redirectTo: '/pages'
     });
@@ -94,7 +98,7 @@ app.run(function($rootScope, $location, $cookieStore, $http) {
             if($location.path() === '/pages' || $location.path() === '/testkendo'){
                 $rootScope.opendiv = 'reports';
             }
-            else if($location.path() === '/orderforms' || $location.path() === '/promolist' || $location.path() === '/offergroup' || $location.path() === '/promocode' || $location.path() === '/insertorderforms' || $location.path() === '/offerimport'){
+            else if($location.path() === '/orderforms' || $location.path() === '/promolist' || $location.path() === '/offergroup' || $location.path() === '/promocode' || $location.path() === '/insertorderforms' || $location.path() === '/offerimport' || $location.path() === '/customerservice'){
                 $rootScope.opendiv = 'offersetup';
             }
             else{

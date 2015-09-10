@@ -1,0 +1,56 @@
+<div class="col-md-10 col-md-offset-1 formBox">
+    <form class="form-inline">
+        <div id="first-half" ng-show="showdetailsdiv">
+            <div class="form-group">
+                <input type="text" class="form-control" ng-model="billingname" placeholder="Billing Name">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" ng-model="vouchercode" placeholder="Voucher Code">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" ng-model="cartid" placeholder="Cart Id">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" ng-model="promotioncode" placeholder="Promotion Code">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" ng-model="customerno" placeholder="Customer Number">
+            </div>
+        </div>
+        <div id="second-half" class="marginTop10">
+            <div class="form-group">
+                <div class="input-group date" id="datetimepicker1">
+                    <input type="text" class="form-control" ng-model="startdate" placeholder="Start Date" />
+                    <span class="input-group-addon"><span class="fa fa-calendar"></span>
+                    </span>
+                </div>
+             </div> 
+             <div class="form-group" style="margin-right:5px;">  
+                <label>to</label>
+             </div>
+             <div class="form-group">   
+                <div class="input-group date" id="datetimepicker2">
+                    <input type="text" class="form-control" ng-model="enddate" placeholder="End Date"/>
+                    <span class="input-group-addon"><span class="fa fa-calendar"></span>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group"></div>
+            <div class="form-group">
+                <input type="text" class="form-control" ng-model="orderconfirm" placeholder="Order Confirmation">
+            </div>
+            <div class="form-group">    
+                <input type="email" class="form-control" ng-model="emailaddress" placeholder="Email Address">
+            </div>
+            <div class="form-group"><button type="button" class="btn btn-success">Submit</button></div>
+        </div>
+        <table class="marginTop10" width="100%">
+            <tr>
+                <td align="center">
+                    <button type="button" ng-show="showdetailsdiv" class="glyphicon glyphicon-chevron-up"  ng-click="showmore('S')"></button>
+                    <button type="button" ng-hide="showdetailsdiv" class="glyphicon glyphicon-chevron-down"  ng-click="showmore('D')"></button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>

@@ -64,7 +64,8 @@
                         <li class="{{getClass('/orderforms')}}" ng-class="{active: $location.path() == '/orderforms'}"><a ng-href="#/orderforms">Order Forms</a></li>
                         <li class="{{getClass('/promolist')}}" ng-class="{active: $location.path() == '/promolist'}"><a ng-href="#/promolist">Promo Mapping</a></li>
                         <li class="{{getClass('/offergroup')}}" ng-class="{active: $location.path() == '/offergroup'}"><a ng-href="#/offergroup">Offer Group</a></li>  
-                        <li class="{{getClass('/offerimport')}}" ng-class="{active: $location.path() == '/offerimport'}"><a ng-href="#/offerimport">Offer Import</a></li> 
+                        <li class="{{getClass('/offerimport')}}" ng-class="{active: $location.path() == '/offerimport'}"><a ng-href="#/offerimport">Offer Import</a></li>
+                        <li class="{{getClass('/customerservice')}}" ng-class="{active: $location.path() == '/customerservice'}"><a ng-href="#/customerservice">Customer Orders</a></li>
                     </ul>
                 </nav>
             </div>
@@ -126,6 +127,7 @@
     <script src="scripts/controllers/insertcampaigns.js"></script>
     <script src="scripts/controllers/login.js"></script>
     <script src="scripts/controllers/offerimport.js"></script>
+    <script src="scripts/controllers/customerservice.js"></script>
     
     <script src="scripts/app-services/authentication.service.js"></script>
     <script src="scripts/app-services/flash.service.js"></script>
@@ -134,6 +136,7 @@
     <script src="http://ckeditor.com/apps/ckeditor/4.2/ckeditor.js"></script>
     <script src="scripts/ng-table.js"></script>     
     <script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.0.js"></script>
+    <script src="scripts/js/bootstrap-datetimepicker.min.js"></script>
     <!-- endbuild -->
 </body>
 </html>

@@ -2,12 +2,13 @@
 
 var app = angular.module('sandvikusaAdminAppsApp');
 
-app.controller('OfferGroupCtrl', function ($scope,$http,$filter) {
+app.controller('OfferGroupCtrl', function ($scope,$http,$filter,$route) {
         $scope.maindiv = false;    
         $scope.editing = false;
         $scope.showModal = false;
         $scope.searchText = '';
         $scope.models=[];
+        angular.element(".msg").html("");
         
         //Add a function
         /*$scope.rowExpanded = function (item) {
@@ -21,11 +22,11 @@ app.controller('OfferGroupCtrl', function ($scope,$http,$filter) {
             });
         };*/
     
-        $scope.getrecords = function(){
-            if($scope.searchText!=''){
+        //$scope.getrecords = function(){
+            //if($scope.searchText!=''){
                    //Get All data
+                    $scope.searchText='MaxChoice 5 for 3.95';
                     var url = "http://beta.iservices.earlymoments.com/getSamsOfferGroups?token=741889E3-4565-40A1-982A-F15F7A923D72&campdesc="+$scope.searchText+"&format=json&callback=JSON_CALLBACK";
-                    console.log(url);
                     $http.jsonp(url)
                     .success(function(data) {
                         $scope.results = data;
@@ -40,7 +41,6 @@ app.controller('OfferGroupCtrl', function ($scope,$http,$filter) {
                                                 sortDirection: 'DEC' 
                                               }
                             };
-                            console.log($scope.models);
                             $scope.offerGroupTableColumnDefinition = [
                                                           {
                                                             columnHeaderDisplayName: 'Offer Group Id',
@@ -65,8 +65,8 @@ app.controller('OfferGroupCtrl', function ($scope,$http,$filter) {
                     }).error(function(){
                         alert("Error");
                     });   
-            }
-        }   
+            //}
+       // }   
     
        
     
@@ -83,7 +83,7 @@ app.controller('OfferGroupCtrl', function ($scope,$http,$filter) {
     
         $scope.dayDataCollapseFn = function (index) {
             $scope.dayDataCollapse = [];
-            for (var i = 0; i < $scope.models.offergrouplist[index].campaigns[[index]].OfferPages.length; i += 1) {
+            for (var i = 0; i < $scope.models.offergrouplist[index].campaigns[index].OfferPages.length; i += 1) {
                 $scope.dayDataCollapse.push(false);
             }
         };
@@ -153,28 +153,117 @@ app.controller('OfferGroupCtrl', function ($scope,$http,$filter) {
     
     //Edit campaign data..
     $scope.editCampaignData = function(campaignData,action){
+            angular.element(".msg").html("");    
             $scope.showModal = !$scope.showModal;
             $scope.actionVal=false;
             $scope.action = action;
-            $scope.campaignId = campaignData.campaignId;
-            $scope.CampaingDesc = campaignData.CampaingDesc;
-            $scope.CampaignCreditRule = campaignData.CampaignCreditRule;
-            $scope.CampaignShortNotes = campaignData.CampaignShortNotes;
+            $scope.campaignDatas = angular.copy(campaignData);
+        
+            /*$scope.CampaignId = campaignData.CampaignId;
+            $scope.OfferGroupId = campaignData.OfferGroupId;        
+            $scope.CampaignDesc = campaignData.CampaignDesc;
+            $scope.CreditRule = campaignData.CreditRule;
+            $scope.DefaultPromoCode = campaignData.DefaultPromoCode;
+            $scope.EmailTemplate = campaignData.EmailTemplate;
+            $scope.TAC = campaignData.TAC;
+            $scope.ShortNotes = campaignData.ShortNotes;
             $scope.Project = campaignData.Project;
             $scope.IsClubShopOffer = campaignData.IsClubShopOffer;
+            $scope.baseOfrClub = campaignData.baseOfrClub;
+            $scope.IntroCount = campaignData.IntroCount;
+            $scope.maxItemsAllowedInCart = campaignData.maxItemsAllowedInCart;
+            $scope.shippingChargeId = campaignData.shippingChargeId;
+            $scope.upsellId = campaignData.upsellId;
+            $scope.freeBooksCount = campaignData.freeBooksCount;
+            $scope.isActice = campaignData.isActice;
+            $scope.opt_out = campaignData.opt_out;
+            $scope.conf_pg_tac = campaignData.conf_pg_tac;
+            $scope.billPlan = campaignData.billPlan;
+            $scope.special_text = campaignData.special_text;
+            $scope.title = campaignData.title;
+            $scope.ccOnBMConfirm = campaignData.ccOnBMConfirm;
+            $scope.applyEnhancedCTI = campaignData.applyEnhancedCTI;
+            $scope.applyDupeCheck = campaignData.applyDupeCheck;
+            $scope.campaign_type = campaignData.campaign_type;
+            $scope.details = campaignData.details;
+            $scope.useLitlePaymentService = campaignData.useLitlePaymentService;
+            $scope.numberOfShipments = campaignData.numberOfShipments;
+            $scope.autoRenewal = campaignData.autoRenewal;
+            $scope.baseReleaseDate = campaignData.baseReleaseDate;
+            $scope.splBookDispPropId = campaignData.splBookDispPropId;*/ 
+            
             if(action==='View') $scope.actionVal=true;
-            //alert(action+' changed');
     };
+    
+    //Update Campaign Data...
     $scope.updateCampaignData= function() {
-        var campaignData = {'campaignId':this.campaignId,
-                            'CampaingDesc':this.CampaingDesc,
-                            'CampaignCreditRule':this.CampaignCreditRule,
-                            'CampaignShortNotes':this.CampaignShortNotes,
-                            'Project':this.Project,
-                            'IsClubShopOffer':this.IsClubShopOffer
+        var campaignData = {
+                            'token':'741889E3-4565-40A1-982A-F15F7A923D72',
+                            'CampaignId':this.campaignDatas.CampaignId,
+                            'OfferGroupId':this.campaignDatas.OfferGroupId,
+                            'CampaignDesc':this.campaignDatas.CampaignDesc,
+                            'CreditRule':this.campaignDatas.CreditRule,
+                            'ShortNotes':this.campaignDatas.ShortNotes,
+                            'Project':this.campaignDatas.Project,
+                            'TAC':encodeURIComponent(this.campaignDatas.TAC)
                            };
-        //alert("please wait...");
-        this.editCampaignData(campaignData,'View');
+        var url = "http://beta.iservices.earlymoments.com/updatecampaigndetails?callback=JSON_CALLBACK";
+        $http.jsonp(encodeURI(url),{params : campaignData})
+        .success(function (data, status, headers, config) {
+            alert("Update successfully");
+        }).error(function (data, status, headers, config) {
+             alert("Error to update");
+        }); 
+    };
+    
+    //Edit Offer Data...
+    $scope.editOfferData = function(offerData,action){
+            $scope.showOfferModal = !$scope.showOfferModal;
+            $scope.actionVal=false;
+            $scope.action = action;
+            $scope.OfferId = offerData.OfferId;
+            $scope.OfferDescCode = offerData.OfferDescCode;
+            $scope.DisplayOrder = offerData.DisplayOrder;
+            $scope.ItemSelected = offerData.ItemSelected;
+            $scope.IsBonusBundled = offerData.IsBonusBundled;
+            $scope.DisplayInCart = offerData.DisplayInCart;
+            $scope.IsBaseOffer = offerData.IsBaseOffer;
+            $scope.InUse = offerData.InUse;
+            $scope.SpecialText = offerData.SpecialText;
+            if(action==='View') $scope.actionVal=true;
+    };
+    
+    //Edit Page Data...
+    $scope.editPageData = function(pageData,action){
+            $scope.showPageModal = !$scope.showPageModal;
+            $scope.actionVal=false;
+            $scope.action = action;
+            $scope.pageData = angular.copy(pageData);
+            if(action==='View') $scope.actionVal=true;
+    };
+    
+    //Update Page Data...
+     $scope.updatePageData= function() {
+        var pageData = {
+                            'token':'741889E3-4565-40A1-982A-F15F7A923D72',
+                            'CampaignId':this.pageData.CampaignId,
+                            'PageId':this.pageData.PageId,
+                            'PageName':this.pageData.PageName,
+                            'PageDesc':this.pageData.PageDesc,
+                            'PayOnForm':this.pageData.PayOnForm,
+                            'PageShortNotes':this.pageData.PageShortNotes,
+                            'PageUrl':this.pageData.PageUrl
+                           };
+        var url = "http://beta.iservices.earlymoments.com/updatepagedetails?callback=JSON_CALLBACK";
+        $http.jsonp(encodeURI(url),{params : pageData})
+        .success(function (data, status, headers, config) {
+            //alert("Update successfully");
+            angular.element(".msg").html("<b>Update successfully</b>");
+            $scope.showPageModal=false;
+            //$route.reload();
+        }).error(function (data, status, headers, config) {
+             alert("Error to update");
+        }); 
     };
     
 });

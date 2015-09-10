@@ -19,7 +19,7 @@ app.controller('promocodeCtrl', function ($scope,$http,$location,$modal) {
             
             $scope.pageids = "";
             $scope.msg="";          
-            $scope.insertloading = true;
+            $scope.insertloading = true; 
         
             //All Campaign Ids...
             $http.jsonp("http://beta.iservices.earlymoments.com/getcampaignlist?token=741889E3-4565-40A1-982A-F15F7A923D72&format=json&callback=JSON_CALLBACK")
