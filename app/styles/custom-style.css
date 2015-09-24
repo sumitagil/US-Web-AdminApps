@@ -68,8 +68,8 @@ fieldset[disabled] .form-control, .campaigns .form-control[disabled], .campaigns
 .campaigns .form-group{margin-bottom: 12px;}
 .campaigns input,.campaigns select{height: 30px;}
 .campaigns textarea{height: 94px;}
-.campaignModal .modal-header{background-color:#3E7AAE; color:#fff; padding: 10px 15px; -webkit-border-radius:4px 4px 0 0;  -moz-border-radius:4px 4px 0 0; border-radius:4px 4px 0 0;}
-.campaignModal .modal-header .close{color:#fff; opacity: 1;}
+.campaignModal .modal-header{ padding: 10px 15px; -webkit-border-radius:4px 4px 0 0;  -moz-border-radius:4px 4px 0 0; border-radius:4px 4px 0 0;}
+.campaignModal .modal-header .close{color:#000; opacity: 1;}
 .campaignModal .modal-body{background-color: #F9F9F9;}
 .loadingModal{height: 100%;}
 .loadingModal .modal-content{top: 30% !important;}

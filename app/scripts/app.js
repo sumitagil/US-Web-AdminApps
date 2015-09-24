@@ -18,10 +18,11 @@ var app = angular.module('sandvikusaAdminAppsApp', [
                         'ngTable',
                         'ui.bootstrap',
                         'adaptv.adaptStrap',
-                        'xeditable'
+                        'xeditable',
+                        'angularUtils.directives.dirPagination'
                       ]);
 
-  app.config(function ($routeProvider) {
+  app.config(function ($routeProvider) { 
     $routeProvider
      .when('/orderforms', {
         templateUrl: 'views/orderforms.html',
@@ -72,6 +73,10 @@ var app = angular.module('sandvikusaAdminAppsApp', [
         templateUrl: 'views/test-offergroup.html',
         controller: 'testoffergroupCtrl',
       })
+	  .when('/salesforce', {
+        templateUrl: 'views/salesforce-management.html',
+        controller: 'salesforceCtrl',
+      })
     .otherwise({
         redirectTo: '/pages'
     });
@@ -99,11 +104,14 @@ app.run(function($rootScope, $location, $cookieStore, $http) {
                 $location.path('/login');
             }
             
-            if($location.path() === '/pages' || $location.path() === '/testkendo'){
+            if($location.path() === '/pages'){
                 $rootScope.opendiv = 'reports';
             }
             else if($location.path() === '/orderforms' || $location.path() === '/promolist' || $location.path() === '/offergroup' || $location.path() === '/promocode' || $location.path() === '/insertorderforms' || $location.path() === '/offerimport' || $location.path() === '/customerservice'){
                 $rootScope.opendiv = 'offersetup';
+            }
+			else if($location.path() === '/salesforce'){
+                $rootScope.opendiv = 'marketting';
             }
             else{
                 $rootScope.opendiv = '';

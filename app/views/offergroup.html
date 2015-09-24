@@ -8,10 +8,7 @@
     </span>
      
 </div>
- <!--<div style="float:left;padding-left:15px;"  ng-show="loading"> <img src="../images/loading.gif" ><span class="loading">LOADING...</span></div>
-<div ng-show="loading" style="position: fixed; left: 50%; top: 50%;">
-    <img src="https://www.drupal.org/files/issues/ajax-loader.gif"></img>
-</div>-->
+ 
   <!-- ========== Usage ========== -->
 <div style="clear:both"></div>
   <div ng-show="maindiv">
@@ -223,7 +220,7 @@
 <modal title="Campaigns" visible="showModal" rel="modal-lg">
     <div class="row">
     <div class="col-md-12 campaigns">
-    
+    <p><input type="button" class="btn btn-primary btn-sm" ng-click="editCampaignData(campaignDatas,'changeview')" value="Edit" ng-show="actionVal"></p>
     <form name="campaignEditform" role="form" ng-submit="updateCampaignData()">
         
         <div class="row">
@@ -403,7 +400,7 @@
         <input type="hidden" ng-model="campaignDatas.CampaignId" /> 
         <input type="hidden" ng-model="campaignDatas.OfferGroupId" /> 
         <input type="submit" class="btn btn-primary btn-sm" ng-hide="actionVal" value="Save" />
-        <button type="button" class="btn btn-default btn-sm" ng-hide="actionVal" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-default btn-sm" ng-hide="actionVal" data-dismiss="modal">Close</button>
     </div>
     
     </form>
@@ -476,6 +473,7 @@
 <modal title="Pages" visible="showPageModal" rel="">
     <div class="row">
         <div class="col-md-12 campaigns">
+            <p><input type="button" class="btn btn-primary btn-sm" ng-click="editCampaignData(campaignDatas,'changeview')" value="Edit" ng-show="actionVal"></p>
             <form name="pageEditform" role="form" ng-submit="updatePageData()">
               <div class="form-group">
                     <label for="PageName">Page Name</label>
@@ -503,9 +501,8 @@
               <input type="hidden" ng-model="pageData.CampaignId" ng-readonly="actionVal" /> 
               <input type="hidden" ng-model="pageData.PageId" ng-readonly="actionVal" /> 
               <input type="submit" class="btn btn-primary btn-sm" ng-hide="actionVal" value="Save" />
-              <button type="button" class="btn btn-default btn-sm" ng-hide="actionVal" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-default btn-sm" ng-hide="actionVal" data-dismiss="modal">Close</button>
             </form>
-            <p class="msg" style="color:green"></p>
         </div>
     </div>
 </modal>
@@ -515,11 +512,21 @@
 <modal title="" visible="loading" rel="modal-sm loadingModal">
     <div class="row">
         <div class="col-md-12 text-center">
-         <img src="http://preloaders.net/images/ajax-loader.gif" style="top:50%;"></img>
+         <img src="http://preloaders.net/images/ajax-loader.gif" style="top:50%;"/>
         </div>
     </div>    
 </modal>
 <!--modal end 4-->
+
+<!--modal 5-->
+<modal title="" visible="showmsgmodal" rel="modal-sm loadingModal">
+    <div class="row">
+        <div class="col-md-12 text-center">
+         <p id="msgcontent"></p>
+        </div>
+    </div>    
+</modal>
+<!--modal end 5-->
 
 <style>
 .offerGroup thead tr:first-child {

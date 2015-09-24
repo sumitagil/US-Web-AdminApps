@@ -42,8 +42,7 @@
                         <ul class="dropdown-menu" role="menu">
                             <li><a ng-href="#/reports" ng-click="selectdiv('reports')">Reports</a></li>
                             <li><a ng-href="#/orderforms" ng-click="selectdiv('offersetup')">Offer Setup</a></li>
-                            <!--<li><a ng-href="#">Vendors</a></li>
-                            <li><a ng-href="#/checkpage">Check Page</a></li>-->
+							<li><a ng-href="#/salesforce" ng-click="selectdiv('marketting')">Marketting</a></li>
                         </ul>
                         
                         <a ng-href="#/login"><button type="button" class="btn btn-primary marginLeft5" ng-class="{active: $location.path() === '/login'}"><span ng-show="loggedIn">Logout</span></button></a>
@@ -66,6 +65,9 @@
                         <li class="{{getClass('/offergroup')}}" ng-class="{active: $location.path() == '/offergroup'}"><a ng-href="#/offergroup">Offer Group</a></li>  
                         <li class="{{getClass('/offerimport')}}" ng-class="{active: $location.path() == '/offerimport'}"><a ng-href="#/offerimport">Offer Import</a></li>
                         <li class="{{getClass('/customerservice')}}" ng-class="{active: $location.path() == '/customerservice'}"><a ng-href="#/customerservice">Customer Orders</a></li>
+                    </ul>
+                    <ul ng-if="opendiv == 'marketting'">
+                        <li class="{{getClass('/salesforce')}}" ng-class="{active: $location.path() == '/salesforce'}"><a ng-href="#/salesforce">Sales Force Management</a></li>
                     </ul>
                 </nav>
             </div>
@@ -114,6 +116,7 @@
     <!-- endbower -->
     <script src="scripts/js/xeditable.js"></script>
     <link href="styles/xeditable.css" rel="stylesheet">
+    <link href="styles/bootstrap-datetimepicker.css" >
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->    
     <script src="scripts/app.js"></script>
@@ -129,6 +132,7 @@
     <script src="scripts/controllers/offerimport.js"></script>
     <script src="scripts/controllers/customerservice.js"></script>
     <script src="scripts/controllers/test-offergroup.js"></script>
+	<script src="scripts/controllers/salesforce-management.js"></script>
     
     <script src="scripts/app-services/authentication.service.js"></script>
     <script src="scripts/app-services/flash.service.js"></script>
@@ -137,7 +141,8 @@
     <script src="http://ckeditor.com/apps/ckeditor/4.2/ckeditor.js"></script>
     <script src="scripts/ng-table.js"></script>     
     <script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.0.js"></script>
-    <script src="scripts/js/bootstrap-datepicker.min.js"></script>
+    <script src="scripts/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="scripts/js/dirPagination.js"></script>
     <!-- endbuild -->
 </body>
 </html>

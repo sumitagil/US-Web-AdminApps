@@ -20,7 +20,7 @@
         <div id="second-half" class="marginTop10">
             <div class="form-group">
                 <div class="input-group date" id="datetimepicker1">
-                    <input type="text" class="form-control" ng-model="startdate" placeholder="Start Date"/>
+                    <input type="text" class="form-control" ng-model="startdate" placeholder="Start Date" id="startdate"/>
                     <span class="input-group-addon"><span class="fa fa-calendar"></span>
                     </span>
                 </div>
@@ -30,7 +30,7 @@
              </div>
              <div class="form-group">   
                 <div class="input-group date" id="datetimepicker2">
-                    <input type="text" class="form-control" ng-model="enddate" placeholder="End Date"/>
+                    <input type="text" class="form-control" ng-model="enddate" placeholder="End Date" id="enddate"/>
                     <span class="input-group-addon"><span class="fa fa-calendar"></span>
                     </span>
                 </div>
@@ -42,7 +42,7 @@
             <div class="form-group">    
                 <input type="email" class="form-control" ng-model="emailaddress" placeholder="Email Address">
             </div>
-            <div class="form-group"><button type="button" class="btn btn-success">Submit</button></div>
+            <div class="form-group"><button type="button" class="btn btn-success" ng-click="getAllRecords('S')">Submit</button></div>
         </div>
         <table class="marginTop10" width="100%">
             <tr>
@@ -54,3 +54,172 @@
         </table>
     </form>
 </div>
+
+<div class="col-md-12 bodyContentArea" ng-if="results.length>0">
+    <table>
+    <table class="table table-hover table-condensed table-striped">
+        <thead class="levelOne">
+            <tr>
+                <th ng-click="sort('order_id')">Order Id
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='order_id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th>Order Source</th>
+                <th>Billing Name</th>
+                <th>Billing Address</th>
+                <th>Billing Email</th>
+                <th>Cancelled</th>
+                <th>Vendor</th>
+                <th>Payment Type</th>
+                <th>Exported</th>
+                <th>Promotion Code</th>
+                <th>Order Date</th>
+                <th>Project</th>
+                <!--<th>Export Status</th>-->
+                <th>&nbsp</th>
+            </tr>
+        </thead>
+        <tbody>
+                <tr dir-paginate="result in results|orderBy:sortKey:reverse|itemsPerPage:10">
+                        <td>{{result.order_id}}</td>
+                        <td>{{result.source}}</td>
+                        <td>{{result.ccname}}</td>
+                        <td>{{result.bill_address}}</td>
+                        <td>{{result.email}} </td>
+                        <td>{{result.cancelled}}</td>
+                        <td>{{result.vendor_id}}</td>
+                        <td>{{result.payment_type}}</td>
+                        <td>{{result.exported}}</td>
+                        <td>{{result.promotion_code}}</td>
+                        <td>{{result.order_dt}}</td>
+                        <td>{{result.project}}</td>
+                        <!--<td>{{result.export_status | limitTo: 10}}</td>-->
+                        <td>
+                            <span class="btn btn-primary offerEditBtn" ng-click="viewCustomerData(result)">View</span>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+    </table>
+    <dir-pagination-controls
+        max-size="5"
+        direction-links="true"
+        boundary-links="true" >
+    </dir-pagination-controls>
+</div>
+
+<!--modal 1-->
+<modal title="" visible="showmsgmodal" rel="modal-sm loadingModal">
+    <div class="row">
+        <div class="col-md-12 text-center">
+         <p id="msgcontent"></p>
+        </div>
+    </div>    
+</modal>
+<!--modal end 1-->
+
+<!--modal 2-->
+<modal title="Customer Orders" visible="showCustomerModal" rel="modal-lg customsize">
+    <div class="row">
+        <div class="col-md-12 campaigns">
+            <div class="panel-body" style="padding:5px; height:90%;">
+                <div class="panel panel-default" style="float: left; width:390px;">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><strong>Customer, Order &amp; Child Details</strong></h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-condensed">
+                                <tbody><tr><td class="active">Order Id:</td><td class="active">{{modalrecords.order_id}}</td></tr>
+                                <tr><td class="active">Project:</td><td class="active">{{modalrecords.project}}</td></tr>
+                                <tr><td class="active">Billing:</td><td class="active">{{modalrecords.bill_address}}</td></tr>
+                                <tr><td class="active">Shipping:</td><td class="active">{{modalrecords.ship_address}}</td></tr>
+                                <tr><td class="active">eMail:</td><td class="active">{{modalrecords.email}}</td></tr>
+                                <tr><td class="active">eMail Sent:</td><td class="active">{{modalrecords.email_sent}}</td></tr>
+                                <tr><td class="active">eMail Sent Date:</td><td class="active">{{modalrecords.email_sent_dt}}</td></tr>
+                                <tr><td class="active">Phone:</td><td class="active">{{modalrecords.phone}}</td></tr>
+                                <tr><td class="active">Cancelled?:</td><td class="active">{{modalrecords.cancelled}}</td></tr>
+                                <tr><td class="active">Cancel Type:</td><td class="active">{{modalrecords.cancel_type}}</td></tr>
+                                <tr><td class="active">Cancel Date:</td><td class="active">{{modalrecords.cancel_dt}}</td></tr>
+                                <tr><td class="active">Exported?:</td><td class="active">{{modalrecords.exported}}</td></tr>
+                                <tr><td class="active">Echeduled Export Date:</td><td class="active">{{modalrecords.export_dt}}</td></tr>
+                                <tr><td class="active">Export Date:</td><td class="active">{{modalrecords.export_dt}}</td></tr>
+                                <tr><td class="active">Export Status:</td><td class="active">{{modalrecords.export_status}}</td></tr>
+                                <tr><td class="active">IP Address:</td><td class="active">{{modalrecords.ip_address}}</td></tr>
+                                <tr><td class="active" style="width: 50px;">Referring Url:</td><td class="active" style="word-wrap: break-word; width: 150px;"><a href="" target="_blank">{{modalrecords.referring_url}}</a></td></tr>
+                            </tbody></table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default" style="float: right; width:390px;">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><strong>Cart Details</strong></h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-condensed">
+                                <tbody><tr><td class="active">Order Id:</td><td class="active">{{modalrecords.order_id}}</td></tr>
+                                <tr><td class="active">Project:</td><td class="active">BRU</td></tr>
+                                <tr><td class="active">Billing:</td><td class="active" style="word-wrap: break-word; width: 200px;">{{modalrecords.order_id}}</td></tr>
+                                <tr><td class="active">eMail:</td><td class="active">{{modalrecords.email}}</td></tr>
+                                <tr><td class="active">eMail Sent:</td><td class="active">{{modalrecords.email_sent}}</td></tr>
+                                <tr><td class="active">eMail Sent Date:</td><td class="active">{{modalrecords.email_sent_dt}}</td></tr>
+                                <tr><td class="active">Phone:</td><td class="active">{{modalrecords.phone}}</td></tr>
+                                <tr><td class="active">Cancelled?:</td><td class="active">{{modalrecords.cancelled}}</td></tr>
+                                <tr><td class="active">Cancel Type:</td><td class="active">{{modalrecords.cancel_type}}</td></tr>
+                                <tr><td class="active">Cancel Date:</td><td class="active">{{modalrecords.cancel_dt}}</td></tr>
+                                <tr><td class="active">Exported?:</td><td class="active">{{modalrecords.exported}}</td></tr>
+                                <tr><td class="active">Echeduled Export Date:</td><td class="active">{{modalrecords.export_dt}}</td></tr>
+                                <tr><td class="active">Export Date:</td><td class="active">{{modalrecords.export_dt}}</td></tr>
+                                <tr><td class="active">Export Status:</td><td class="active">{{modalrecords.export_status}}</td></tr>
+                                <tr><td class="active">IP Address:</td><td class="active" style="word-wrap: break-word; width: 150px;">{{modalrecords.ip_address}}</td></tr>
+                            </tbody></table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default" style="float: right; width:390px;">
+            <div class="panel-heading">
+                <h3 class="panel-title"><strong>Payment, Vendor &amp; Other Details</strong></h3>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-hover table-condensed">
+                        <tbody><tr><td class="active">Payment Type:</td><td class="active">{{modalrecords.payment_type}}</td></tr>
+                        <tr><td class="active">Auth Code:</td><td class="active">{{modalrecords.authcode}}</td></tr>
+                        <tr><td class="active">Token:</td><td class="active" style="word-wrap: break-word; width: 150px;">{{modalrecords.token}}</td></tr>
+                        <tr><td class="active">Customer Message:</td><td class="active">{{modalrecords.respmsg}}</td></tr>
+                        <tr><td class="active">Total Auth Amount:</td><td class="active">{{modalrecords.authamt}}</td></tr>
+                        <tr><td class="active">Transaction Id:</td><td class="active">{{modalrecords.cart_id}}</td></tr>
+                        <tr><td class="active">Card Number:</td><td class="active"> {{modalrecords.ccnum}}</td></tr>
+                        <tr><td class="active">Card Zipcode:</td><td class="active">{{modalrecords.cczipcode}}</td></tr>
+                        <tr><td class="active">Card Expiration:</td><td class="active">{{modalrecords.ccexp}}</td></tr>
+                        <tr><td class="active">Name on Card:</td><td class="active">{{modalrecords.ccname}}</td></tr>
+                        <tr><td class="active">Vendor Id:</td><td class="active">{{modalrecords.vendor_id}}</td></tr>
+                        <tr><td class="active">Vendor Data1:</td><td class="active">{{modalrecords.vendor_data1}}</td></tr>
+                        <tr><td class="active">Vendor Data2:</td><td class="active">{{modalrecords.vendor_data2}}</td></tr>
+                        <tr><td class="active">Vendor Cust Identifier:</td><td class="active">{{modalrecords.vendor_cust_ref_id}}</td></tr>
+                        <tr><td class="active">Voucher Code:</td><td class="active">{{modalrecords.promotion_code}}</td></tr>
+                        <tr><td class="active">Discount Amount:</td><td class="active">{{modalrecords.discount_amount}}</td></tr>
+                        <tr><td class="active">Promotion Id:</td><td class="active">{{modalrecords.paytran_ref_id}}</td></tr>
+                        <tr><td class="active">Promotion Code:</td><td class="active">{{modalrecords.promotion_code}}</td></tr>
+                        <tr><td class="active">Credit Rule:</td><td class="active">{{modalrecords.credit_rule}}</td></tr>
+                    </tbody></table>
+                </div>
+            </div>
+        </div>
+            </div>
+        </div>
+    </div>
+</modal>
+<!--modal end 2-->
+
+<style>
+.sort-icon {
+    font-size: 9px;
+    margin-left: 5px;
+}
+
+th {
+    cursor:pointer;
+}
+.customsize{width:1230px; font-size: 12px;}
+</style>

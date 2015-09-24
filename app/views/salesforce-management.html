@@ -1,0 +1,128 @@
+ <div class="col-md-12 bodyContentArea">
+     <h5 class="fr"><a class="btn btn-primary  btn-sm" ng-click="viewCustomerData(result)">Add Email</a></h5>
+     <div class="input-group" style="width:20%; padding-bottom:1px;float:left;">
+        <input type="text" ng-model="search" class="form-control" placeholder="Search" style="width:270px;">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>   
+     </div>
+    <table>
+    <table class="table table-hover table-condensed table-striped">
+        <thead class="levelOne">
+            <tr>
+                <th ng-click="sort('order_id')">Person Id
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='order_id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th ng-click="sort('source')">Email No
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='source'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th ng-click="sort('ccname')">Post Title
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='ccname'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th ng-click="sort('bill_address')">Subject Line
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='bill_address'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th ng-click="sort('email')">Last Updated
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='email'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th>&nbsp</th>
+            </tr>
+        </thead>
+        <tbody>
+                <tr dir-paginate="result in results|orderBy:sortKey:reverse|filter:search|itemsPerPage:10">
+                        <td>{{result.order_id}}</td>
+                        <td>{{result.source}}</td>
+                        <td>{{result.ccname}}</td>
+                        <td>{{result.bill_address}}</td>
+                        <td>{{result.email}} </td>
+                        <td>
+                            <span class="btn btn-primary offerEditBtn" ng-click="viewCustomerData(result)">Edit</span>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+    </table>
+    <dir-pagination-controls
+        max-size="5"
+        direction-links="true"
+        boundary-links="true" >
+    </dir-pagination-controls>
+</div>
+
+
+<!--modal 1-->
+<modal title="" visible="showloadingmodal" rel="modal-sm loadingModal">
+    <div class="row">
+        <div class="col-md-12 text-center">
+         <p id="loadingcontent"><img src="/images/ajax-loader.gif" style="top:50%;"/></p>
+        </div>
+    </div>    
+</modal>
+<!--modal end 1-->
+
+<!--modal 2-->
+<modal title="Sales Force Management" visible="showCustomerModal" rel="emailrel">
+    <div class="row">
+        <div class="col-md-12 campaigns">
+            <div class="panel-body">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><strong>Edit</strong></h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-condensed">
+                            <tbody>
+                                <tr>
+                                    <td class="active">Person Id:</td>
+                                    <td class="active">
+                                        <input type="text" class="form-control" ng-model="modalrecords.order_id" ng-readonly="actionVal" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="active">Email No:</td>
+                                    <td class="active">
+                                        <input type="text" class="form-control" ng-model="modalrecords.project" ng-readonly="actionVal" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="active">Post Title:</td>
+                                    <td class="active">
+                                        <input type="text" class="form-control" ng-model="modalrecords.bill_address" ng-readonly="actionVal" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="active">Subject Line:</td>
+                                    <td class="active">
+                                        <input type="text" class="form-control" ng-model="modalrecords.ship_address" ng-readonly="actionVal" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="active">Last Updated:</td>
+                                    <td class="active">
+                                        <input type="text" class="form-control" ng-model="modalrecords.email" ng-readonly="actionVal" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                            </table>
+                            <input type="submit" class="btn btn-primary btn-sm" ng-hide="actionVal" value="Submit" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</modal>
+<!--modal end 2-->
+
+<style>
+.sort-icon {
+    font-size: 9px;
+    margin-left: 5px;
+}
+
+th {
+    cursor:pointer;
+}
+.emailrel{
+    width: 32%;
+}
+</style>
