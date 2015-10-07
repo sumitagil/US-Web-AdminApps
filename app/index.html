@@ -58,6 +58,7 @@
             	<nav>
                     <ul ng-if="opendiv == 'reports'">
                         <li class="{{getClass('/pages')}}" ng-class="{active: $location.path() == '/pages'}"><a ng-href="#/pages">Page List</a></li>
+                        <li class="{{getClass('/users')}}" ng-class="{active: $location.path() == '/users'}"><a ng-href="#/users">Registered Users</a></li>
                     </ul>
                     <ul ng-if="opendiv == 'offersetup'">
                         <li class="{{getClass('/orderforms')}}" ng-class="{active: $location.path() == '/orderforms'}"><a ng-href="#/orderforms">Order Forms</a></li>
@@ -133,6 +134,7 @@
     <script src="scripts/controllers/customerservice.js"></script>
     <script src="scripts/controllers/test-offergroup.js"></script>
 	<script src="scripts/controllers/salesforce-management.js"></script>
+    <script src="scripts/controllers/users.js"></script>
     
     <script src="scripts/app-services/authentication.service.js"></script>
     <script src="scripts/app-services/flash.service.js"></script>

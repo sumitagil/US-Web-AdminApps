@@ -77,6 +77,10 @@ var app = angular.module('sandvikusaAdminAppsApp', [
         templateUrl: 'views/salesforce-management.html',
         controller: 'salesforceCtrl',
       })
+    .when('/users', {
+        templateUrl: 'views/users.html',
+        controller: 'usersCtrl',
+      })
     .otherwise({
         redirectTo: '/pages'
     });
@@ -104,7 +108,7 @@ app.run(function($rootScope, $location, $cookieStore, $http) {
                 $location.path('/login');
             }
             
-            if($location.path() === '/pages'){
+            if($location.path() === '/pages' || $location.path() === '/users'){
                 $rootScope.opendiv = 'reports';
             }
             else if($location.path() === '/orderforms' || $location.path() === '/promolist' || $location.path() === '/offergroup' || $location.path() === '/promocode' || $location.path() === '/insertorderforms' || $location.path() === '/offerimport' || $location.path() === '/customerservice'){

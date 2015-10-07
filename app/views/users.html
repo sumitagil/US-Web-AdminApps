@@ -1,0 +1,169 @@
+ <div class="col-md-12 bodyContentArea">
+     <div class="input-group col-md-3">
+        <input type="text" ng-model="searchText" class="form-control" placeholder="Search" ng-keyup="getrecords($event)" >
+        <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>   
+     </div>
+    
+     <div class="col-md-9">
+         <i class="fa fa-filter listIcon" ng-click="opendiv()"></i>
+         <div id="showdiv">
+             <div class="form-group showdivField">
+                 <div ng-repeat="item in items" class="form-inline">
+                         <select class="field form-control" ng-model="item.datafield">
+                              <option value="">Select One</option>
+                              <option value="email">Email</option>
+                              <option value="paymentId">Payment Id</option>
+                              <option value="isProcessed">Is Processed</option>
+                              <option value="appName">App Name</option>
+                              <option value="promotionCode">Promotion Code</option>
+                              <option value="environment">Environment</option>
+                              <option value="voucher">Voucher</option>
+                         </select>
+
+                         <select ng-model="item.operatorvalue" class="form-control">
+                              <option value="">Select One</option>
+                              <option value="=">equals</option>
+                              <!--<option value="does not equal">does not equal</option>
+                              <option value="starts with">starts with</option>
+                              <option value="exists">exists</option>
+                              <option value="does not exist">does not exist</option>-->
+                        </select>
+
+                        <input type="text" placeholder="Enter text..." ng-model="item.datavalue" class="form-control">
+                        <span class="glyphicon glyphicon-remove" ng-click="remove($index)"></span>
+                 </div>
+             </div>
+             <div class="form-group" style="margin-bottom:0;">
+                 <button type="button" class="btn btn-default btn-sm" ng-click="add()">
+                  <span class="glyphicon glyphicon-plus"></span>
+                 </button>
+                 <button type="button" class="btn btn-default btn-sm" ng-click="searchdata()">Apply</button>
+             </div>
+         </div>
+    </div>
+     
+    <div class="clearfix"></div> 
+    <div ng-show="tblevisible">
+    <table>
+    <table class="table table-hover table-condensed table-striped marginTop20" >
+        <thead class="levelOne">
+            <tr>
+                <th ng-click="sort('regId')">Reg Id
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='regId'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th ng-click="sort('email')">Email
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='email'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th ng-click="sort('paymentType')">Payment Type
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='paymentType'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th ng-click="sort('isProcessed')">Is Processed
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='isProcessed'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th ng-click="sort('paymentId')">Payment Id
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='paymentId'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th ng-click="sort('promotionCode')">Promotion Code
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='promotionCode'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th ng-click="sort('environment')">Environment
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='environment'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <!--<th ng-click="sort('parseUpdated')">parseUpdated
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='parseUpdated'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th ng-click="sort('parseUpdateDate')">Parse Update Date
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='parseUpdateDate'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>              
+                <th ng-click="sort('cuno')">cuno
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='cuno'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>-->
+                <th ng-click="sort('parseId')">Parse Id
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='parseId'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th ng-click="sort('appName')">App Name
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='appName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th ng-click="sort('requestType')">Request Type
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='requestType'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th ng-click="sort('OrderSource')">Order Source
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='OrderSource'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th ng-click="sort('username')">Username
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='username'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th ng-click="sort('subscriptionPlan')">Subscription Plan
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='subscriptionPlan'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th ng-click="sort('subscriptionAmount')">Subscription Amount
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='subscriptionAmount'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+                <tr dir-paginate="result in results|orderBy:sortKey:reverse|filter:search|itemsPerPage:selpageno">
+                        <td>{{result.regId}}</td>
+                        <td>{{result.email}}</td>
+                        <td>{{result.paymentType}}</td>
+                        <td>{{result.isProcessed}}</td>
+                        <td>{{result.paymentId}} </td>
+                        <td>{{result.promotionCode}} </td>
+                        <td>{{result.environment}} </td>
+                        <!--<td>{{result.parseUpdated}} </td>
+                        <td>{{result.parseUpdateDate}} </td>
+                        <td>{{result.cuno}} </td>-->
+                        <td>{{result.parseId}} </td>
+                        <td>{{result.appName}} </td>
+                        <td>{{result.requestType}} </td>
+                        <td>{{result.OrderSource}} </td>
+                        <td>{{result.username}} </td>
+                        <td>{{result.subscriptionPlan}} </td>
+                        <td>{{result.subscriptionAmount}} </td>
+               </tr>
+        </tbody>
+    </table>
+    </table>
+    <dir-pagination-controls
+        max-size="5"
+        direction-links="true"
+        boundary-links="true" >
+    </dir-pagination-controls>
+        
+    <div style="float:right;margin:20px 0;border-radius:4px;">
+        Items per page
+     <select ng-model="selpageno">
+         <option value="5">5</option>
+         <option value="10">10</option>
+         <option value="15">15</option>
+         <option value="20">20</option>
+     </select>
+    </div>
+        
+    </div> 
+</div>
+
+
+<!--modal 1-->
+<modal title="" visible="showloadingmodal" rel="modal-sm loadingModal">
+    <div class="row">
+        <div class="col-md-12 text-center">
+         <p id="loadingcontent"><img src="/images/ajax-loader.gif" style="top:50%;"/></p>
+        </div>
+    </div>    
+</modal>
+<!--modal end 1-->
+
+<style>
+.sort-icon {
+    font-size: 9px;
+    margin-left: 5px;
+}
+
+th {
+    cursor:pointer;
+}
+.emailrel{
+    width: 32%;
+}
+</style>

@@ -74,3 +74,10 @@ fieldset[disabled] .form-control, .campaigns .form-control[disabled], .campaigns
 .loadingModal{height: 100%;}
 .loadingModal .modal-content{top: 30% !important;}
 .loadingModal .modal-header .close{margin-top:-10px;}
+
+.input-group[class*="col-"]{float: left !important;}
+.listIcon{background-color: #337AB7; padding: 6px 8px; border-radius: 4px; font-size: 21px; color: #fff; position: absolute; z-index: 999 !important;}
+#showdiv{background-color: #fff; padding: 10px 15px 10px 43px; border: 1px solid #ccc; max-width: 560px; min-width: 508px; position: absolute; box-shadow: 0 1px 4px rgba(0,0,0,0.4); top: 0; left: 14px;}
+.showdivField{margin-bottom: 0;}
+.showdivField .form-control{margin-right: 10px; margin-bottom:10px; font-size: 12px;}
+.showdivField select, .showdivField input{height:28px;}
