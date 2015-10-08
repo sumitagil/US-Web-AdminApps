@@ -18,7 +18,6 @@ var app = angular.module('sandvikusaAdminAppsApp', [
                         'ngTable',
                         'ui.bootstrap',
                         'adaptv.adaptStrap',
-                        'xeditable',
                         'angularUtils.directives.dirPagination'
                       ]);
 
@@ -40,21 +39,9 @@ var app = angular.module('sandvikusaAdminAppsApp', [
         templateUrl: 'views/promolist.html',
         controller: 'promolistCtrl'
       })
-     .when('/pages', {
-        templateUrl: 'views/pages.html',
-        controller: 'pageCtrl'
-      })
-      .when('/checkpage', {
-        templateUrl: 'views/checkpage.html',
-        controller: 'CheckPageCtrl'
-      })
     .when('/offergroup', {
         templateUrl: 'views/offergroup.html',
         controller: 'OfferGroupCtrl'
-      })
-	.when('/insertcampaigns', {
-        templateUrl: 'views/insertcampaigns.html',
-        controller: 'insertCampaignsCtrl'
       })
     .when('/login', {
         templateUrl: 'views/login.html',
@@ -69,10 +56,6 @@ var app = angular.module('sandvikusaAdminAppsApp', [
         templateUrl: 'views/customerservice.html',
         controller: 'customerserviceCtrl',
       })
-    .when('/testoffergroup', {
-        templateUrl: 'views/test-offergroup.html',
-        controller: 'testoffergroupCtrl',
-      })
 	  .when('/salesforce', {
         templateUrl: 'views/salesforce-management.html',
         controller: 'salesforceCtrl',
@@ -82,7 +65,7 @@ var app = angular.module('sandvikusaAdminAppsApp', [
         controller: 'usersCtrl',
       })
     .otherwise({
-        redirectTo: '/pages'
+        redirectTo: '/users'
     });
      
   });
@@ -108,7 +91,7 @@ app.run(function($rootScope, $location, $cookieStore, $http) {
                 $location.path('/login');
             }
             
-            if($location.path() === '/pages' || $location.path() === '/users'){
+            if($location.path() === '/users'){
                 $rootScope.opendiv = 'reports';
             }
             else if($location.path() === '/orderforms' || $location.path() === '/promolist' || $location.path() === '/offergroup' || $location.path() === '/promocode' || $location.path() === '/insertorderforms' || $location.path() === '/offerimport' || $location.path() === '/customerservice'){
