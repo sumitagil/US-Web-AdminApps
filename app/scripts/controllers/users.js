@@ -7,27 +7,24 @@ app.controller('usersCtrl', function ($scope,$http) {
         $scope.tblevisible = false;
         $scope.selpageno = 10;
         angular.element("#showdiv").hide();
+        $scope.alloperators = {
+                'email': ['Contains','Starts with', 'Ends with','Equal'],
+                'regid': ['Equal','Greater than','Greater than equal','Less than', 'Less than equal', 'Between'],
+                'expdate': ['Equal', 'Between','Greater than','Greater than equal', 'Less than','Less than equal']
+            };
     
-        $scope.getrecords = function(event){
-            if(event.keyCode==13){
-                if($scope.searchText!=''){
-                        $scope.showloadingmodal = true;
-                        var customerData = {
-                            'token':'741889E3-4565-40A1-982A-F15F7A923D72',
-                            'email':$scope.searchText
-                           };
-                        console.log(customerData);
-                        var url = "http://beta.iservices.earlymoments.com/getappregistrationlist?callback=JSON_CALLBACK";
-                        $http.jsonp(url,{params : customerData})
-                             .success(function (data, status, headers, config) {
-                                    $scope.results = data;
-                                    $scope.showloadingmodal = false;
-                                    $scope.tblevisible = true;
-                             });                    
-                }
-            }
-        }
-    
+        $scope.showloadingmodal = true;
+        var customerData = {
+            'token':'741889E3-4565-40A1-982A-F15F7A923D72',
+            'email':"xyz@sandviks.com"
+           };
+        var url = "http://beta.iservices.earlymoments.com/getappregistrationlist?callback=JSON_CALLBACK";
+        $http.jsonp(url,{params : customerData})
+             .success(function (data, status, headers, config) {
+                    $scope.results = data;
+                    $scope.showloadingmodal = false;
+                    $scope.tblevisible = true;
+             }); 
     
         $scope.sort = function(keyname){
             $scope.sortKey = keyname;   //set the sortKey to the param passed
@@ -43,9 +40,11 @@ app.controller('usersCtrl', function ($scope,$http) {
         var count = 1;
         $scope.add = function () {
           $scope.items.push({ 
-            datafield: "",
+            tempfield: "",
+            datafield : "",
             operatorvalue: "",
-            datavalue: ""
+            datavalue1: "",
+            datavalue2: ""
           });
         console.log($scope.items);
         };
@@ -63,20 +62,22 @@ app.controller('usersCtrl', function ($scope,$http) {
             }
             $scope.items.splice(index, 1)[0];
         };
+        
+        $scope.getvalue=function(index){
+            var fieldval = angular.element("#field"+index).val();
+            if(fieldval != ""){
+                $scope.items[index].datafield = fieldval;
+            }
+        };
     
-    
-        $scope.searchdata = function(){
+       /* $scope.searchdata = function(){
             var url="http://beta.iservices.earlymoments.com/getappregistrationlist?token=741889E3-4565-40A1-982A-F15F7A923D72&callback=JSON_CALLBACK";
             var c;
             if($scope.items.length > 0)
             {
                 for(var i=0; i < $scope.items.length; i++ ){
-                    c = $scope.items[i].datafield+$scope.items[i].operatorvalue+$scope.items[i].datavalue;
+                    c = $scope.items[i].datafield+$scope.items[i].operatorvalue+$scope.items[i].datavalue1;
                     url += "&"+c;
-                    /*if(i==0)
-                        url += "?"+c;
-                    else
-                        url += "&"+c;*/
                 }
             }
             console.log(url);
@@ -88,6 +89,11 @@ app.controller('usersCtrl', function ($scope,$http) {
                     $scope.showloadingmodal = false;
                     $scope.tblevisible = true;
             });
+        };*/
+        $scope.searchdata = function(){
+            var url="http://beta.iservices.earlymoments.com/getappregistrationlist?token=741889E3-4565-40A1-982A-F15F7A923D72&callback=JSON_CALLBACK";
+            console.log("Final result");
+            console.log($scope.items);
         };
     
 });

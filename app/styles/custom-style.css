@@ -76,8 +76,9 @@ fieldset[disabled] .form-control, .campaigns .form-control[disabled], .campaigns
 .loadingModal .modal-header .close{margin-top:-10px;}
 
 .input-group[class*="col-"]{float: left !important;}
-.listIcon{background-color: #337AB7; padding: 6px 8px; border-radius: 4px; font-size: 21px; color: #fff; position: absolute; z-index: 999 !important;}
-#showdiv{background-color: #fff; padding: 10px 15px 10px 43px; border: 1px solid #ccc; max-width: 560px; min-width: 508px; position: absolute; box-shadow: 0 1px 4px rgba(0,0,0,0.4); top: 0; left: 14px;}
+.listIcon{background-color: #000000; padding: 4px 6px; border-radius: 50%; font-size: 13px; color: #fff; position: absolute; z-index: 999 !important;left: 0;}
+#showdiv{background-color: #fff; padding: 10px 15px 10px 30px; border: 1px solid #ccc; min-width: 460px; position: absolute; box-shadow: 0 1px 4px rgba(0,0,0,0.4); top: 0; left: 0; border-radius: 10px 0 0 0;}
 .showdivField{margin-bottom: 0;}
 .showdivField .form-control{margin-right: 10px; margin-bottom:10px; font-size: 12px;}
 .showdivField select, .showdivField input{height:28px;}
+.operator{min-width: 152px;}
