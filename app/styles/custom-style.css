@@ -82,3 +82,5 @@ fieldset[disabled] .form-control, .campaigns .form-control[disabled], .campaigns
 .showdivField .form-control{margin-right: 10px; margin-bottom:10px; font-size: 12px;}
 .showdivField select, .showdivField input{height:28px;}
 .operator{min-width: 152px;}
+
+.adjCalender .bootstrap-datetimepicker-widget{top:34px !important; bottom: auto !important; left:auto !important; right: 0 !important;}

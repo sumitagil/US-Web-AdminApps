@@ -1,128 +1,20 @@
  <div class="col-md-12 bodyContentArea">
-     <!--<div class="input-group col-md-3">
-        <input type="text" ng-model="searchText" class="form-control" placeholder="Search" ng-keyup="getrecords($event)" >
-        <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>   
-     </div>-->
-    
-     <div class="col-md-9">
-         <i class="fa fa-filter listIcon" ng-click="opendiv()"></i>
-         <div id="showdiv">
-             <div class="form-group showdivField">
-                 <div ng-repeat="item in items" class="form-inline">
-                        <select id="field{{$index}}" class="field form-control" ng-model="item.tempfield" ng-options="cc for (cc, ss) in alloperators" ng-change="getvalue($index)">
-                            <option value=''>Select</option>
-                        </select>
-                        
-                        <select ng-disabled="!item.tempfield" class="form-control operator" ng-model="item.operatorvalue">
-                            <option value=''>Select</option>
-                            <option ng-repeat="d in item.tempfield" value='{{d}}'>{{d}}</option>
-                        </select>
-
-                        <input type="text" placeholder="Enter text..." ng-model="item.datavalue1" class="form-control">
-                        <span ng-if="item.operatorvalue=='Between'">
-                            To <input type="text" placeholder="Enter text..." ng-model="item.datavalue2" class="form-control">
-                        </span>
-                        <span class="glyphicon glyphicon-remove" ng-click="remove($index)"></span>
-                 </div>
-             </div>
-             <div class="form-group" style="margin-bottom:0;">
-                 <button type="button" class="btn btn-default btn-sm" ng-click="add()">
-                  <span class="glyphicon glyphicon-plus"></span>
-                 </button>
-                 <button type="button" class="btn btn-default btn-sm" ng-click="searchdata()">Apply</button>
-             </div>
-         </div>
-    </div>
-     
-    <div class="clearfix"></div> 
-    <div ng-show="tblevisible">
-    <table>
-    <table class="table table-hover table-condensed table-striped marginTop20" >
-        <thead class="levelOne">
-            <tr>
-                <th ng-click="sort('regId')">Reg Id
-                    <span class="glyphicon sort-icon" ng-show="sortKey=='regId'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                </th>
-                <th ng-click="sort('email')">Email
-                    <span class="glyphicon sort-icon" ng-show="sortKey=='email'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                </th>
-                <th ng-click="sort('paymentType')">Payment Type
-                    <span class="glyphicon sort-icon" ng-show="sortKey=='paymentType'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                </th>
-                
-                <th ng-click="sort('paymentType')">Date Created
-                    <span class="glyphicon sort-icon" ng-show="sortKey=='paymentType'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                </th>
-                <th ng-click="sort('paymentType')">as400updated
-                    <span class="glyphicon sort-icon" ng-show="sortKey=='paymentType'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                </th>
-                <th ng-click="sort('parseUpdated')">as400updatedate
-                    <span class="glyphicon sort-icon" ng-show="sortKey=='parseUpdated'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                </th>
-                <th ng-click="sort('parseId')">Parse Id
-                    <span class="glyphicon sort-icon" ng-show="sortKey=='parseId'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                </th>
-                <th ng-click="sort('requestType')">Request Type
-                    <span class="glyphicon sort-icon" ng-show="sortKey=='requestType'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                </th>
-                <th ng-click="sort('subscriptionPlan')">Sub. Plan
-                    <span class="glyphicon sort-icon" ng-show="sortKey=='subscriptionPlan'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                </th>
-                <th ng-click="sort('subscriptionAmount')">Sub.Amt
-                    <span class="glyphicon sort-icon" ng-show="sortKey=='subscriptionAmount'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                </th>
-                <th ng-click="sort('promotionCode')">Promo Code
-                    <span class="glyphicon sort-icon" ng-show="sortKey=='promotionCode'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                </th>
-                <th ng-click="sort('subscriptionExpirationDate')">Subscription Exp.Dt
-                    <span class="glyphicon sort-icon" ng-show="sortKey=='subscriptionExpirationDate'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                </th>
-                <th ng-click="sort('voucher')">Voucher
-                    <span class="glyphicon sort-icon" ng-show="sortKey=='voucher'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-                <tr dir-paginate="result in results|orderBy:sortKey:reverse|filter:search|itemsPerPage:selpageno">
-                        <td>{{result.regId}}</td>
-                        <td>{{result.email}}</td>
-                        <td>{{result.paymentType}}</td>
-                    
-                        <td>{{result.isProcessed}}</td>
-                        <td>{{result.paymentId}} </td>
-                        <td>{{result.parseUpdated}} </td>
-                       
-                        
-                        <td>{{result.parseId}} </td>
-                        <td>{{result.requestType}} </td>
-                        <td>{{result.subscriptionPlan}} </td>
-                        <td>{{result.subscriptionAmount}} </td>
-                        <td>{{result.promotionCode}} </td>
-                        <td>{{result.subscriptionExpirationDate}} </td>
-                        <td>{{result.voucher}} </td>
-               </tr>
-        </tbody>
-    </table>
-    </table>
-    <dir-pagination-controls
-        max-size="5"
-        direction-links="true"
-        boundary-links="true" >
-    </dir-pagination-controls>
-        
-    <div style="float:right;margin:20px 0;border-radius:4px;">
-        Items per page
-     <select ng-model="selpageno">
-         <option value="5">5</option>
-         <option value="10">10</option>
-         <option value="15">15</option>
-         <option value="20">20</option>
-     </select>
-    </div>
-        
-    </div> 
+ 
+<div>
+<ad-table-lite table-name="usertable"
+                 enable-column-search="true"
+                 column-definition="usersTableColumnDefinition"
+                 local-data-source="models.userlist"
+                 page-sizes="[5,10,20]"
+                 pagination-btn-group-classes="pagination pagination-sm"
+                 table-classes="table table-hover table-condensed table-striped table-bordered offerGroup"
+                 items-not-found-message="Records Not Found"
+                 snug-sort-icons="true"
+                 search-text="models.searchText"
+                >
+</ad-table-lite>
 </div>
-
+</div>
 
 <!--modal 1-->
 <modal title="" visible="showloadingmodal" rel="modal-sm loadingModal">
@@ -135,15 +27,21 @@
 <!--modal end 1-->
 
 <style>
-.sort-icon {
-    font-size: 9px;
-    margin-left: 5px;
+.offerGroup thead tr:first-child {
+    background-color: #3E7AAE;
+    color: #fff;
+    border:none;
 }
-
-th {
-    cursor:pointer;
+.offerGroup thead tr:last-child {
+    background-color: #f9f9f9;
+    color: #fff;
+    border:none;
 }
-.emailrel{
-    width: 32%;
-}
+.offerGroup tr:first-child td:first-child,
+.offerGroup tr:first-child th:first-child{border-radius: 6px 0 0 0;}
+.offerGroup tr:first-child td:last-child,
+.offerGroup tr:first-child th:last-child{border-radius: 0 6px 0 0;}
+.offerGroup tbody > tr {
+    border-bottom: 1px solid #ddd;
+ }
 </style>
