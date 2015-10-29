@@ -92,7 +92,7 @@ app.controller('usersCtrl', function ($scope,$http) {
                           },
                           {
                             columnHeaderDisplayName: 'Exp. Date',
-                            template: "{{formatDate(item.subscriptionExpirationDate) | date:'dd/MM/yyyy' }}",
+                            template: "{{formatDate(item.subscriptionExpirationDate) | date:'MM/dd/yyyy' }}",
                             //displayProperty: 'subscriptionExpirationDate',
                             sortKey: 'subscriptionExpirationDate',
                             columnSearchProperty: 'subscriptionExpirationDate'
