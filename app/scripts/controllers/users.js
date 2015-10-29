@@ -5,10 +5,10 @@ var app = angular.module('sandvikusaAdminAppsApp');
 app.controller('usersCtrl', function ($scope,$http) {
         $scope.opendiv = 'reports';
         $scope.tblevisible = false;
-        $scope.showloadingmodal = true;
+        $scope.showloadingmodal = true; $scope.CurrentDate = new Date();
         var customerData = {
-            'token':'741889E3-4565-40A1-982A-F15F7A923D72'
-            //'email':"xyz@sandviks.com"
+            'token':'741889E3-4565-40A1-982A-F15F7A923D72',
+            'email':"xyz@sandviks.com"
            };
         var url = "http://beta.iservices.earlymoments.com/getappregistrationlist?callback=JSON_CALLBACK";
         $http.jsonp(url,{params : customerData})
@@ -92,7 +92,8 @@ app.controller('usersCtrl', function ($scope,$http) {
                           },
                           {
                             columnHeaderDisplayName: 'Exp. Date',
-                            displayProperty: 'subscriptionExpirationDate',
+                            template: "{{formatDate(item.subscriptionExpirationDate) | date:'dd/MM/yyyy' }}",
+                            //displayProperty: 'subscriptionExpirationDate',
                             sortKey: 'subscriptionExpirationDate',
                             columnSearchProperty: 'subscriptionExpirationDate'
                           },
@@ -104,5 +105,10 @@ app.controller('usersCtrl', function ($scope,$http) {
                           }
                         ];
             });
+    
+            $scope.formatDate = function(date){
+                  var dateOut = new Date(date);
+                  return dateOut;
+            };
     
 });
