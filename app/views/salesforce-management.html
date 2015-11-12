@@ -1,5 +1,5 @@
  <div class="col-md-12 bodyContentArea">
-     <h5 class="fr"><a class="btn btn-primary  btn-sm" ng-click="viewCustomerData(result)">Add Email</a></h5>
+     <h5 class="fr"><a class="btn btn-primary  btn-sm" ng-click="addCustomerData()">Add</a></h5>
      <div class="input-group" style="width:20%; padding-bottom:1px;float:left;">
         <input type="text" ng-model="search" class="form-control" placeholder="Search" style="width:270px;">
         <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>   
@@ -8,35 +8,39 @@
     <table class="table table-hover table-condensed table-striped">
         <thead class="levelOne">
             <tr>
-                <th ng-click="sort('order_id')">Person Id
+                <th ng-click="sort('order_id')">Persona
                     <span class="glyphicon sort-icon" ng-show="sortKey=='order_id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                 </th>
                 <th ng-click="sort('source')">Email No
                     <span class="glyphicon sort-icon" ng-show="sortKey=='source'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                 </th>
-                <th ng-click="sort('ccname')">Post Title
+                <th ng-click="sort('ccname')">Post Id
                     <span class="glyphicon sort-icon" ng-show="sortKey=='ccname'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                 </th>
                 <th ng-click="sort('bill_address')">Subject Line
                     <span class="glyphicon sort-icon" ng-show="sortKey=='bill_address'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                 </th>
-                <th ng-click="sort('email')">Last Updated
+                <th ng-click="sort('email')">Display Sequence
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='email'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th ng-click="sort('email')">Status
                     <span class="glyphicon sort-icon" ng-show="sortKey=='email'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                 </th>
                 <th>&nbsp</th>
             </tr>
         </thead>
         <tbody>
-                <tr dir-paginate="result in results|orderBy:sortKey:reverse|filter:search|itemsPerPage:10">
-                        <td>{{result.order_id}}</td>
-                        <td>{{result.source}}</td>
-                        <td>{{result.ccname}}</td>
-                        <td>{{result.bill_address}}</td>
-                        <td>{{result.email}} </td>
-                        <td>
-                            <span class="btn btn-primary offerEditBtn" ng-click="viewCustomerData(result)">Edit</span>
-                        </td>
-                    </tr>
+            <tr dir-paginate="result in results|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" ng-class="set_color(result.order_id)">
+                    <td>{{result.order_id}}</td>
+                    <td>{{result.source}}</td>
+                    <td>{{result.ccname}}</td>
+                    <td>{{result.bill_address}}</td>
+                    <td>{{result.email}} </td>
+                    <td>true</td>
+                    <td>
+                        <span class="btn btn-primary offerEditBtn" ng-click="viewCustomerData(result)">Edit</span>
+                    </td>
+            </tr>
         </tbody>
     </table>
     </table>
@@ -48,7 +52,7 @@
 </div>
 
 
-<!--modal 1-->
+<!--Waiting modal-->
 <modal title="" visible="showloadingmodal" rel="modal-sm loadingModal">
     <div class="row">
         <div class="col-md-12 text-center">
@@ -56,54 +60,109 @@
         </div>
     </div>    
 </modal>
-<!--modal end 1-->
+<!--Waiting modal end-->
 
-<!--modal 2-->
+<!--Edit modal-->
 <modal title="Sales Force Management" visible="showCustomerModal" rel="emailrel">
     <div class="row">
         <div class="col-md-12 campaigns">
             <div class="panel-body">
-                <div class="panel panel-default">
+                <div class="listingUser">
+                <table class="table table-hover table-condensed customTable">
+                    <tbody>
+                        <tr>
+                            <th class="active">Persona</th>
+                            <th class="active">Email No</th>
+                            <th class="active">Post Id</th>
+                            <th class="active">Display Sequence</th>
+                        </tr>
+                        <tr>
+                            <td class="active">11</td>
+                            <td class="active">abc@gmail.com</td>
+                            <td class="active">P001</td>
+                            <td class="active">2</td>
+                        </tr>
+                        <tr>
+                            <td class="active">12</td>
+                            <td class="active">abc@gmail.com</td>
+                            <td class="active">P001</td>
+                            <td class="active">3</td>
+                        </tr>
+                        <tr>
+                            <td class="active">11</td>
+                            <td class="active">abc@gmail.com</td>
+                            <td class="active">P001</td>
+                            <td class="active">5</td>
+                        </tr>
+                        <tr>
+                            <td class="active">12</td>
+                            <td class="active">abc@gmail.com</td>
+                            <td class="active">P001</td>
+                            <td class="active">6</td>
+                        </tr>
+                        <tr>
+                            <td class="active">11</td>
+                            <td class="active">abc@gmail.com</td>
+                            <td class="active">P001</td>
+                            <td class="active">1</td>
+                        </tr>
+                        <tr>
+                            <td class="active">12</td>
+                            <td class="active">abc@gmail.com</td>
+                            <td class="active">P001</td>
+                            <td class="active">4</td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>  
+                <div class="clear"></div>
+                 <div style="padding-bottom:25px;">
+                    <span style="float:left;">Persona : #100</span> 
+                    <span style="float:right;">Email No : #2</span>
+                 </div>
+                <div class="clear"></div>
+                <div class="panel panel-default editUser">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><strong>Edit</strong></h3>
+                        <h3 class="panel-title">EDIT</h3>
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body">                      
                         <div class="table-responsive">
-                            <table class="table table-hover table-condensed">
-                            <tbody>
+                            <form name="editForm" class="myForm" required>
+                            <table class="table table-hover table-condensed editUserTable">
+                            <tbody>                               
                                 <tr>
-                                    <td class="active">Person Id:</td>
+                                    <td class="active">Post Id:</td>
                                     <td class="active">
-                                        <input type="text" class="form-control" ng-model="modalrecords.order_id" ng-readonly="actionVal" />
+                                        <input type="text" class="form-control" name="postid" ng-model="modalrecords.bill_address" required />
+                                        <div ng-messages="editForm.postid.$error" ng-if="editForm.postid.$dirty">
+                                          <div ng-message="required" class="err-msg">This field is required</div>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="active">Email No:</td>
+                                    <td class="active">Display Sequence</td>
                                     <td class="active">
-                                        <input type="text" class="form-control" ng-model="modalrecords.project" ng-readonly="actionVal" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="active">Post Title:</td>
-                                    <td class="active">
-                                        <input type="text" class="form-control" ng-model="modalrecords.bill_address" ng-readonly="actionVal" />
+                                        <select name="displaysequence" ng-model="modalrecords.ship_address" class="form-control" required>
+                                            <option value="1" ng-repeat="display in displaySeqArr">{{display}}</option>
+                                        </select>
+                                        <div ng-messages="editForm.displaysequence.$error" ng-if="editForm.postid.$dirty">
+                                          <div ng-message="required" class="err-msg">This field is required</div>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="active">Subject Line:</td>
                                     <td class="active">
-                                        <input type="text" class="form-control" ng-model="modalrecords.ship_address" ng-readonly="actionVal" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="active">Last Updated:</td>
-                                    <td class="active">
-                                        <input type="text" class="form-control" ng-model="modalrecords.email" ng-readonly="actionVal" />
+                                        <input type="text" name="subjectline" class="form-control" ng-model="modalrecords.email" required />
+                                        <div ng-messages="editForm.subjectline.$error" ng-if="editForm.postid.$dirty">
+                                          <div ng-message="required" class="err-msg">This field is required</div>
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>
                             </table>
                             <input type="submit" class="btn btn-primary btn-sm" ng-hide="actionVal" value="Submit" />
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -111,18 +170,158 @@
         </div>
     </div>
 </modal>
-<!--modal end 2-->
+<!--Edit modal end-->
+
+<!--Add modal-->
+<modal title="Sales Force Management" visible="showAddModal" rel="emailrel">
+    <div class="row">
+        <div class="col-md-12 campaigns">
+            <div class="panel-body">
+                <div class="listingUser" ng-show="listingdiv">
+                <table class="table table-hover table-condensed customTable">
+                    <tbody>
+                        <tr>
+                            <th class="active">Persona</th>
+                            <th class="active">Email No</th>
+                            <th class="active">Post Id</th>
+                            <th class="active">Display Sequence</th>
+                        </tr>
+                        <tr>
+                            <td class="active">11</td>
+                            <td class="active">abc@gmail.com</td>
+                            <td class="active">P001</td>
+                            <td class="active">2</td>
+                        </tr>
+                        <tr>
+                            <td class="active">12</td>
+                            <td class="active">abc@gmail.com</td>
+                            <td class="active">P001</td>
+                            <td class="active">3</td>
+                        </tr>
+                        <tr>
+                            <td class="active">11</td>
+                            <td class="active">abc@gmail.com</td>
+                            <td class="active">P001</td>
+                            <td class="active">5</td>
+                        </tr>
+                        <tr>
+                            <td class="active">12</td>
+                            <td class="active">abc@gmail.com</td>
+                            <td class="active">P001</td>
+                            <td class="active">6</td>
+                        </tr>
+                        <tr>
+                            <td class="active">11</td>
+                            <td class="active">abc@gmail.com</td>
+                            <td class="active">P001</td>
+                            <td class="active">1</td>
+                        </tr>
+                        <tr>
+                            <td class="active">12</td>
+                            <td class="active">abc@gmail.com</td>
+                            <td class="active">P001</td>
+                            <td class="active">4</td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>  
+                <div class="clear"></div>
+                <div class="panel panel-default editUser">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">ADD</h3>
+                    </div>
+                    <div class="panel-body">                      
+                        <div class="table-responsive">
+                            <table class="table table-hover table-condensed editUserTable">
+                            <tbody>                               
+                                <tr>
+                                    <td class="active">Persona:</td>
+                                    <td class="active">
+                                        <select class="form-control" ng-model="modalrecords.bill_address" ng-change="showListDiv(modalrecords.bill_address)">
+                                            <option value="100">100</option>
+                                            <option value="200">200</option>
+                                            <option value="300">300</option>
+                                            <option value="400">400</option>
+                                            <option value="500">500</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="active">Email No:</td>
+                                    <td class="active">
+                                        <select class="form-control" ng-model="modalrecords.email" ng-change="showListDivByEmail(modalrecords.email)">
+                                            <option value="2">2</option>
+                                            <option value="5">5</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="active">Post Id:</td>
+                                    <td class="active">
+                                        <select class="form-control" ng-model="modalrecords.email">
+                                            <option value="2">2</option>
+                                            <option value="5">5</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="active">Subject Line:</td>
+                                    <td class="active">
+                                        <input type="text" class="form-control" ng-model="modalrecords.email" ng-readonly="actionVal" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="active">Display Sequence</td>
+                                    <td class="active">
+                                        <select ng-model="modalrecords.ship_address" ng-readonly="actionVal" class="form-control">
+                                            <option value="1" ng-repeat="display in displaySeqArr">{{display}}</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="active">Status:</td>
+                                    <td class="active">
+                                         <select class="form-control" ng-model="modalrecords.email">
+                                            <option value="1">True</option>
+                                            <option value="0">False</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            </table>
+                            <input type="submit" class="btn btn-primary btn-sm" ng-hide="actionVal" value="Add" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</modal>
+<!--Add modal end-->
 
 <style>
 .sort-icon {
     font-size: 9px;
     margin-left: 5px;
 }
+.customTable th, .customTable td{font-weight: normal !important;}
+    .customTable,.editUserTable{border:1px solid #ddd; font-size: 12px;}
+    .customTable th{background-color: /*#929292*/ #337AB7  !important; color:#fff; border-radius:0 !important}
 
 th {
     cursor:pointer;
 }
-.emailrel{
-    width: 32%;
+
+.redclass {
+    background-color: #839E16 !important;
+    color:#fff;
 }
+.listingUser{max-height: 141px; overflow-y: auto; margin-bottom: 10px;}
+.editUser h3{font-size: 12px;}
+.editUser .panel-heading{padding:7px 15px;}
+.err-msg{color: red;}   
 </style>

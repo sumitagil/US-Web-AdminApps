@@ -11,10 +11,9 @@ app.controller('OfferGroupCtrl', function ($scope,$http,$filter,commonService,$r
         angular.element(".msg").html("");
         $scope.showmsgmodal = false;
         
-        //Add a function
+        /* Add a function */
         $scope.rowExpanded = function (item) {
-            //console.log(item);
-            alert(item.OfferGroupId + ' row expanded');
+            //alert(item.OfferGroupId + ' row expanded');
             $scope.models.offergrouplist.forEach(function (selectedItem) {
                 if (item.OfferGroupId != selectedItem.OfferGroupId) {
                     $(".glyphicon-minus-sign").attr("ng-class","iconClasses.expand");
@@ -24,24 +23,26 @@ app.controller('OfferGroupCtrl', function ($scope,$http,$filter,commonService,$r
             });
         };
     
-        //Get All Project
-         var tokendata = {token : '741889E3-4565-40A1-982A-F15F7A923D72' };
-         /*$http.jsonp("http://beta.iservices.earlymoments.com/getprojectlist?token=741889E3-4565-40A1-982A-F15F7A923D72&format=json&callback=JSON_CALLBACK")*/
+       
+        var tokendata = {token : '741889E3-4565-40A1-982A-F15F7A923D72' };
+    
+        /* Get All Project */
         $http.jsonp("http://beta.iservices.earlymoments.com/getprojectlist?callback=JSON_CALLBACK",{params : tokendata})
          .success(function(data) {
             $scope.allProjects = data.response;
-         }); //end
-        //Get All Credit Rule
+         });
+    
+        /* Get All Credit Rule */
          $http.jsonp("http://beta.iservices.earlymoments.com/getcreditruleslist?callback=JSON_CALLBACK",{params : tokendata})
          .success(function(data) {
             $scope.allCreditrules = data.response;
-         }); //end
+         }); 
     
-         //Get All Email Template
+         /* Get All Email Template */
           $http.jsonp("http://beta.iservices.earlymoments.com/getemailtemplates?callback=JSON_CALLBACK",{params : tokendata})
           .success(function(data) {
             $scope.allEmailTemps = data;
-          }); //end
+          }); 
     
         $scope.getrecords = function(event){
             if(event.keyCode==13){
@@ -53,12 +54,12 @@ app.controller('OfferGroupCtrl', function ($scope,$http,$filter,commonService,$r
         }
            
     
-        //for second layer : offer soring..
+        /* for second layer : offer soring.. */
         $scope.orderByField = 'offerId';
         $scope.reverseSort = false;
      
     
-        //////// third Layer...
+        /* third Layer... */
         $scope.tableRowExpanded = false;
         $scope.tableRowIndexExpandedCurr = "";
         $scope.tableRowIndexExpandedPrev = "";
@@ -103,7 +104,7 @@ app.controller('OfferGroupCtrl', function ($scope,$http,$filter,commonService,$r
             }
 
         };
-       //////// third Layer.....
+       /* third Layer..... */
      
         
       //Edit Section and Save Edit..
@@ -134,27 +135,27 @@ app.controller('OfferGroupCtrl', function ($scope,$http,$filter,commonService,$r
         };*/
      //Edit Section and Save Edit..
     
-    //Edit campaign data..
+    /*Edit campaign data..*/
     $scope.editCampaignData = function(campaignData,action){
             if(action === 'changeview'){
                 action = 'Edit';
             }else{
-             $scope.showModal = !$scope.showModal;   
+                $scope.showModal = !$scope.showModal;   
             }
             angular.element(".msg").html("");    
-            $scope.actionVal=false;
+            $scope.actionVal = false;
             $scope.action = action;
             $scope.campaignDatas = angular.copy(campaignData);
             
             if(action==='View'){ 
-                $scope.actionVal=true;
+                $scope.actionVal = true;
                 angular.element("#cke_1_top").hide();
             }else{
-             angular.element("#cke_1_top").show();   
+                angular.element("#cke_1_top").show();   
             }
     };
     
-    //Update Campaign Data...
+    /* Update Campaign Data... */
     $scope.updateCampaignData= function() {
         var campaignData = {
                             'token':'741889E3-4565-40A1-982A-F15F7A923D72',
@@ -207,7 +208,7 @@ app.controller('OfferGroupCtrl', function ($scope,$http,$filter,commonService,$r
         }); 
     };
     
-    //Edit Offer Data...
+    /*Edit Offer Data...*/
     $scope.editOfferData = function(offerData,action){
             $scope.showOfferModal = !$scope.showOfferModal;
             $scope.actionVal=false;
@@ -224,7 +225,7 @@ app.controller('OfferGroupCtrl', function ($scope,$http,$filter,commonService,$r
             if(action==='View') $scope.actionVal=true;
     };
     
-    //Edit Page Data...
+    /*Edit Page Data...*/
     $scope.editPageData = function(pageData,action){
             angular.element(".msg").html("");
             $scope.showPageModal = !$scope.showPageModal;
@@ -234,7 +235,7 @@ app.controller('OfferGroupCtrl', function ($scope,$http,$filter,commonService,$r
             if(action==='View') $scope.actionVal=true;
     };
     
-    //Update Page Data...
+    /*Update Page Data...*/
      $scope.updatePageData= function() {
         var pageData = {
                             'token':'741889E3-4565-40A1-982A-F15F7A923D72',
