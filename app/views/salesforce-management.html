@@ -105,10 +105,11 @@
                             <table class="table table-hover table-condensed editUserTable">
                             <tbody>                               
                                 <tr>
-                                    <td class="active">Post Id:</td>
+                                    <td class="active">Post : </td>
                                     <td class="active">
                                         <select name="blogId" ng-model="editrecords.blogId" class="form-control" required>
-                                        <option value="{{allPostId.blogId}}" ng-repeat="allPostId in allPostIds">{{allPostId.title}}</option>
+                                        <option value="{{allPostId.blogId}}" ng-repeat="allPostId in allPostIds">
+                                            {{allPostId.blogId}} - {{allPostId.title}}</option>
                                         </select>
                                         <div ng-messages="editForm.blogId.$error" ng-if="editForm.blogId.$dirty">
                                           <div ng-message="required" class="err-msg">Post id is required</div>
@@ -116,7 +117,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="active">Display Sequence</td>
+                                    <td class="active">Display Sequence : </td>
                                     <td class="active">
                                         <select name="displaySequence" ng-model="editrecords.displaySequence" class="form-control" required>
                                             <option value="{{display}}" ng-repeat="display in displaySeqArr">{{display}}</option>
@@ -127,9 +128,21 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="active">Subject Line:</td>
+                                    <td class="active">Title : </td>
                                     <td class="active">
-                                        <input type="text" name="postTitle" class="form-control" ng-model="editrecords.postTitle"/>       
+                                        <input type="text" name="postTitle" class="form-control" ng-model="editrecords.postTitle" readonly/>   
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="active">Status:</td>
+                                    <td class="active">
+                                         <select class="form-control" ng-model="editrecords.status" name="status" required>
+                                            <option value="true">True</option>
+                                            <option value="false">False</option>
+                                        </select>
+                                        <div ng-messages="editForm.status.$error" ng-if="editForm.status.$dirty">
+                                          <div ng-message="required" class="err-msg">Status is required</div>
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>
@@ -211,18 +224,19 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="active">Post Id:</td>
+                                    <td class="active">Post:</td>
                                     <td class="active">
                                         <select name="blogId" ng-model="addarrData.blogId" class="form-control" required>
-                                        <option value="{{allPostId.blogId}}" ng-repeat="allPostId in allPostIds">{{allPostId.title}}</option>
+                                        <option value="{{allPostId.blogId}}" ng-repeat="allPostId in allPostIds">
+                                            {{allPostId.blogId}} - {{allPostId.title}}</option>
                                         </select>
                                         <div ng-messages="addForm.blogId.$error" ng-if="addForm.blogId.$dirty">
-                                          <div ng-message="required" class="err-msg">Post Id is required</div>
+                                          <div ng-message="required" class="err-msg">Post is required</div>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="active">Subject Line:</td>
+                                    <td class="active">Title :</td>
                                     <td class="active">
                                         <input type="text" class="form-control" ng-model="addarrData.postTitle" />
                                     </td>
@@ -278,8 +292,8 @@ th {
 }
 
 .redclass {
-    background-color: /*#839E16*/ rgba(173, 255, 47, 0.37) !important;
-    /*color:#fff;*/
+    background-color: #839E16 !important;
+    color:#fff;
 }
 .listingUser{max-height: 141px; overflow-y: auto; margin-bottom: 10px;}
 .editUser h3{font-size: 12px;}
