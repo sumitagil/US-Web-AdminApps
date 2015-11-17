@@ -8,38 +8,41 @@
     <table class="table table-hover table-condensed table-striped">
         <thead class="levelOne">
             <tr>
-                <th ng-click="sort('order_id')">Persona
-                    <span class="glyphicon sort-icon" ng-show="sortKey=='order_id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                <th ng-click="sort('persona')">Persona
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='persona'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                 </th>
-                <th ng-click="sort('source')">Email No
-                    <span class="glyphicon sort-icon" ng-show="sortKey=='source'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                <th ng-click="sort('emailno')">Email No
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='emailno'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                 </th>
-                <th ng-click="sort('ccname')">Post Id
-                    <span class="glyphicon sort-icon" ng-show="sortKey=='ccname'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                <th ng-click="sort('blogId')">Post Id
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='blogId'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                 </th>
-                <th ng-click="sort('bill_address')">Subject Line
-                    <span class="glyphicon sort-icon" ng-show="sortKey=='bill_address'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                <th ng-click="sort('postTitle')">Subject Line
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='postTitle'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                 </th>
-                <th ng-click="sort('email')">Display Sequence
-                    <span class="glyphicon sort-icon" ng-show="sortKey=='email'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                <th ng-click="sort('displaySequence')">Display Sequence
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='displaySequence'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                 </th>
-                <th ng-click="sort('email')">Status
-                    <span class="glyphicon sort-icon" ng-show="sortKey=='email'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                <th ng-click="sort('status')">Status
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='status'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                 </th>
                 <th>&nbsp</th>
             </tr>
         </thead>
         <tbody>
-            <tr dir-paginate="result in results|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" ng-class="set_color(result.order_id)">
-                    <td>{{result.order_id}}</td>
-                    <td>{{result.source}}</td>
-                    <td>{{result.ccname}}</td>
-                    <td>{{result.bill_address}}</td>
-                    <td>{{result.email}} </td>
-                    <td>true</td>
+            <tr dir-paginate="result in results|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" ng-class="set_color(result.displaySequence)" ng-if="results.length>0">
+                    <td>{{result.persona}}</td>
+                    <td>{{result.emailno}}</td>
+                    <td>{{result.blogId}}</td>
+                    <td>{{result.postTitle}}</td>
+                    <td>{{result.displaySequence}} </td>
+                    <td>{{result.status}}</td>
                     <td>
                         <span class="btn btn-primary offerEditBtn" ng-click="viewCustomerData(result)">Edit</span>
                     </td>
+            </tr>
+            <tr ng-if="results.length==0">
+                <td colspan="7">No records found</td>
             </tr>
         </tbody>
     </table>
@@ -67,7 +70,8 @@
     <div class="row">
         <div class="col-md-12 campaigns">
             <div class="panel-body">
-                <div class="listingUser">
+                <p ng-show="editloadingimage"><img src="/images/ajax-loader.gif" style="padding-left:45%;"/></p>
+                <div class="listingUser" ng-if="editlist.length > 0">
                 <table class="table table-hover table-condensed customTable">
                     <tbody>
                         <tr>
@@ -76,49 +80,19 @@
                             <th class="active">Post Id</th>
                             <th class="active">Display Sequence</th>
                         </tr>
-                        <tr>
-                            <td class="active">11</td>
-                            <td class="active">abc@gmail.com</td>
-                            <td class="active">P001</td>
-                            <td class="active">2</td>
-                        </tr>
-                        <tr>
-                            <td class="active">12</td>
-                            <td class="active">abc@gmail.com</td>
-                            <td class="active">P001</td>
-                            <td class="active">3</td>
-                        </tr>
-                        <tr>
-                            <td class="active">11</td>
-                            <td class="active">abc@gmail.com</td>
-                            <td class="active">P001</td>
-                            <td class="active">5</td>
-                        </tr>
-                        <tr>
-                            <td class="active">12</td>
-                            <td class="active">abc@gmail.com</td>
-                            <td class="active">P001</td>
-                            <td class="active">6</td>
-                        </tr>
-                        <tr>
-                            <td class="active">11</td>
-                            <td class="active">abc@gmail.com</td>
-                            <td class="active">P001</td>
-                            <td class="active">1</td>
-                        </tr>
-                        <tr>
-                            <td class="active">12</td>
-                            <td class="active">abc@gmail.com</td>
-                            <td class="active">P001</td>
-                            <td class="active">4</td>
-                        </tr>
+                        <tr ng-repeat="list in editlist" ng-if="list.persona==editrecords.persona && list.emailno==editrecords.emailno">
+                            <td class="active">{{list.persona}}</td>
+                            <td class="active">{{list.emailno}}</td>
+                            <td class="active">{{list.blogId}}</td>
+                            <td class="active">{{list.displaySequence}}</td>
+                        </tr>  
                     </tbody>
                 </table>
                 </div>  
                 <div class="clear"></div>
                  <div style="padding-bottom:25px;">
-                    <span style="float:left;">Persona : #100</span> 
-                    <span style="float:right;">Email No : #2</span>
+                    <span style="float:left;">Persona : #{{editrecords.persona}}</span> 
+                    <span style="float:right;">Email No : #{{editrecords.emailno}}</span>
                  </div>
                 <div class="clear"></div>
                 <div class="panel panel-default editUser">
@@ -127,41 +101,41 @@
                     </div>
                     <div class="panel-body">                      
                         <div class="table-responsive">
-                            <form name="editForm" class="myForm" required>
+                            <form name="editForm" class="myForm" novalidate>
                             <table class="table table-hover table-condensed editUserTable">
                             <tbody>                               
                                 <tr>
                                     <td class="active">Post Id:</td>
                                     <td class="active">
-                                        <input type="text" class="form-control" name="postid" ng-model="modalrecords.bill_address" required />
-                                        <div ng-messages="editForm.postid.$error" ng-if="editForm.postid.$dirty">
-                                          <div ng-message="required" class="err-msg">This field is required</div>
+                                        <select name="blogId" ng-model="editrecords.blogId" class="form-control" required>
+                                        <option value="{{allPostId.blogId}}" ng-repeat="allPostId in allPostIds">{{allPostId.title}}</option>
+                                        </select>
+                                        <div ng-messages="editForm.blogId.$error" ng-if="editForm.blogId.$dirty">
+                                          <div ng-message="required" class="err-msg">Post id is required</div>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="active">Display Sequence</td>
                                     <td class="active">
-                                        <select name="displaysequence" ng-model="modalrecords.ship_address" class="form-control" required>
-                                            <option value="1" ng-repeat="display in displaySeqArr">{{display}}</option>
+                                        <select name="displaySequence" ng-model="editrecords.displaySequence" class="form-control" required>
+                                            <option value="{{display}}" ng-repeat="display in displaySeqArr">{{display}}</option>
                                         </select>
-                                        <div ng-messages="editForm.displaysequence.$error" ng-if="editForm.postid.$dirty">
-                                          <div ng-message="required" class="err-msg">This field is required</div>
+                                        <div ng-messages="editForm.displaySequence.$error" ng-if="editForm.displaySequence.$dirty">
+                                          <div ng-message="required" class="err-msg">Display sequence is required</div>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="active">Subject Line:</td>
                                     <td class="active">
-                                        <input type="text" name="subjectline" class="form-control" ng-model="modalrecords.email" required />
-                                        <div ng-messages="editForm.subjectline.$error" ng-if="editForm.postid.$dirty">
-                                          <div ng-message="required" class="err-msg">This field is required</div>
-                                        </div>
+                                        <input type="text" name="postTitle" class="form-control" ng-model="editrecords.postTitle"/>       
                                     </td>
                                 </tr>
                             </tbody>
                             </table>
-                            <input type="submit" class="btn btn-primary btn-sm" ng-hide="actionVal" value="Submit" />
+                            <input type="submit" class="btn btn-primary btn-sm" value="Submit" ng-click="updateRecords(editrecords.persona,editrecords.emailno)" />
+                            <p class="displaymsg">{{responsemsg}}</p>
                             </form>
                         </div>
                     </div>
@@ -178,7 +152,7 @@
         <div class="col-md-12 campaigns">
             <div class="panel-body">
                 <div class="listingUser" ng-show="listingdiv">
-                <table class="table table-hover table-condensed customTable">
+                    <table class="table table-hover table-condensed customTable">
                     <tbody>
                         <tr>
                             <th class="active">Persona</th>
@@ -186,42 +160,12 @@
                             <th class="active">Post Id</th>
                             <th class="active">Display Sequence</th>
                         </tr>
-                        <tr>
-                            <td class="active">11</td>
-                            <td class="active">abc@gmail.com</td>
-                            <td class="active">P001</td>
-                            <td class="active">2</td>
-                        </tr>
-                        <tr>
-                            <td class="active">12</td>
-                            <td class="active">abc@gmail.com</td>
-                            <td class="active">P001</td>
-                            <td class="active">3</td>
-                        </tr>
-                        <tr>
-                            <td class="active">11</td>
-                            <td class="active">abc@gmail.com</td>
-                            <td class="active">P001</td>
-                            <td class="active">5</td>
-                        </tr>
-                        <tr>
-                            <td class="active">12</td>
-                            <td class="active">abc@gmail.com</td>
-                            <td class="active">P001</td>
-                            <td class="active">6</td>
-                        </tr>
-                        <tr>
-                            <td class="active">11</td>
-                            <td class="active">abc@gmail.com</td>
-                            <td class="active">P001</td>
-                            <td class="active">1</td>
-                        </tr>
-                        <tr>
-                            <td class="active">12</td>
-                            <td class="active">abc@gmail.com</td>
-                            <td class="active">P001</td>
-                            <td class="active">4</td>
-                        </tr>
+                        <tr ng-repeat="list in addlist" ng-if="addlist.length > 0">
+                            <td class="active">{{list.persona}}</td>
+                            <td class="active">{{list.emailno}}</td>
+                            <td class="active">{{list.blogId}}</td>
+                            <td class="active">{{list.displaySequence}}</td>
+                        </tr> 
                     </tbody>
                 </table>
                 </div>  
@@ -232,68 +176,85 @@
                     </div>
                     <div class="panel-body">                      
                         <div class="table-responsive">
+                            <form name="addForm" class="myForm" required>
                             <table class="table table-hover table-condensed editUserTable">
                             <tbody>                               
                                 <tr>
                                     <td class="active">Persona:</td>
                                     <td class="active">
-                                        <select class="form-control" ng-model="modalrecords.bill_address" ng-change="showListDiv(modalrecords.bill_address)">
+                                      <select class="form-control" ng-model="addarrData.persona" ng-change="showListDivByPersonaAndEmail(addarrData.persona,addarrData.emailno)" name="persona" required>
+                                            <option value="0">Select One</option>
                                             <option value="100">100</option>
                                             <option value="200">200</option>
                                             <option value="300">300</option>
                                             <option value="400">400</option>
                                             <option value="500">500</option>
                                         </select>
+                                        <div ng-messages="addForm.persona.$error" ng-if="addForm.persona.$dirty">
+                                          <div ng-message="required" class="err-msg">Persona is required</div>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="active">Email No:</td>
                                     <td class="active">
-                                        <select class="form-control" ng-model="modalrecords.email" ng-change="showListDivByEmail(modalrecords.email)">
+                                        <select class="form-control" ng-model="addarrData.emailno" ng-change="showListDivByPersonaAndEmail(addarrData.persona,addarrData.emailno)" required>
+                                            <option value="0">Select One</option>
                                             <option value="2">2</option>
                                             <option value="5">5</option>
                                             <option value="7">7</option>
                                             <option value="8">8</option>
                                         </select>
+                                        <div ng-messages="addForm.emailno.$error" ng-if="addForm.emailno.$dirty">
+                                          <div ng-message="required" class="err-msg">Email No is required</div>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="active">Post Id:</td>
                                     <td class="active">
-                                        <select class="form-control" ng-model="modalrecords.email">
-                                            <option value="2">2</option>
-                                            <option value="5">5</option>
-                                            <option value="7">7</option>
-                                            <option value="8">8</option>
+                                        <select name="blogId" ng-model="addarrData.blogId" class="form-control" required>
+                                        <option value="{{allPostId.blogId}}" ng-repeat="allPostId in allPostIds">{{allPostId.title}}</option>
                                         </select>
+                                        <div ng-messages="addForm.blogId.$error" ng-if="addForm.blogId.$dirty">
+                                          <div ng-message="required" class="err-msg">Post Id is required</div>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="active">Subject Line:</td>
                                     <td class="active">
-                                        <input type="text" class="form-control" ng-model="modalrecords.email" ng-readonly="actionVal" />
+                                        <input type="text" class="form-control" ng-model="addarrData.postTitle" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="active">Display Sequence</td>
                                     <td class="active">
-                                        <select ng-model="modalrecords.ship_address" ng-readonly="actionVal" class="form-control">
-                                            <option value="1" ng-repeat="display in displaySeqArr">{{display}}</option>
+                                        <select ng-model="addarrData.displaySequence" class="form-control" required>
+                                            <option value="{{display}}" ng-repeat="display in displaySeqArr">{{display}}</option>
                                         </select>
+                                        <div ng-messages="addForm.displaySequence.$error" ng-if="addForm.displaySequence.$dirty">
+                                          <div ng-message="required" class="err-msg">Display sequence is required</div>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="active">Status:</td>
                                     <td class="active">
-                                         <select class="form-control" ng-model="modalrecords.email">
-                                            <option value="1">True</option>
-                                            <option value="0">False</option>
+                                         <select class="form-control" ng-model="addarrData.status" required>
+                                            <option value="true">True</option>
+                                            <option value="false">False</option>
                                         </select>
+                                        <div ng-messages="addForm.status.$error" ng-if="addForm.status.$dirty">
+                                          <div ng-message="required" class="err-msg">Status is required</div>
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>
                             </table>
-                            <input type="submit" class="btn btn-primary btn-sm" ng-hide="actionVal" value="Add" />
+                            <input type="submit" class="btn btn-primary btn-sm" ng-hide="actionVal" value="Add" ng-click="addRecords()" />
+                            <p class="displaymsg">{{responsemsg}}</p>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -310,18 +271,19 @@
 }
 .customTable th, .customTable td{font-weight: normal !important;}
     .customTable,.editUserTable{border:1px solid #ddd; font-size: 12px;}
-    .customTable th{background-color: /*#929292*/ #337AB7  !important; color:#fff; border-radius:0 !important}
+    .customTable th{background-color: #337AB7  !important; color:#fff; border-radius:0 !important}
 
 th {
     cursor:pointer;
 }
 
 .redclass {
-    background-color: #839E16 !important;
-    color:#fff;
+    background-color: /*#839E16*/ rgba(173, 255, 47, 0.37) !important;
+    /*color:#fff;*/
 }
 .listingUser{max-height: 141px; overflow-y: auto; margin-bottom: 10px;}
 .editUser h3{font-size: 12px;}
 .editUser .panel-heading{padding:7px 15px;}
-.err-msg{color: red;}   
+.err-msg{color: red;} 
+.displaymsg{padding-top: 10px; color: green; font-weight: bold;}
 </style>
