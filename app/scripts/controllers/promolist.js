@@ -112,8 +112,7 @@ app.controller('promolistCtrl', function ($scope,$http,$route,$modal) {
                             $scope.short_notes="";
                        
                         var url = "http://beta.iservices.earlymoments.com/UpdatePromoMapping?token="+token+"&EntryId="+$scope.EntryId+"&PromoCode="+$scope.promo_code+"&CampaignId="+$scope.campaign_id+"&PageId="+$scope.page_id+"&ConfirmReferenceId="+$scope.refid+"&ShortNotes="+$scope.short_notes+"&callback=JSON_CALLBACK";
-                     
-                       
+                                           
                         $http.jsonp(url)
                         .success(function (data, status, headers, config) {
                             alert("Record has been updated Successfully");

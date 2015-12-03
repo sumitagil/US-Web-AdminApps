@@ -92,6 +92,7 @@
                     <td>Page Id</td>
                     <td>  
                         <select name="page_id" ng-model="page_id" class="form-control">
+                                <option value="">Select One</option>
                                 <option ng-repeat="pageid in pageids" 
                                         ng-selected="{{pageid.PageId==page_id}}" 
                                         value="{{pageid.PageId}}">

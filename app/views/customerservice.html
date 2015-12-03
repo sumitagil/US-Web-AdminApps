@@ -64,16 +64,34 @@
                     <span class="glyphicon sort-icon" ng-show="sortKey=='order_id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                 </th>
                 <th>Order Source</th>
-                <th>Billing Name</th>
+                <th ng-click="sort('ccname')">Billing Name
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='ccname'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
                 <th>Billing Address</th>
-                <th>Billing Email</th>
-                <th>Cancelled</th>
-                <th>Vendor</th>
-                <th>Payment Type</th>
-                <th>Exported</th>
-                <th>Promotion Code</th>
-                <th>Order Date</th>
-                <th>Project</th>
+                <th ng-click="sort('email')">Billing Email
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='email'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th ng-click="sort('cancelled')">Cancelled
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='cancelled'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th ng-click="sort('vendor_id')">Vendor
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='vendor_id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th ng-click="sort('payment_type')">Payment Type
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='payment_type'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th ng-click="sort('exported')">Exported
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='exported'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th ng-click="sort('promotion_code')">Promotion Code
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='promotion_code'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th ng-click="sort('order_dt')">Order Date
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='order_dt'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th ng-click="sort('project')">Project
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='project'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
                 <!--<th>Export Status</th>-->
                 <th>&nbsp</th>
             </tr>
