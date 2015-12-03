@@ -24,8 +24,8 @@ app.controller('salesforceCtrl', function ($scope,$http) {
              });
         
         /* GET ALL POST ID LIST */
-        var editurl = "http://iservices.earlymoments.com/getBlogContentList?callback=JSON_CALLBACK";
-        $http.jsonp(editurl,{params : customerData})
+        var editurl = "http://iservices.earlymoments.com/getBlogContentList?token=68510D51-7677-4B7A-A154-C1812F80B783&callback=JSON_CALLBACK";
+        $http.jsonp(editurl)
              .success(function (data, status, headers, config) {
                     if(data.status==true){
                         $scope.allPostIds = data.BlogContents; 
@@ -42,6 +42,7 @@ app.controller('salesforceCtrl', function ($scope,$http) {
             $scope.showCustomerModal = !$scope.showCustomerModal;
             $scope.editrecords = angular.copy(data);
             $scope.editlist = $scope.results;
+            //$scope.editrecords.postTitle = $scope.allPostIds[i].title;
         };
     
         $scope.updateRecords = function(persona,emailno){
@@ -58,21 +59,81 @@ app.controller('salesforceCtrl', function ($scope,$http) {
             $scope.listingdiv = false;
             $scope.showAddModal = !$scope.showAddModal;
             $scope.addarrData=[];
+            $scope.addarrData.postTitle ='';
+        };
+        
+        $scope.getBlogTitle = function(blogId){
+            $scope.editrecords.postTitle ='';
+            if($scope.allPostIds.length > 0){
+                for(var i=0; i<$scope.allPostIds.length; i++){
+                    if($scope.allPostIds[i].blogId == blogId){
+                        $scope.editrecords.postTitle = $scope.allPostIds[i].title;
+                        break;
+                    }
+                }
+            }
         };
     
-        $scope.showListDivByPersonaAndEmail = function(persona,emailno){ 
+        $scope.showListDivByPersonaAndEmail = function(persona,emailno,blogid){ 
             $scope.listingdiv = false;
             $scope.addlist =[];
-            if(persona > 0 && (emailno == 0 || emailno == '' || emailno == undefined || emailno == 'undefined')){
+            $scope.addarrData.postTitle ='';
+            if($scope.allPostIds.length > 0){
+                for(var i=0; i<$scope.allPostIds.length; i++){
+                    if($scope.allPostIds[i].blogId == blogid){
+                        $scope.addarrData.postTitle = $scope.allPostIds[i].title;
+                        break;
+                    }
+                }
+            }
+            if(persona > 0 && (emailno == 0 || emailno == '' || emailno == undefined || emailno == 'undefined') 
+               && (blogid == 0 || blogid == '' || blogid == undefined || blogid == 'undefined') ){
                 for(var i=0; i<$scope.results.length; i++){
                     if($scope.results[i].persona==persona)
                         $scope.addlist.push(angular.copy($scope.results[i]));
                 }
                 $scope.listingdiv = true;
             }
-            else if(persona > 0 && emailno > 0){
+            else if(emailno > 0 && (persona == 0 || persona == '' || persona == undefined || persona == 'undefined') 
+                    && (blogid == 0 || blogid == '' || blogid == undefined || blogid == 'undefined') ){
+                for(var i=0; i<$scope.results.length; i++){
+                    if($scope.results[i].emailno==emailno)
+                        $scope.addlist.push(angular.copy($scope.results[i]));
+                }
+                $scope.listingdiv = true;
+            }
+            else if(blogid > 0 && (emailno == 0 || emailno == '' || emailno == undefined || emailno == 'undefined') 
+                    && (persona == 0 || persona == '' || persona == undefined || persona == 'undefined') ){
+                for(var i=0; i<$scope.results.length; i++){
+                    if($scope.results[i].blogId==blogid)
+                        $scope.addlist.push(angular.copy($scope.results[i]));
+                }
+                $scope.listingdiv = true;
+            }
+            else if(persona > 0 && emailno > 0 && (blogid == 0 || blogid == '' || blogid == undefined || blogid == 'undefined') ){
                 for(var i=0; i<$scope.results.length; i++){
                     if($scope.results[i].persona==persona && $scope.results[i].emailno==emailno)
+                        $scope.addlist.push(angular.copy($scope.results[i]));
+                }
+                $scope.listingdiv = true; 
+            }
+            else if(persona > 0 && blogid > 0 && (emailno == 0 || emailno == '' || emailno == undefined || emailno == 'undefined') ){
+                for(var i=0; i<$scope.results.length; i++){
+                    if($scope.results[i].persona==persona && $scope.results[i].blogId==blogid)
+                        $scope.addlist.push(angular.copy($scope.results[i]));
+                }
+                $scope.listingdiv = true; 
+            }
+            else if(emailno > 0 && blogid > 0 && (persona == 0 || persona == '' || persona == undefined || persona == 'undefined') ){
+                for(var i=0; i<$scope.results.length; i++){
+                    if($scope.results[i].emailno==emailno && $scope.results[i].blogId==blogid)
+                        $scope.addlist.push(angular.copy($scope.results[i]));
+                }
+                $scope.listingdiv = true; 
+            }
+            else if(persona > 0 && emailno > 0 && blogid > 0 ){
+                for(var i=0; i<$scope.results.length; i++){
+                    if($scope.results[i].persona==persona && $scope.results[i].emailno==emailno && $scope.results[i].blogId==blogid)
                         $scope.addlist.push(angular.copy($scope.results[i]));
                 }
                 $scope.listingdiv = true; 

@@ -14,7 +14,7 @@
                 <th ng-click="sort('emailno')">Email No
                     <span class="glyphicon sort-icon" ng-show="sortKey=='emailno'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                 </th>
-                <th ng-click="sort('blogId')">Post Id
+                <th ng-click="sort('blogId')">Post
                     <span class="glyphicon sort-icon" ng-show="sortKey=='blogId'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                 </th>
                 <th ng-click="sort('postTitle')">Subject Line
@@ -77,7 +77,7 @@
                         <tr>
                             <th class="active">Persona</th>
                             <th class="active">Email No</th>
-                            <th class="active">Post Id</th>
+                            <th class="active">Post</th>
                             <th class="active">Display Sequence</th>
                         </tr>
                         <tr ng-repeat="list in editlist" ng-if="list.persona==editrecords.persona && list.emailno==editrecords.emailno">
@@ -107,13 +107,19 @@
                                 <tr>
                                     <td class="active">Post : </td>
                                     <td class="active">
-                                        <select name="blogId" ng-model="editrecords.blogId" class="form-control" required>
+                                        <select name="blogId" ng-model="editrecords.blogId" class="form-control" required ng-change="getBlogTitle(editrecords.blogId)">
                                         <option value="{{allPostId.blogId}}" ng-repeat="allPostId in allPostIds">
-                                            {{allPostId.blogId}} - {{allPostId.title}}</option>
+                                            {{allPostId.blogId}}</option>
                                         </select>
                                         <div ng-messages="editForm.blogId.$error" ng-if="editForm.blogId.$dirty">
                                           <div ng-message="required" class="err-msg">Post id is required</div>
                                         </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="active">Title : </td>
+                                    <td class="active">
+                                        <input type="text" name="postTitle" class="form-control" ng-model="editrecords.postTitle" readonly/>   
                                     </td>
                                 </tr>
                                 <tr>
@@ -126,13 +132,7 @@
                                           <div ng-message="required" class="err-msg">Display sequence is required</div>
                                         </div>
                                     </td>
-                                </tr>
-                                <tr>
-                                    <td class="active">Title : </td>
-                                    <td class="active">
-                                        <input type="text" name="postTitle" class="form-control" ng-model="editrecords.postTitle" readonly/>   
-                                    </td>
-                                </tr>
+                                </tr>       
                                 <tr>
                                     <td class="active">Status:</td>
                                     <td class="active">
@@ -170,7 +170,7 @@
                         <tr>
                             <th class="active">Persona</th>
                             <th class="active">Email No</th>
-                            <th class="active">Post Id</th>
+                            <th class="active">Post</th>
                             <th class="active">Display Sequence</th>
                         </tr>
                         <tr ng-repeat="list in addlist" ng-if="addlist.length > 0">
@@ -179,6 +179,9 @@
                             <td class="active">{{list.blogId}}</td>
                             <td class="active">{{list.displaySequence}}</td>
                         </tr> 
+                        <tr ng-if="addlist.length == 0">
+                            <td colspan="4">No records found</td>
+                        </tr>
                     </tbody>
                 </table>
                 </div>  
@@ -195,8 +198,8 @@
                                 <tr>
                                     <td class="active">Persona:</td>
                                     <td class="active">
-                                      <select class="form-control" ng-model="addarrData.persona" ng-change="showListDivByPersonaAndEmail(addarrData.persona,addarrData.emailno)" name="persona" required>
-                                            <option value="0">Select One</option>
+                                      <select class="form-control" ng-model="addarrData.persona" name="persona" required 
+                                     ng-change="showListDivByPersonaAndEmail(addarrData.persona,addarrData.emailno,addarrData.blogId)">
                                             <option value="100">100</option>
                                             <option value="200">200</option>
                                             <option value="300">300</option>
@@ -211,8 +214,8 @@
                                 <tr>
                                     <td class="active">Email No:</td>
                                     <td class="active">
-                                        <select class="form-control" ng-model="addarrData.emailno" ng-change="showListDivByPersonaAndEmail(addarrData.persona,addarrData.emailno)" required>
-                                            <option value="0">Select One</option>
+                                        <select class="form-control" ng-model="addarrData.emailno" required 
+                                        ng-change="showListDivByPersonaAndEmail(addarrData.persona,addarrData.emailno,addarrData.blogId)" >
                                             <option value="2">2</option>
                                             <option value="5">5</option>
                                             <option value="7">7</option>
@@ -226,9 +229,10 @@
                                 <tr>
                                     <td class="active">Post:</td>
                                     <td class="active">
-                                        <select name="blogId" ng-model="addarrData.blogId" class="form-control" required>
+                                        <select name="blogId" ng-model="addarrData.blogId" class="form-control" required 
+                                        ng-change="showListDivByPersonaAndEmail(addarrData.persona,addarrData.emailno,addarrData.blogId)">
                                         <option value="{{allPostId.blogId}}" ng-repeat="allPostId in allPostIds">
-                                            {{allPostId.blogId}} - {{allPostId.title}}</option>
+                                            {{allPostId.blogId}}</option>
                                         </select>
                                         <div ng-messages="addForm.blogId.$error" ng-if="addForm.blogId.$dirty">
                                           <div ng-message="required" class="err-msg">Post is required</div>
@@ -236,9 +240,9 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="active">Title :</td>
+                                    <td class="active">Title/Subject :</td>
                                     <td class="active">
-                                        <input type="text" class="form-control" ng-model="addarrData.postTitle" />
+                                        <input type="text" class="form-control" ng-model="addarrData.postTitle" readonly="true"/>
                                     </td>
                                 </tr>
                                 <tr>

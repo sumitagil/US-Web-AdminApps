@@ -266,49 +266,6 @@ app.controller('OfferGroupCtrl', function ($scope,$http,$filter,commonService,$r
 });
 
 
-app.directive('modal', function () {
-    return {
-      template: '<div class="modal fade campaignModal">' + 
-          '<div class="modal-dialog {{class}}">' + 
-            '<div class="modal-content">' + 
-              '<div class="modal-header" ng-show="title">' + 
-                '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>' + 
-                '<h4 class="modal-title">{{ title }}</h4>' + 
-              '</div>' + 
-              '<div class="modal-body" ng-transclude></div>' + 
-            '</div>' + 
-          '</div>' + 
-        '</div>',
-      restrict: 'E',
-      transclude: true,
-      replace:true,
-      scope:true,
-      link: function postLink(scope, element, attrs) {
-        scope.title = attrs.title;
-        scope.class = attrs.rel;
-
-        scope.$watch(attrs.visible, function(value){
-          if(value == true)
-            $(element).modal('show');
-          else
-            $(element).modal('hide');
-        });
-
-        $(element).on('shown.bs.modal', function(){
-          scope.$apply(function(){
-            scope.$parent[attrs.visible] = true;
-          });
-        });
-
-        $(element).on('hidden.bs.modal', function(){
-          scope.$apply(function(){
-            scope.$parent[attrs.visible] = false;
-          });
-        });
-      }
-    };
-});
-
 app.service('commonService', function () {
     return {
         displayAllRecords: function ($scope,$http) { 
