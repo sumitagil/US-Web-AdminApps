@@ -18,24 +18,15 @@ app.controller('OrderFormsCtrl', function ($scope,$location, $http,$route) {
     $scope.$location = $location;
     $scope.listAll = true;
     $scope.editAll = false;
-    $scope.loading = true;
-    $scope.curPage = 0;
-    $scope.pageSize = 5;
-    $scope.MaxPage = 0;
     
+    $scope.loading = true;
     //Get All data
     $http.jsonp("http://beta.iservices.earlymoments.com/getorderformdetails?token=741889E3-4565-40A1-982A-F15F7A923D72&format=json&callback=JSON_CALLBACK")
         .success(function(data) {
+            $scope.loading = false; 
             $scope.results = data.response;
-            $scope.loading = false;
-            //pagination...
-            $scope.numberOfPages=function(){
-                return Math.ceil($scope.results.length / $scope.pageSize);
-            }
-            $scope.MaxPage=$scope.numberOfPages();
-            //pagination...
-           
         }).error(function(){
+            $scope.showloadingmodal = false; 
             alert("Error");
         });
     

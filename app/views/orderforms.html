@@ -1,15 +1,12 @@
 <div class="col-md-12 bodyContentArea">
-    <div ng-show="listAll">
-           
+    <div ng-show="listAll">         
         <div class="clear"></div>
-        <div ng-show="loading" class="loading"><img src="../images/loading.gif">LOADING...</div>
-        <div class="clear"></div>
-    
-        
+        <div ng-show="loading" class="loading"><img src="/images/ajax-loader.gif"/></div>
+        <div class="clear"></div>        
         <div class="table-responsive"> 
-            <h5 class="fr"><a href="#/insertorderforms" class="btn btn-primary  btn-sm">ADD NEW</a></h5>
-            <table class="table table-bordered">
-                <thead>
+            <h5 class="fr"><a href="#/insertorderforms" class="btn btn-primary  btn-sm">ADD</a></h5>
+            <table class="table table-hover table-condensed table-striped">
+                <thead class="levelOne">
                 <tr>
                     <th >Entry Id</th>
                     <th>Additional Info</th>
@@ -19,31 +16,20 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="result in results | pagination: curPage * pageSize | limitTo: pageSize">                    
-                    <td style="padding:10px;">{{result.EntryId}}</td>
-                    <td style="max-width:250px; overflow:hidden;padding:5px;"><div ng-bind-html="result.AdditionalInfo" style="max-height:145px;overflow:hidden;text-align:justify;"></div></td>
-                    <td style="max-width:250px; overflow:hidden;padding:10px;"><div ng-bind-html="result.OfferInfo" style="max-height:145px;overflow:hidden;text-align:justify;"></div></td>
-                    <td style="padding:10px;">{{result.ShortNotes | limitTo: 30 }}</td>
-                    <td style="padding:10px;"><a href="" ng-click="editdata(result.EntryId)" class="btn btn-default">Edit</a></td>         
+                <tr dir-paginate="result in results |itemsPerPage:10">                    
+                    <td width="5%" >{{result.EntryId}}</td>
+                    <td width="40%"><div ng-bind-html="result.AdditionalInfo | limitTo: 100" style="max-height:145px;overflow:hidden;text-align:justify;"></div></td>
+                    <td width="30%" style="padding:5px;"><div ng-bind-html="result.OfferInfo | limitTo: 100" style="max-height:145px;overflow:hidden;text-align:justify;"></div></td>
+                    <td width="20%" style="padding:3px;">{{result.ShortNotes | limitTo: 30 }}</td>
+                    <td width="5%"><a href="" ng-click="editdata(result.EntryId)" class="btn btn-primary offerEditBtn">Edit</a></td>         
                 </tr>  
                 </tbody>
             </table>
-          
-            <div class="pagination-div" ng-show="results.length" id="divPaginate">
-                <ul>
-                    <li><button type="button" class="btn" ng-disabled="curPage == 0" ng-click="curPage=curPage-1">PREV</button></li>
-                    <li><span>{{curPage + 1}} of {{ numberOfPages() }}</span></li>
-                    <li><button type="button"  class="btn" ng-disabled="curPage == numberOfPages()-1" ng-click="curPage = curPage+1">NEXT </button></li>
-                    <li>
-                        <select ng-model="pageSize" ng-change="pageSize" class="btn btn-default">
-                            <option value="5">5</option>
-                            <option value="10">10</option>
-                            <option value="15">15</option>
-                            <option value="20">20</option>
-                        </select>
-                    </li>
-                </ul>
-            </div>
+            <dir-pagination-controls
+                max-size="5"
+                direction-links="true"
+                boundary-links="true" >
+            </dir-pagination-controls>
         </div>
     </div>
     
