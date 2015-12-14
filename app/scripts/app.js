@@ -21,7 +21,7 @@ var app = angular.module('sandvikusaAdminAppsApp', [
                         'angularUtils.directives.dirPagination'
                       ]);
 
-  app.config(function ($routeProvider) { 
+app.config(function ($routeProvider) { 
     $routeProvider
      .when('/orderforms', {
         templateUrl: 'views/orderforms.html',
@@ -74,7 +74,7 @@ app.run(function($rootScope, $location, $cookieStore, $http) {
         // keep user logged in after page refresh
         $rootScope.globals = $cookieStore.get('globals') || {};
         if ($rootScope.globals.currentUser) {
-            $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
+            $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata;
         }
         
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
@@ -113,11 +113,27 @@ app.run(function($rootScope, $location, $cookieStore, $http) {
                 if($location.path() === selmenu) 
                     res = 'active';
                 return res;
-            }
+            };
+            
+            $rootScope.getmenu = function(sel){
+                $rootScope.opendiv = sel;
+                if(sel=='offersetup')
+                    $location.path('/orderforms');
+                else if(sel=='marketting')
+                    $location.path('/salesforce');
+                else
+                     $location.path('/users');
+            };
+            
+            $rootScope.getSelectedOrNot = function(sel){
+                var s = false;
+                if($rootScope.opendiv == sel)
+                    s = true;
+                return s;
+            };
             
         });
 });
-
 
 
 //Common filters...
@@ -162,7 +178,7 @@ app.directive('modal', function () {
             '</div>' + 
           '</div>' + 
         '</div>',
-      restrict: 'E',
+      restrict: 'AE',
       transclude: true,
       replace:true,
       scope:true,

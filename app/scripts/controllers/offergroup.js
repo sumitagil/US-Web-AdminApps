@@ -2,29 +2,46 @@
 
 var app = angular.module('sandvikusaAdminAppsApp');
 
-app.controller('OfferGroupCtrl', function ($scope,$http,$filter,commonService,$route,$timeout) {  
-        $scope.maindiv = false;    
-        $scope.editing = false;
-        $scope.showModal = false;
-        $scope.searchText = '';
-        $scope.models=[];
-        angular.element(".msg").html("");
-        $scope.showmsgmodal = false;
-        
-        /* Add a function */
-        $scope.rowExpanded = function (item) {
-            //alert(item.OfferGroupId + ' row expanded');
-            $scope.models.offergrouplist.forEach(function (selectedItem) {
-                if (item.OfferGroupId != selectedItem.OfferGroupId) {
-                    $(".glyphicon-minus-sign").attr("ng-class","iconClasses.expand");
-                    $(".glyphicon-minus-sign").removeClass("glyphicon-minus-sign").addClass("glyphicon-plus-sign"); 
-                    $(".glyphicon-minus-sign").attr("ng-if","iconClasses.expand");
+app.controller('OfferGroupCtrl', function ($scope,$http,$filter,commonService,$route,$timeout) { 
+        $scope.currentPage = 1;
+        $scope.loading=false;
+        $scope.getrecords = function(event){
+            if(event.keyCode==13 || event.type=='click'){
+                $scope.loading=true;
+                if($scope.searchText!=''){
+                        var url = "http://beta.iservices.earlymoments.com/getSamsOfferGroups?token=741889E3-4565-40A1-982A-F15F7A923D72&campdesc="+$scope.searchText+"&format=json&callback=JSON_CALLBACK";
+                        $http.jsonp(url).success(function(data) {   
+                            $scope.models = data;
+                            $scope.loading=false;
+                        });
+                }else{
+                   $scope.loading=false; 
                 }
-            });
+            }
         };
     
-       
         var tokendata = {token : '741889E3-4565-40A1-982A-F15F7A923D72' };
+        $scope.selectTableRow = function (offerGroupId) { 
+            var c = $("#icon_"+offerGroupId); 
+            if(c.attr('class')=="glyphicon glyphicon-plus-sign"){
+                c.removeClass("glyphicon-plus-sign").addClass("glyphicon-minus-sign");
+                $("#level2_"+offerGroupId).show();
+            }else{
+                c.removeClass("glyphicon-minus-sign").addClass("glyphicon-plus-sign");
+                $("#level2_"+offerGroupId).hide();
+            }
+        };
+    
+        $scope.selectTableRowCampaign = function (campaignId) {
+            var c = $("#icon_"+campaignId); 
+            if(c.attr('class')=="glyphicon glyphicon-plus-sign"){
+                c.removeClass("glyphicon-plus-sign").addClass("glyphicon-minus-sign");
+                $("#level3_"+campaignId).show();
+            }else{
+                c.removeClass("glyphicon-minus-sign").addClass("glyphicon-plus-sign");
+                $("#level3_"+campaignId).hide();
+            }
+        };
     
         /* Get All Project */
         $http.jsonp("http://beta.iservices.earlymoments.com/getprojectlist?callback=JSON_CALLBACK",{params : tokendata})
@@ -44,70 +61,7 @@ app.controller('OfferGroupCtrl', function ($scope,$http,$filter,commonService,$r
             $scope.allEmailTemps = data;
           }); 
     
-        $scope.getrecords = function(event){
-            if(event.keyCode==13){
-                if($scope.searchText!=''){
-                        $scope.loading = true;
-                        commonService.displayAllRecords($scope, $http);                    
-                }
-            }
-        }
-           
-    
-        /* for second layer : offer soring.. */
-        $scope.orderByField = 'offerId';
-        $scope.reverseSort = false;
-     
-    
-        /* third Layer... */
-        $scope.tableRowExpanded = false;
-        $scope.tableRowIndexExpandedCurr = "";
-        $scope.tableRowIndexExpandedPrev = "";
-        $scope.storeIdExpanded = "";
-    
-        $scope.dayDataCollapseFn = function (index) {
-            $scope.dayDataCollapse = [];
-            for (var i = 0; i < $scope.models.offergrouplist[index].campaigns[index].OfferPages.length; i += 1) {
-                $scope.dayDataCollapse.push(false);
-            }
-        };
-    
-        $scope.selectTableRow = function (index, campaignId) {
-            if (typeof $scope.dayDataCollapse === 'undefined') {
-                $scope.dayDataCollapseFn(index);
-            }
-
-            if ($scope.tableRowExpanded === false && $scope.tableRowIndexExpandedCurr === "" && $scope.storeIdExpanded === "") {
-                $scope.tableRowIndexExpandedPrev = "";
-                $scope.tableRowExpanded = true;
-                $scope.tableRowIndexExpandedCurr = index;
-                $scope.storeIdExpanded = campaignId;
-                $scope.dayDataCollapse[index] = true;
-                $("#icon_"+campaignId).removeClass("glyphicon-plus-sign").addClass("glyphicon-minus-sign");
-            } 
-            else if ($scope.tableRowExpanded === true) {
-                if ($scope.tableRowIndexExpandedCurr === index && $scope.storeIdExpanded === campaignId) {
-                    $scope.tableRowExpanded = false;
-                    $scope.tableRowIndexExpandedCurr = "";
-                    $scope.storeIdExpanded = "";
-                    $scope.dayDataCollapse[index] = false;
-                    $("#icon_"+campaignId).removeClass("glyphicon-minus-sign").addClass("glyphicon-plus-sign");
-                } else {
-                    $scope.tableRowIndexExpandedPrev = $scope.tableRowIndexExpandedCurr;
-                    $scope.tableRowIndexExpandedCurr = index;
-                    $scope.storeIdExpanded = campaignId;
-                    $scope.dayDataCollapse[$scope.tableRowIndexExpandedPrev] = false;
-                    $scope.dayDataCollapse[$scope.tableRowIndexExpandedCurr] = true;
-                    $(".listSerialicon").removeClass("glyphicon-minus-sign").addClass("glyphicon-plus-sign");
-                    $("#icon_"+campaignId).removeClass("glyphicon-plus-sign").addClass("glyphicon-minus-sign");
-                }  
-            }
-
-        };
-       /* third Layer..... */
-     
-        
-      //Edit Section and Save Edit..
+     //Edit Section and Save Edit..
         /*$scope.itemstatus = [
             {value: 'Y', text: 'Yes'},
             {value: 'N', text: 'No'},
@@ -157,6 +111,7 @@ app.controller('OfferGroupCtrl', function ($scope,$http,$filter,commonService,$r
     
     /* Update Campaign Data... */
     $scope.updateCampaignData= function() {
+        $scope.levelid=this.campaignDatas.OfferGroupId;
         var campaignData = {
                             'token':'741889E3-4565-40A1-982A-F15F7A923D72',
                             'CampaignId':this.campaignDatas.CampaignId,
@@ -172,23 +127,7 @@ app.controller('OfferGroupCtrl', function ($scope,$http,$filter,commonService,$r
                             'billPlan':this.campaignDatas.billPlan,
                             'special_text':this.campaignDatas.special_text,
                             'title':this.campaignDatas.title,
-                             'opt_out':this.campaignDatas.opt_out
-                             /*'IsClubShopOffer':this.campaignDatas.IsClubShopOffer,
-                             'isActice':this.campaignDatas.isActice,
-                             'ccOnBMConfirm':this.campaignDatas.ccOnBMConfirm,
-                             'applyEnhancedCTI':this.campaignDatas.applyEnhancedCTI,
-                             'maxItemsAllowedInCart':this.campaignDatas.maxItemsAllowedInCart,
-                             'campaign_type':this.campaignDatas.campaign_type,
-                            'details':this.campaignDatas.details,
-                            'splBookDispPropId':this.campaignDatas.splBookDispPropId,
-                            'useLitlePaymentService':this.campaignDatas.useLitlePaymentService,
-                            'numberOfShipments':this.campaignDatas.numberOfShipments,
-                            'baseOfrClub':this.campaignDatas.baseOfrClub,
-                            'baseReleaseDate':this.campaignDatas.baseReleaseDate,
-                            'upsellId':this.campaignDatas.upsellId,
-                            'freeBooksCount':this.campaignDatas.freeBooksCount,
-                            'shippingChargeId':this.campaignDatas.shippingChargeId,
-                            'autoRenewal':this.campaignDatas.autoRenewal*/
+                            'opt_out':this.campaignDatas.opt_out  
                            };
         //console.log(campaignData);
         var url = "http://beta.iservices.earlymoments.com/updatecampaigndetails?callback=JSON_CALLBACK";
@@ -197,12 +136,31 @@ app.controller('OfferGroupCtrl', function ($scope,$http,$filter,commonService,$r
             //alert(data+"Update successfully");
             $scope.showModal = false;
             $scope.showmsgmodal = true;
-            if(commonService.displayAllRecords($scope,$http)!="Error"){
-                angular.element("#msgcontent").html('<img src="http://preloaders.net/images/ajax-loader.gif" style="top:50%;"/><b>Updating</b>');
-                $timeout(function() {
+            /* ================= */
+            angular.element("#msgcontent").html('<img src="http://preloaders.net/images/ajax-loader.gif" style="top:50%;"/><b>Updating</b>');
+            
+            var url1 = "http://beta.iservices.earlymoments.com/getSamsOfferGroups?token=741889E3-4565-40A1-982A-F15F7A923D72&campdesc="+$scope.searchText+"&format=json&callback=JSON_CALLBACK";
+            $http.jsonp(url1).success(function(data) {   
+                $scope.models = data;
+                if($scope.models.length > 0){
+                    $timeout(function() {
+                        $scope.showmsgmodal = false;
+                        angular.element("#icon_"+$scope.levelid).removeClass("glyphicon-plus-sign").addClass("glyphicon-minus-sign"); 
+                        angular.element('#firstli_'+$scope.levelid).removeClass( "active" );
+                        angular.element('#secondli_'+$scope.levelid).addClass( "active" );
+                        var v = '#offers_'+$scope.levelid;
+                        var v1 = '#campaigns_'+$scope.levelid;
+                        angular.element("a[href='"+v+"']").attr('aria-expanded',"false");
+                        angular.element("a[href='"+v1+"']").attr('aria-expanded',"true");
+                        angular.element("#offers_"+$scope.levelid).removeClass("active");
+                        angular.element("#campaigns_"+$scope.levelid).addClass("active");
+                        angular.element("#level2_"+$scope.levelid).show(); 
+                    }, 1000);
+                }else{
                     $scope.showmsgmodal = false;
-                }, 3000);
-            }
+                }
+            });
+            /* ================= */
         }).error(function (data, status, headers, config) {
              alert("Error to update");
         }); 
@@ -226,17 +184,19 @@ app.controller('OfferGroupCtrl', function ($scope,$http,$filter,commonService,$r
     };
     
     /*Edit Page Data...*/
-    $scope.editPageData = function(pageData,action){
+    $scope.editPageData = function(pageData,action,offergroupid){
             angular.element(".msg").html("");
             $scope.showPageModal = !$scope.showPageModal;
             $scope.actionVal=false;
             $scope.action = action;
             $scope.pageData = angular.copy(pageData);
+            $scope.levelid=offergroupid;
             if(action==='View') $scope.actionVal=true;
     };
     
     /*Update Page Data...*/
      $scope.updatePageData= function() {
+        $scope.campId=this.pageData.CampaignId;
         var pageData = {
                             'token':'741889E3-4565-40A1-982A-F15F7A923D72',
                             'CampaignId':this.pageData.CampaignId,
@@ -252,19 +212,43 @@ app.controller('OfferGroupCtrl', function ($scope,$http,$filter,commonService,$r
         .success(function (data, status, headers, config) {
             $scope.showPageModal = false;
             $scope.showmsgmodal = true;
-            if(commonService.displayAllRecords($scope,$http)!="Error"){
-                angular.element("#msgcontent").html('<img src="http://preloaders.net/images/ajax-loader.gif" style="top:50%;"/><b>Updating</b>');
-                $timeout(function() {
+            angular.element("#msgcontent").html('<img src="http://preloaders.net/images/ajax-loader.gif" style="top:50%;"/><b>Updating</b>');
+            
+            var url1 = "http://beta.iservices.earlymoments.com/getSamsOfferGroups?token=741889E3-4565-40A1-982A-F15F7A923D72&campdesc="+$scope.searchText+"&format=json&callback=JSON_CALLBACK";
+            $http.jsonp(url1).success(function(data) {   
+                $scope.models = data;
+                if($scope.models.length > 0){
+                    $timeout(function() {
+                        $scope.showmsgmodal = false;
+                        angular.element("#icon_"+$scope.levelid).removeClass("glyphicon-plus-sign").addClass("glyphicon-minus-sign"); 
+                        angular.element('#firstli_'+$scope.levelid).removeClass( "active" );
+                        angular.element('#secondli_'+$scope.levelid).addClass( "active" );
+                        var v = '#offers_'+$scope.levelid;
+                        var v1 = '#campaigns_'+$scope.levelid;
+                        angular.element("a[href='"+v+"']").attr('aria-expanded',"false");
+                        angular.element("a[href='"+v1+"']").attr('aria-expanded',"true");
+                        angular.element("#offers_"+$scope.levelid).removeClass("active");
+                        angular.element("#campaigns_"+$scope.levelid).addClass("active");
+                        angular.element("#level2_"+$scope.levelid).show(); 
+                        angular.element("#icon_"+$scope.campId).removeClass("glyphicon-plus-sign").addClass("glyphicon-minus-sign"); 
+                        angular.element("#level3_"+$scope.campId).show();
+                    }, 1000);
+                }else{
                     $scope.showmsgmodal = false;
-                }, 3000);
-            }
+                }
+            });
+            
         }).error(function (data, status, headers, config) {
              alert("Error to update");
         }); 
     };
     
+     $scope.sort = function(keyname){
+            $scope.sortKey = keyname;   //set the sortKey to the param passed
+            $scope.reverse = !$scope.reverse; //if true make it false and vice versa
+        };
+    
 });
-
 
 app.service('commonService', function () {
     return {
@@ -275,36 +259,7 @@ app.service('commonService', function () {
                         $scope.results = data;
                         $scope.loading = false;
                         if($scope.results.length > 0){  
-                             $scope.maindiv = true;
-                             $scope.models = {
-                                              changeInfo: [],
-                                              searchText: $scope.searchText,
-                                              offergrouplist : $scope.results,
-                                              state: {
-                                                sortKey: 'offergroupId',
-                                                sortDirection: 'DEC' 
-                                              }
-                            };
-                            $scope.offerGroupTableColumnDefinition = [
-                                                          {
-                                                            columnHeaderDisplayName: 'Offer Group Id',
-                                                            displayProperty: 'OfferGroupId',
-                                                            sortKey: 'OfferGroupId',
-                                                            width: '20em',
-                                                            visible: true
-                                                          },
-                                                          {
-                                                            columnHeaderDisplayName: 'Offer Group Desc',
-                                                            displayProperty: 'GroupDesc',
-                                                            visible: true
-                                                          },
-                                                          {
-                                                            columnHeaderDisplayName: 'campaigns',
-                                                            displayProperty: 'campaigns',
-                                                            sortKey: 'campaigns',
-                                                            visible: false
-                                                          }
-                                                        ];
+                             $scope.models = data;
                         }
                     }).error(function(){
                         return "Error";

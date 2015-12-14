@@ -2,7 +2,8 @@
 
 var app = angular.module('sandvikusaAdminAppsApp');
 
-app.controller('offerimportCtrl', function ($scope,$http,$filter) {
+app.controller('offerimportCtrl', function ($scope,$http,$filter,commonService,$route,$timeout) {
+        
         $scope.errormsg = '';
         $scope.errModal = false;   
     
@@ -15,4 +16,5 @@ app.controller('offerimportCtrl', function ($scope,$http,$filter) {
                 alert($scope.offercode);
             }
         };
+         
 });

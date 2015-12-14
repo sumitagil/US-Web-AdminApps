@@ -9,10 +9,8 @@
         <input type="submit" name="submit" value="Import" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
     </form> 
     </div>
-
 </div>
 
-<!--- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" ng-show="errModal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -26,3 +24,31 @@
     </div>
   </div>
 </div>
+
+ 
+<style>
+.offerGroup thead tr:first-child {
+    background-color: #3E7AAE;
+    color: #fff;
+    border:none;
+}
+.offerGroup thead tr:last-child {
+    background-color: #f9f9f9;
+    color: #fff;
+    border:none;
+}
+.offerGroup tr:first-child td:first-child,
+.offerGroup tr:first-child th:first-child{border-radius: 6px 0 0 0;}
+.offerGroup tr:first-child td:last-child,
+.offerGroup tr:first-child th:last-child{border-radius: 0 6px 0 0;}
+ .offerGroup tbody > tr {
+    border-bottom: 1px solid #ddd;
+ }
+.max{margin-bottom: 0;}
+.alignLeft{text-align: left;}
+/*.tblMain tr:nth-of-type(2) {  
+  color: #ccc;
+}*/
+/*.tblMain tr:nth-of-type(odd){background-color: #f00 !important;}*/
+</style>
+    

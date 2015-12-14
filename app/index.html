@@ -35,16 +35,15 @@
                 </div>
                 
                 <div class="col-md-4 col-md-offset-4 text-right" ng-show="loggedIn">
-                	<div class="btn-group customBtnGr" role="group">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        	Departments <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a ng-href="#/reports" ng-click="selectdiv('reports')">Reports</a></li>
-                            <li><a ng-href="#/orderforms" ng-click="selectdiv('offersetup')">Offer Setup</a></li>
-							<li><a ng-href="#/salesforce" ng-click="selectdiv('marketting')">Marketting</a></li>
-                        </ul>
-                        
+                	<div class="form-inline">
+        
+                        <select class="form-control" ng-model="selectoption" ng-change="getmenu(selectoption)">
+                            <option value="" ng-selected="false">Department</option>
+                            <option value="reports" ng-selected="getSelectedOrNot('reports')">Reports</option>
+                            <option value="offersetup" ng-selected="getSelectedOrNot('offersetup')">Offer Setup</option>
+                            <option value="marketting" ng-selected="getSelectedOrNot('marketting')">Marketting</option>
+                        </select>
+                                               
                         <a ng-href="#/login"><button type="button" class="btn btn-primary marginLeft5" ng-class="{active: $location.path() === '/login'}"><span ng-show="loggedIn">Logout</span></button></a>
                     </div>
                 </div>

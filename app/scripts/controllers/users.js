@@ -1,28 +1,35 @@
 'use strict';
 
 var app = angular.module('sandvikusaAdminAppsApp');
+/*app.config(['$adConfigProvider', function ($adConfigProvider) {
+     //$adConfigProvider.iconClasses.firstPage = 'glyphicon glyphicon-forward';
+    $adConfigProvider.iconClasses.firstPage = $adConfigProvider.paging.response.totalItems;
+}]);*/
 
-app.controller('usersCtrl', function ($scope,$http) {
+app.controller('usersCtrl', function ($scope,$http,$timeout) {
         $scope.opendiv = 'reports';
         $scope.tblevisible = false;
-        $scope.showloadingmodal = true; $scope.CurrentDate = new Date();
-        var customerData = {
-            'token':'741889E3-4565-40A1-982A-F15F7A923D72',
-            'email':"xyz@sandviks.com"
-           };
-        var url = "http://beta.iservices.earlymoments.com/getappregistrationlist?callback=JSON_CALLBACK";
-        $http.jsonp(url,{params : customerData})
+        $scope.results=[];
+        //$scope.showloadingmodal = true; 
+        $timeout(function() {
+            $scope.showloadingmodal = false; 
+        }, 1000);
+        $scope.CurrentDate = new Date();
+        
+        var user_url = "http://beta.iservices.earlymoments.com/getappregistrationlist?token=741889E3-4565-40A1-982A-F15F7A923D72&email=xyz@sandviks.com&callback=JSON_CALLBACK";
+        $http.jsonp(user_url)
              .success(function (data, status, headers, config) {
-                    $scope.results = data;
                     $scope.showloadingmodal = false;
-                    $scope.tblevisible = true;    
-     
-                    $scope.models = {
-                                      changeInfo: [],
-                                      searchText: '',
-                                      userlist: $scope.results
-                                    };
-                    $scope.usersTableColumnDefinition = [
+                    if(data.length > 0){
+                        $scope.results = data;
+                        $scope.tblevisible = true;    
+
+                        $scope.models = {
+                                          changeInfo: [],
+                                          searchText: '',
+                                          userlist: $scope.results
+                                        };
+                        $scope.usersTableColumnDefinition = [
                           {
                             columnHeaderDisplayName: 'Reg Id',
                             displayProperty: 'regId',
@@ -104,11 +111,21 @@ app.controller('usersCtrl', function ($scope,$http) {
                             columnSearchProperty: 'voucher'
                           }
                         ];
+                    }
+            })
+            .error(function(data){
+                $scope.showloadingmodal = false;
             });
     
             $scope.formatDate = function(date){
                   var dateOut = new Date(date);
                   return dateOut;
             };
-    
+            
+            /*$scope.getlength = function(){  
+                var rowCount = $('.offerGroup >tbody >tr').length;
+                var page = $(".pagination li").length;
+                return page;
+            };*/
+            
 });
