@@ -16,7 +16,7 @@ app.controller('usersCtrl', function ($scope,$http,$timeout) {
         }, 1000);
         $scope.CurrentDate = new Date();
         
-        var user_url = "http://beta.iservices.earlymoments.com/getappregistrationlist?token=741889E3-4565-40A1-982A-F15F7A923D72&email=xyz@sandviks.com&callback=JSON_CALLBACK";
+        var user_url = "http://beta.iservices.earlymoments.com/getappregistrationlist?token=741889E3-4565-40A1-982A-F15F7A923D72&callback=JSON_CALLBACK";
         $http.jsonp(user_url)
              .success(function (data, status, headers, config) {
                     $scope.showloadingmodal = false;

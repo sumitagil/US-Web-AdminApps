@@ -60,6 +60,10 @@ app.config(function ($routeProvider) {
         templateUrl: 'views/salesforce-management.html',
         controller: 'salesforceCtrl',
       })
+     .when('/vendorsystem', {
+        templateUrl: 'views/vendorsystem.html',
+        controller: 'vendorsystemCtrl',
+      })
     .when('/users', {
         templateUrl: 'views/users.html',
         controller: 'usersCtrl',
@@ -97,7 +101,7 @@ app.run(function($rootScope, $location, $cookieStore, $http) {
             else if($location.path() === '/orderforms' || $location.path() === '/promolist' || $location.path() === '/offergroup' || $location.path() === '/promocode' || $location.path() === '/insertorderforms' || $location.path() === '/offerimport' || $location.path() === '/customerservice'){
                 $rootScope.opendiv = 'offersetup';
             }
-			else if($location.path() === '/salesforce'){
+			else if($location.path() === '/salesforce' || $location.path() === '/vendorsystem'){
                 $rootScope.opendiv = 'marketting';
             }
             else{

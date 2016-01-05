@@ -67,6 +67,7 @@
                     </ul>
                     <ul ng-if="opendiv == 'marketting'">
                         <li class="{{getClass('/salesforce')}}" ng-class="{active: $location.path() == '/salesforce'}"><a ng-href="#/salesforce">Sales Force Management</a></li>
+                        <li class="{{getClass('/vendorsystem')}}" ng-class="{active: $location.path() == '/vendorsystem'}"><a ng-href="#/vendorsystem">Vendor System</a></li>
                     </ul>
                 </nav>
             </div>
@@ -126,6 +127,7 @@
     <script src="scripts/controllers/offerimport.js"></script>
     <script src="scripts/controllers/customerservice.js"></script>
 	<script src="scripts/controllers/salesforce-management.js"></script>
+    <script src="scripts/controllers/vendorsystem.js"></script>
     <script src="scripts/controllers/users.js"></script>
     
     <script src="scripts/app-services/authentication.service.js"></script>

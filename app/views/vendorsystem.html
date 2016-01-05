@@ -1,0 +1,398 @@
+<div class="col-md-12 bodyContentArea">
+    <span class="btn btn-primary offerEditBtn" ng-click="AddVendorSystem()" style="float:right;">Add</span>
+    <div ng-if="models.length>0" style="padding-bottom:12px;">
+    <table class="table table-hover table-condensed table-striped table-bordered">
+        <thead class="levelOne">
+            <tr>
+                <th style="width:25px;">#</th>
+                <th style="width:110px;" ng-click="sort('OfferGroupId')">Code
+                        <i ng-hide="sortKey=='OfferGroupId'" class="glyphicon glyphicon-resize-vertical"></i>
+                        <span class="glyphicon sort-icon" ng-show="sortKey=='OfferGroupId'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th style="width:142px;" ng-click="sort('GroupDesc')">Description
+                    <i ng-hide="sortKey=='GroupDesc'" class="glyphicon glyphicon-resize-vertical"></i>
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='GroupDesc'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th style="width:110px;" ng-click="sort('GroupDesc')">CC Optout
+                    <i ng-hide="sortKey=='GroupDesc'" class="glyphicon glyphicon-resize-vertical"></i>
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='GroupDesc'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th style="width:110px;" ng-click="sort('GroupDesc')">BM Optout
+                    <i ng-hide="sortKey=='GroupDesc'" class="glyphicon glyphicon-resize-vertical"></i>
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='GroupDesc'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th style="width:110px;" ng-click="sort('GroupDesc')">Notes
+                    <i ng-hide="sortKey=='GroupDesc'" class="glyphicon glyphicon-resize-vertical"></i>
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='GroupDesc'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th style="width:110px;" ng-click="sort('GroupDesc')">Max Mind
+                    <i ng-hide="sortKey=='GroupDesc'" class="glyphicon glyphicon-resize-vertical"></i>
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='GroupDesc'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th style="width:110px;" ng-click="sort('GroupDesc')">Alliant Score
+                    <i ng-hide="sortKey=='GroupDesc'" class="glyphicon glyphicon-resize-vertical"></i>
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='GroupDesc'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th style="width:110px;" ng-click="sort('GroupDesc')">Email
+                    <i ng-hide="sortKey=='GroupDesc'" class="glyphicon glyphicon-resize-vertical"></i>
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='GroupDesc'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th style="width:110px;" ng-click="sort('GroupDesc')">Contact No
+                    <i ng-hide="sortKey=='GroupDesc'" class="glyphicon glyphicon-resize-vertical"></i>
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='GroupDesc'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th style="width:110px;" ng-click="sort('GroupDesc')">Send Email?
+                    <i ng-hide="sortKey=='GroupDesc'" class="glyphicon glyphicon-resize-vertical"></i>
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='GroupDesc'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th style="width:110px;" ng-click="sort('GroupDesc')">Email Freq.
+                    <i ng-hide="sortKey=='GroupDesc'" class="glyphicon glyphicon-resize-vertical"></i>
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='GroupDesc'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th style="width:50px;">Action</th>
+            </tr>
+        </thead>
+        <tbody class="tblMain">
+            <tr dir-paginate="item in models|orderBy:sortKey:reverse|itemsPerPage:10" pagination-id="pagination_first">
+                <td colspan="13" style="padding:0;">
+                <table class="table table-hover table-condensed table-striped max">
+                    <tr class="customtr">
+                        <td style="width:25px; border-top:none;" ng-click="selectTableRow(item.OfferGroupId)" class="listSerial">
+                            <i id="icon_{{item.OfferGroupId}}" class="glyphicon glyphicon-plus-sign"></i>
+                        </td>
+                        <td style="width:110px; border-top:none; border-left:1px solid #ddd; border-right:1px solid #ddd;">{{item.OfferGroupId}}</td>
+                        <td style="border-top:none;" class="alignLeft">{{item.GroupDesc}}</td>
+                         <td style="width:110px; border-top:none; border-left:1px solid #ddd; border-right:1px solid #ddd;">{{item.OfferGroupId}}</td>
+                         <td style="width:110px; border-top:none; border-left:1px solid #ddd; border-right:1px solid #ddd;">{{item.OfferGroupId}}</td>
+                         <td style="width:110px; border-top:none; border-left:1px solid #ddd; border-right:1px solid #ddd;">{{item.OfferGroupId}}</td>
+                         <td style="width:110px; border-top:none; border-left:1px solid #ddd; border-right:1px solid #ddd;">{{item.OfferGroupId}}</td>
+                         <td style="width:110px; border-top:none; border-left:1px solid #ddd; border-right:1px solid #ddd;">{{item.OfferGroupId}}</td>
+                         <td style="width:110px; border-top:none; border-left:1px solid #ddd; border-right:1px solid #ddd;">{{item.OfferGroupId}}</td>
+                         <td style="width:110px; border-top:none; border-left:1px solid #ddd; border-right:1px solid #ddd;">{{item.OfferGroupId}}</td>
+                         <td style="width:110px; border-top:none; border-left:1px solid #ddd; border-right:1px solid #ddd;">{{item.OfferGroupId}}</td>
+                         <td style="width:110px; border-top:none; border-left:1px solid #ddd; border-right:1px solid #ddd;">{{item.OfferGroupId}}</td>
+                        <td>
+                            <span class="btn btn-primary offerEditBtn" ng-click="editOfferData(offerData,'Edit')">Edit</span>
+                        </td>
+                    </tr>
+                    <tr id="level2_{{item.OfferGroupId}}" style="display:none;">
+                        <td colspan="13">
+                            <!-- Start 2nd level Content -->
+                            <div>
+                                <ul class="nav nav-tabs tabTitle" role="tablist">
+                                    <li id="firstli_{{item.OfferGroupId}}" role="presentation" class="active"><a showtab="" href="#offers_{{item.OfferGroupId}}" role="tab" data-toggle="tab">Pixel Details</a></li>
+                                    <li id="secondli_{{item.OfferGroupId}}" role="presentation"><a showtab="" href="#campaigns_{{item.OfferGroupId}}" role="tab" data-toggle="tab">Sub Affiliates</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                   <div role="tabpanel" class="tab-pane active" id="offers_{{item.OfferGroupId}}">
+                                      <table class="table table-hover table-condensed table-striped">
+                                        <thead class="levelTwo">
+                                            <tr>
+                                                <th>#</th>
+                                                <th ng-click="sort('OfferId')">Code
+                                                    <i ng-hide="sortKey=='OfferId'" class="glyphicon glyphicon-resize-vertical"></i>
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='OfferId'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th ng-click="sort('offerDescCode')">Pixel Code
+                                                    <i ng-hide="sortKey=='offerDescCode'" class="glyphicon glyphicon-resize-vertical"></i>
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='offerDescCode'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th ng-click="sort('displayOrder')">Hardcoded
+                                                    <i ng-hide="sortKey=='displayOrder'" class="glyphicon glyphicon-resize-vertical"></i>
+                                                    <span class="glyphicon sort-icon" ng-show="sortKey=='displayOrder'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                                </th>
+                                                <th>Pixel</th>
+                                                <th>Notes</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr dir-paginate="offerData in item.offers | orderBy:sortKey:reverseSort|itemsPerPage:10"
+                                                current-page="currentPage" pagination-id="item.OfferGroupId">
+                                                <td>{{$index+1}}</td>
+                                                <td>{{offerData.OfferId}}</td>
+                                                <td class="smlTxtBx">{{offerData.OfferDescCode}}</td>
+                                                <td class="smlTxtBx">
+                                                    <span editable-number="offerData.DisplayOrder" e-name="DisplayOrder" e-form="rowform" e-step="any" e-required>
+                                                    {{offerData.DisplayOrder || 'Enter number'}}
+                                                    </span>
+                                                </td>
+                                                <td class="smlTxtBx">
+                                                    <span editable-select="offerData.ItemSelected" e-name="ItemSelected" e-form="rowform" e-ng-options="s.value as s.text for s in itemstatus">
+                                                        {{showStatus(offerData.ItemSelected,1)}}
+                                                    </span>
+                                                </td>
+                                                <td class="smlTxtBx">
+                                                    <span editable-select="offerData.IsBonusBundled" e-name="IsBonusBundled" e-form="rowform" e-ng-options="s.value as s.text for s in allstatus">
+                                                        {{showStatus(offerData.IsBonusBundled,2)}}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="btn btn-primary offerEditBtn" ng-click="editOfferData(offerData,'View')">View</span>
+                                                    <span class="btn btn-primary offerEditBtn" ng-click="editOfferData(offerData,'Edit')">Edit</span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                      </table>
+                                      <dir-pagination-controls pagination-id="item.OfferGroupId" max-size="5" 
+                                            direction-links="true" boundary-links="true" >
+                                      </dir-pagination-controls>
+                                       <p>Total records : {{item.offers.length}}</p>
+                                   </div> 
+                                   <div role="tabpanel" class="tab-pane" id="campaigns_{{item.OfferGroupId}}">
+                                      <table class="table table-hover table-condensed table-striped">
+                                          <thead class="levelTwo">
+                                            <tr>
+                                                <th>Code</th>
+                                                <th>Affiliate Description</th>
+                                                <th>Affiliate Id</th>
+                                                <th>Reference Code</th>
+                                                <th>Default Promotion Code</th>
+                                                <th>Notes</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody dir-paginate="campaignData in item.campaigns | orderBy:sortKey:reverseSort | itemsPerPage:10" current-page="currentPage" pagination-id="campaignData.CampaignId">
+                                            <tr class="clickableRow">
+                                                <td class="listOffergroupId">{{campaignData.CampaignId}}</td>
+                                                <td>{{campaignData.CampaignDesc}}</td>
+                                                <td>{{campaignData.CreditRule}}</td>
+                                                <td>{{campaignData.ShortNotes}}</td>
+                                                <td>{{campaignData.Project}}</td>
+                                                <td>
+                                                    <span ng-if="campaignData.IsClubShopOffer=='Y'">Maxchoice</span>
+                                                    <span ng-if="campaignData.IsClubShopOffer=='N'">Horizontal</span>
+                                                </td>
+                                                <td>
+                                                    <span class="btn btn-primary offerEditBtn" ng-click="editCampaignData(campaignData,'View')">View</span>
+                                                    <span class="btn btn-primary offerEditBtn" ng-if="campaignData.CampaignId == 12380" ng-click="editCampaignData(campaignData,'Edit')">Edit</span>
+                                                </td>
+                                            </tr>  
+                                        </tbody>
+                                    </table>
+                                      <dir-pagination-controls pagination-id="campaignData.CampaignId" max-size="5" 
+                                            direction-links="true" boundary-links="true" >
+                                      </dir-pagination-controls>
+                                       <p>Total records : {{item.campaigns.length}}</p>
+                                   </div>
+                                </div>
+                            </div>
+                            <!-- End 2nd level Content -->
+                        </td>
+                    </tr>
+                </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <dir-pagination-controls pagination-id="pagination_first"
+        max-size="5"
+        direction-links="true"
+        boundary-links="true" >
+    </dir-pagination-controls>
+    
+    <p>Total no of records : {{models.length}}</p>
+  </div>
+</div>
+
+<!-- Add modal 0-->
+<modal title="Add Vendor Details" visible="showAddModal" rel="emailrel">
+    <form name="campaignEditform" role="form" ng-submit="addVendorDetails()">
+      <div class="form-group">
+            <label for="OfferDescCode">Vendor Code *</label>
+            <input type="text" class="form-control" ng-model="OfferDescCode" ng-readonly="actionVal" />
+      </div>
+      <div class="form-group">
+            <label for="DisplayOrder">Description *</label>
+            <textarea class="form-control" ng-model="DisplayOrder" ng-readonly="actionVal"></textarea>
+      </div>
+      <div class="form-group">
+            <label for="ItemSelected">CC Output Hours*</label>
+            <input type="text" class="form-control" ng-model="ItemSelected" ng-readonly="actionVal" />
+      </div>
+      <div class="form-group">
+            <label for="Project">BM Output Hours*</label>
+            <input type="text" class="form-control" ng-model="IsBonusBundled" ng-readonly="actionVal"/>
+      </div>
+      <div class="form-group">
+            <label for="SpecialText">Notes</label>
+            <textarea class="form-control" ng-model="SpecialText" ng-readonly="actionVal"></textarea>
+      </div>
+        <div class="form-group">
+            <label for="Project">Max Mind Score*</label>
+            <input type="text" class="form-control" ng-model="IsBonusBundled" ng-readonly="actionVal"/>
+      </div>
+      <div class="form-group">
+            <label for="Project">Alliant Score*</label>
+            <input type="text" class="form-control" ng-model="IsBonusBundled" ng-readonly="actionVal"/>
+      </div>
+       <div class="form-group">
+            <label for="Project">Send Email*</label>
+             <select class="form-control" ng-model="IsBonusBundled" ng-readonly="actionVal">
+                <option value="Y">Yes</option> 
+                <option value="N">No</option>
+            </select>
+      </div>
+      <div class="form-group">
+            <label for="Project">Contact Name*</label>
+            <input type="text" class="form-control" ng-model="IsBonusBundled" ng-readonly="actionVal"/>
+      </div>
+        <div class="form-group">
+            <label for="Project">Email</label>
+            <input type="text" class="form-control" ng-model="IsBonusBundled" ng-readonly="actionVal"/>
+      </div>
+        <div class="form-group">
+            <label for="Project">Email Freequency</label>
+            <select class="form-control" ng-model="IsBonusBundled" ng-readonly="actionVal">
+                <option value="Hourly">Hourly</option> 
+                <option value="Daily">Daily</option>
+                <option value="Monthly">Monthly</option> 
+                <option value="None">None</option>
+            </select>
+      </div>
+      <input type="hidden" ng-model="OfferId" ng-readonly="actionVal" />    
+      <input type="submit" class="btn btn-primary btn-sm" ng-hide="actionVal" value="Save" />
+      <button type="button" class="btn btn-default btn-sm" ng-hide="actionVal" data-dismiss="modal">Cancel</button>
+    </form>
+</modal>
+<!--Add modal end 0-->
+
+<!--modal 1-->
+<modal title="Edit Sub Affiliates" visible="showModal" rel="emailrel">
+    <div class="row">
+    <div class="col-md-12 campaigns">
+    <p><input type="button" class="btn btn-primary btn-sm" ng-click="editCampaignData(campaignDatas,'changeview')" value="Edit" ng-show="actionVal"></p>
+    <form name="campaignEditform" role="form" ng-submit="updateCampaignData()">
+        
+        <div class="row">
+    	<div class="col-md-12">
+        	<div class="form-group">
+                <label for="CampaignDesc">Code</label>
+                <input type="text" class="form-control" placeholder="Enter Campaing Desc" ng-model="campaignDatas.CampaignDesc" ng-readonly="actionVal" />
+            </div>
+            <div class="form-group">
+                <label for="EmailTemplate">Description</label>
+                <select class="form-control" ng-model="campaignDatas.EmailTemplate" ng-disabled="actionVal">
+                    <option value="">Select One</option>
+                    <option ng-repeat="emailtemp in allEmailTemps" value="{{emailtemp.TemplateId}}">
+                    {{emailtemp.EmailDescription}}
+                    </option>
+				</select>
+			</div>
+            <div class="form-group">
+                <label for="DefaultPromoCode">Affiliate Id</label>
+                <input type="text" class="form-control" placeholder="Enter Default Promo Code" ng-model="campaignDatas.DefaultPromoCode" ng-readonly="actionVal" />
+            </div>
+            <div class="form-group">
+                <label for="CreditRule">Reference Code</label>
+                <select class="form-control" ng-model="campaignDatas.CreditRule" ng-disabled="actionVal">
+                    <option value="">Credit Rule</option>
+                    <option ng-repeat="credit in allCreditrules" value="{{credit.RuleId}}">
+                    {{credit.RuleId}}
+                    </option>
+				</select>
+			</div>
+            <div class="form-group">
+                <label for="conf_pg_tac">Promotion Code</label>
+                <input type="text" class="form-control" ng-model="campaignDatas.conf_pg_tac" ng-readonly="actionVal" />
+			</div>
+            <div class="form-group">
+                <label for="opt_out">Note</label>
+                <textarea class="form-control" ng-model="campaignDatas.opt_out" ng-disabled="actionVal"></textarea>
+			</div>
+        </div>
+    </div>
+    
+    <div class="col-md-12">
+        <input type="hidden" ng-model="campaignDatas.CampaignId" /> 
+        <input type="hidden" ng-model="campaignDatas.OfferGroupId" /> 
+        <input type="submit" class="btn btn-primary btn-sm" ng-hide="actionVal" value="Save" />
+        <button type="button" class="btn btn-default btn-sm" ng-hide="actionVal" data-dismiss="modal">Close</button>
+    </div>
+    
+    </form>
+    <p class="msg" style="color:green">Loading...Plesae wait</p>
+    </div>
+    </div>
+</modal>
+<!--modal end 1-->
+
+<!--modal 2-->
+<modal title="Edit Pixel Details" visible="showOfferModal" rel="emailrel">
+    <form name="campaignEditform" role="form" ng-submit="updateOfferData()">
+      <div class="form-group">
+            <label for="OfferDescCode">Code *</label>
+            <input type="text" class="form-control" ng-model="OfferDescCode" ng-readonly="actionVal" />
+      </div>
+      <div class="form-group">
+            <label for="DisplayOrder">Pixel Code *</label>
+            <select class="form-control" ng-model="DisplayOrder" ng-readonly="actionVal">
+                <option value="1">1</option> 
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+      </div>
+      <div class="form-group">
+            <label for="ItemSelected">Hard Coded *</label>
+            <select class="form-control" ng-model="ItemSelected" ng-readonly="actionVal">
+                <option value="Y">Yes</option> 
+                <option value="N">No</option>
+            </select>
+      </div>
+      <div class="form-group">
+            <label for="Project">Pixel</label>
+            <input type="text" class="form-control" ng-model="IsBonusBundled" ng-readonly="actionVal"/>
+      </div>
+      <div class="form-group">
+            <label for="SpecialText">Note</label>
+            <textarea class="form-control" ng-model="SpecialText" ng-readonly="actionVal"></textarea>
+      </div>
+      <input type="hidden" ng-model="OfferId" ng-readonly="actionVal" />    
+      <input type="submit" class="btn btn-primary btn-sm" ng-hide="actionVal" value="Save" />
+      <button type="button" class="btn btn-default btn-sm" ng-hide="actionVal" data-dismiss="modal">Cancel</button>
+    </form>
+</modal>
+<!--modal end 2-->
+
+<!--modal 4-->
+<modal title="" visible="loading" rel="modal-sm loadingModal">
+    <div class="row">
+        <div class="col-md-12 text-center">
+         <img src="http://preloaders.net/images/ajax-loader.gif" style="top:50%;"/>
+        </div>
+    </div>    
+</modal>
+<!--modal end 4-->
+
+<!--modal 5-->
+<modal title="" visible="showmsgmodal" rel="modal-sm loadingModal">
+    <div class="row">
+        <div class="col-md-12 text-center">
+         <p id="msgcontent"></p>
+        </div>
+    </div>    
+</modal>
+<!--modal end 5-->
+
+<style>
+.offerGroup thead tr:first-child {
+    background-color: #3E7AAE;
+    color: #fff;
+    border:none;
+}
+.offerGroup thead tr:last-child {
+    background-color: #f9f9f9;
+    color: #fff;
+    border:none;
+}
+.offerGroup tr:first-child td:first-child,
+.offerGroup tr:first-child th:first-child{border-radius: 6px 0 0 0;}
+.offerGroup tr:first-child td:last-child,
+.offerGroup tr:first-child th:last-child{border-radius: 0 6px 0 0;}
+ .offerGroup tbody > tr {
+    border-bottom: 1px solid #ddd;
+ }
+.max{margin-bottom: 0;}
+.alignLeft{text-align: left;}
+</style>
